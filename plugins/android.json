@@ -13,6 +13,9 @@
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.demoapp675353"
         },
+        "cordova-plugin-situm-indoor-navigation": {
+            "PACKAGE_NAME": "com.ionicframework.demoapp675353"
+        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.ionicframework.demoapp675353"
         },
@@ -23,9 +26,6 @@
             "PACKAGE_NAME": "com.ionicframework.demoapp675353"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.demoapp675353"
-        },
-        "cordova-plugin-situm-indoor-navigation": {
             "PACKAGE_NAME": "com.ionicframework.demoapp675353"
         }
     },
