@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-situm-indoor-navigation" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>SitumIndoorNavigation</name>
+	<js-module name="SitumIndoorNavigation" src="www/SitumIndoorNavigation.js">
+		<clobbers target="cordova.plugins.SitumIndoorNavigation"/>
+	</js-module>
+	<platform name="android">
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="SitumIndoorNavigation">
+				<param name="android-package" value="cordova-plugin-situm-indoor-navigation.SitumIndoorNavigation"/>
+			</feature>
+		</config-file>
+		<config-file parent="/*" target="AndroidManifest.xml"/>
+
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">            
+			<meta-data android:name="es.situm.sdk.API_USER"	android:value="$API_USER_EMAIL" />
+			<meta-data android:name="es.situm.sdk.API_KEY" android:value="$API_KEY" />
+		</config-file>
+		<config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>            
+        </config-file>
+
+
+		<source-file src="src/android/SitumIndoorNavigation.java" target-dir="src/cordova.plugin.situm.indoor.navigation"/>
+
+		<framework src="src/android/situm.gradle" custom="true" type="gradleReference"/>
+	</platform>
+</plugin>

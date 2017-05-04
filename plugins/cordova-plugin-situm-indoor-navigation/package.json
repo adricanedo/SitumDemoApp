@@ -1,0 +1,25 @@
+{
+  "name": "cordova-plugin-situm-indoor-navigation",
+  "version": "0.0.1",
+  "description": "Situm native sdk for ios and android",
+  "cordova": {
+    "id": "cordova-plugin-situm-indoor-navigation",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdev99/SitumIndoorNavigation.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Sukhdev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sdev99/SitumIndoorNavigation/issues"
+  },
+  "homepage": "https://github.com/sdev99/SitumIndoorNavigation#readme"
+}
