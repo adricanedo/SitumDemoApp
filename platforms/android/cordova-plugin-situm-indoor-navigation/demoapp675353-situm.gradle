@@ -1,0 +1,9 @@
+allprojects {
+    repositories {
+        maven { url "https://repo.situm.es/artifactory/libs-release-local" }
+    }
+}
+
+dependencies {
+    compile ('es.situm:situm-sdk:2.3.0@aar') {  transitive = true }
+}

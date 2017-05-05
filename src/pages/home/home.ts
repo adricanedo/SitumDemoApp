@@ -7,6 +7,8 @@ declare var window: any;
   templateUrl: 'home.html'
 })
 export class HomePage {
+  //ionic plugin add https://github.com/sdev99/SitumIndoorNavigation.git --variable API_USER_EMAIL="qaiyumohamed@gmail.com" --variable API_KEY="9ebe6ce727fad5052f1402b513d48be50c2c7936b562754306285fb99ec84816"
+
 
   constructor(public navCtrl: NavController) {
   	setTimeout(function() {

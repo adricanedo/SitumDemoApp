@@ -1,6 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="cordova-plugin-situm-indoor-navigation" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>SitumIndoorNavigation</name>
+
+	<preference name="API_USER_EMAIL" />
+    <preference name="API_KEY" />
+    
 	<js-module name="SitumIndoorNavigation" src="www/SitumIndoorNavigation.js">
 		<clobbers target="window.plugins.SitumIndoorNavigation"/>
 	</js-module>
@@ -13,8 +17,8 @@
 		<config-file parent="/*" target="AndroidManifest.xml"/>
 
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">            
-			<meta-data android:name="es.situm.sdk.API_USER"	android:value="$API_USER_EMAIL" />
-			<meta-data android:name="es.situm.sdk.API_KEY" android:value="$API_KEY" />
+			<meta-data android:name="es.situm.sdk.API_USER"	android:value="@string/API_USER_EMAIL" />
+			<meta-data android:name="es.situm.sdk.API_KEY" android:value="@string/API_KEY" />
 		</config-file>
 		<config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.INTERNET"/>
@@ -23,6 +27,11 @@
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>            
         </config-file>
 
+        <source-file src="src/android/situm.xml" target-dir="res/values" />
+        <config-file target="res/values/situm.xml" parent="/*">
+            <string name="API_USER_EMAIL">$API_USER_EMAIL</string>
+            <string name="API_KEY">$API_KEY</string>
+        </config-file>
 
 		<source-file src="src/android/SitumIndoorNavigation.java" target-dir="src/cordova.plugin.situm.indoor.navigation"/>
 
