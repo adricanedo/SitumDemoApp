@@ -10,6 +10,7 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +20,10 @@ import java.util.Collection;
 import es.situm.sdk.SitumSdk;
 import es.situm.sdk.error.Error;
 import es.situm.sdk.model.cartography.Building;
+import es.situm.sdk.model.location.Angle;
+import es.situm.sdk.model.location.Bounds;
+import es.situm.sdk.model.location.Coordinate;
+import es.situm.sdk.model.location.Dimensions;
 import es.situm.sdk.utils.Handler;
 
 /**
@@ -62,19 +67,42 @@ public class SitumIndoorNavigation extends CordovaPlugin {
             @Override
             public void onSuccess(Collection<Building> buildings) {
                 Log.d(TAG, "onSuccess: Your buildings: ");
+
+                JSONArray buildingsJA = new JSONArray();
+
                 for (Building building : buildings) {
                     Log.i(TAG, "onSuccess: " + building.getIdentifier() + " - " + building.getName());
 
                     if (BUILDING_ID.equals(building.getIdentifier())) {
 //                        selectedBuilding = building;
                     }
+
+                    JSONObject bjo = new JSONObject();
+                    try {
+                        bjo.put("address", building.getAddress());
+                        bjo.put("bounds", boundsToJsonObject(building.getBounds()));
+                        bjo.put("bounds-rotated", boundsToJsonObject(building.getBoundsRotated()));
+                        bjo.put("center", coordinateToJsonObject(building.getCenter()));
+                        bjo.put("dimensions", dimensionsToJsonObject(building.getDimensions()));
+                        bjo.put("info-html", building.getInfoHtml());
+                        bjo.put("name", building.getName());
+                        bjo.put("picture-thum-url", building.getPictureThumbUrl().toString());
+                        bjo.put("picture-url", building.getPictureUrl().toString());
+                        bjo.put("rotation", angleToJsonObject(building.getRotation()));
+                        bjo.put("user-identifier", building.getUserIdentifier());
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    buildingsJA.put(bjo);
                 }
 
                 if (buildings.isEmpty()) {
                     Log.e(TAG, "onSuccess: you have no buildings. Create one in the Dashboard");
                     return;
                 } else {
-                    cbc.success(buildings.toString());
+                    cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, buildingsJA.toString()));
                 }
             }
 
@@ -85,4 +113,55 @@ public class SitumIndoorNavigation extends CordovaPlugin {
             }
         });
     }
+
+    // Utility Methods
+
+    private JSONObject coordinateToJsonObject(Coordinate coordinate) {
+        JSONObject jo = new JSONObject();
+        try {
+            jo.put("latitude", coordinate.getLatitude());
+            jo.put("longitude", coordinate.getLongitude());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  jo;
+    }
+
+    private JSONObject dimensionsToJsonObject(Dimensions dimensions) {
+        JSONObject jo = new JSONObject();
+        try {
+            jo.put("width", dimensions.getWidth());
+            jo.put("height", dimensions.getHeight());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  jo;
+    }
+
+    private JSONObject boundsToJsonObject(Bounds bounds) {
+        JSONObject jo = new JSONObject();
+        try {
+            jo.put("north-east", coordinateToJsonObject(bounds.getNorthEast()));
+            jo.put("north-west", coordinateToJsonObject(bounds.getNorthWest()));
+            jo.put("south-east", coordinateToJsonObject(bounds.getSouthEast()));
+            jo.put("south-west", coordinateToJsonObject(bounds.getSouthWest()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  jo;
+    }
+
+    private JSONObject angleToJsonObject(Angle angle) {
+        JSONObject jo = new JSONObject();
+        try {
+            jo.put("degrees", angle.degrees());
+            jo.put("degreesClockwise", angle.degreesClockwise());
+            jo.put("radians", angle.radians());
+            jo.put("radiansMinusPiPi", angle.radiansMinusPiPi());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  jo;
+    }
+
 }
