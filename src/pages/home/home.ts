@@ -13,7 +13,7 @@ export class HomePage {
   constructor(public navCtrl: NavController) {
   	setTimeout(function() {
   		console.log("Plugin Call");
-  		window.plugins.SitumIndoorNavigation.fetchBuildings("test", function(res){
+  		window.plugins.SitumIndoorNavigation.fetchBuildings(function(res){
   			console.log("RESPONSE "+res);
   		}, function(error){
   			console.log("Error "+error);

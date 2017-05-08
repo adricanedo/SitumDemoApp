@@ -2,8 +2,8 @@ cordova.define("cordova-plugin-situm-indoor-navigation.SitumIndoorNavigation", f
 function SitumIndoorNavigation(){
 }
 
-SitumIndoorNavigation.prototype.fetchBuildings = function(arg0, success, error) {
-  cordova.exec(success, error, "SitumIndoorNavigation", "fetchBuildings", [arg0]);
+SitumIndoorNavigation.prototype.fetchBuildings = function(success, error) {
+  cordova.exec(success, error, "SitumIndoorNavigation", "fetchBuildings", []);
 };
 
 SitumIndoorNavigation.install = function () {

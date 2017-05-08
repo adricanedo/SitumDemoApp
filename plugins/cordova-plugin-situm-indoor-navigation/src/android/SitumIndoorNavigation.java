@@ -1,6 +1,7 @@
 package cordova.plugin.situm.indoor.navigation;
 
 
+import android.os.Build;
 import android.util.Log;
 
 import com.ionicframework.demoapp675353.MainActivity;
@@ -15,11 +16,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import es.situm.sdk.SitumSdk;
+import es.situm.sdk.directions.DirectionsRequest;
 import es.situm.sdk.error.Error;
 import es.situm.sdk.model.cartography.Building;
+import es.situm.sdk.model.cartography.Floor;
+import es.situm.sdk.model.cartography.Poi;
 import es.situm.sdk.model.location.Angle;
 import es.situm.sdk.model.location.Bounds;
 import es.situm.sdk.model.location.Coordinate;
@@ -35,6 +41,11 @@ public class SitumIndoorNavigation extends CordovaPlugin {
     // The building identifier where positioning will start.
     // You can see your buildings IDs and names running this example in the Logcat
     private static final String BUILDING_ID = "YOUR_BUILDING_ID";
+
+
+    private HashMap<String, Building> buildingsList = new HashMap<String, Building>();
+    private HashMap<String, Floor> floorsList = new HashMap<String, Floor>();
+    private HashMap<String, Poi> poisList = new HashMap<String, Poi>();
 
     /**
      * Sets the context of the Command. This can then be used to do things like
@@ -52,14 +63,21 @@ public class SitumIndoorNavigation extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("fetchBuildings")) {
-            String message = args.getString(0);
-            this.fetchBuildings(message, callbackContext);
+            this.fetchBuildings(callbackContext);
+            return true;
+        } else if (action.equals("fetchFloorsForBuilding")) {
+            JSONObject building = args.getJSONObject(0);
+            this.fetchFloorsForBuilding(building, callbackContext);
+            return true;
+        } else if (action.equals("fetchIndoorPOIsFromBuilding")) {
+            JSONObject building = args.getJSONObject(0);
+            this.fetchIndoorPOIsFromBuilding(building, callbackContext);
             return true;
         }
         return false;
     }
 
-    private void fetchBuildings(String message, CallbackContext callbackContext) {
+    private void fetchBuildings(CallbackContext callbackContext) {
         final CallbackContext cbc = callbackContext;
 
         //Get all the buildings of the account
@@ -90,17 +108,20 @@ public class SitumIndoorNavigation extends CordovaPlugin {
                         bjo.put("picture-url", building.getPictureUrl().toString());
                         bjo.put("rotation", angleToJsonObject(building.getRotation()));
                         bjo.put("user-identifier", building.getUserIdentifier());
+                        bjo.put("identifier", building.getIdentifier());
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                     buildingsJA.put(bjo);
+
+                    buildingsList.put(building.getIdentifier(), building);
                 }
 
                 if (buildings.isEmpty()) {
                     Log.e(TAG, "onSuccess: you have no buildings. Create one in the Dashboard");
-                    return;
+                    cbc.error("you have no buildings. Create one in the Dashboard");
                 } else {
                     cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, buildingsJA.toString()));
                 }
@@ -111,7 +132,107 @@ public class SitumIndoorNavigation extends CordovaPlugin {
                 Log.e(TAG, "onFailure:" + error);
                 cbc.error("Expected one non-empty string argument.");
             }
+
+            DirectionsRequest dr = new DirectionsRequest.Builder().from()
         });
+    }
+
+    private void fetchFloorsForBuilding(JSONObject building, CallbackContext callbackContext) {
+        final CallbackContext cbc = callbackContext;
+
+        try {
+            Building selectedBuilding = buildingsList.get(building.getString("identifier"));
+
+            SitumSdk.communicationManager().fetchFloorsFromBuilding(selectedBuilding, new Handler<Collection<Floor>>() {
+                @Override
+                public void onSuccess(Collection<Floor> floors) {
+                    JSONArray floorsJA = new JSONArray();
+
+                    for (Floor floor : floors) {
+                        Log.i(TAG, "onSuccess: " + floor.getIdentifier() + " - " + floor.getLevel());
+
+
+                        JSONObject floorJO = new JSONObject();
+                        try {
+                            floorJO.put("altitude", floor.getAltitude());
+                            floorJO.put("building-identifier", floor.getBuildingIdentifier());
+                            floorJO.put("level", floor.getLevel());
+                            floorJO.put("map-url", floor.getMapUrl());
+                            floorJO.put("scale", floor.getScale());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        floorsJA.put(floorJO);
+
+                        floorsList.put(String.valueOf(floor.getLevel()), floor);
+                    }
+
+                    if (floors.isEmpty()) {
+                        Log.e(TAG, "onSuccess: you have no floors. Create one in the Dashboard");
+                        cbc.error("you have no floors. Create one in the Dashboard");
+                    } else {
+                        cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, floorsJA.toString()));
+                    }
+                }
+
+                @Override
+                public void onFailure(Error error) {
+                    cbc.error(error.toString());
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void fetchIndoorPOIsFromBuilding(JSONObject building, CallbackContext callbackContext) {
+        final CallbackContext cbc = callbackContext;
+
+        try {
+            Building selectedBuilding = buildingsList.get(building.getString("identifier"));
+
+            SitumSdk.communicationManager().fetchIndoorPOIsFromBuilding(selectedBuilding, new Handler<Collection<Poi>>() {
+                @Override
+                public void onSuccess(Collection<Poi> pois) {
+                    JSONArray poisJA = new JSONArray();
+
+                    for (Poi poi : pois) {
+                        Log.i(TAG, "onSuccess: " + poi.getFloorIdentifier() + " - " + poi.getName());
+
+
+                        JSONObject poiJO = new JSONObject();
+                        try {
+                            poiJO.put("identifier", poi.getIdentifier());
+//                            poiJO.put("building-identifier", poi.getBuildingIdentifier());
+//                            poiJO.put("level", poi.getLevel());
+//                            poiJO.put("map-url", poi.getMapUrl());
+//                            poiJO.put("scale", poi.getScale());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        poisJA.put(poiJO);
+
+                        poisList.put(String.valueOf(poi.getName()), poi);
+                    }
+
+                    if (pois.isEmpty()) {
+                        Log.e(TAG, "onSuccess: you have no floors. Create one in the Dashboard");
+                        cbc.error("you have no floors. Create one in the Dashboard");
+                    } else {
+                        cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, poisJA.toString()));
+                    }
+                }
+
+                @Override
+                public void onFailure(Error error) {
+                    cbc.error(error.toString());
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     // Utility Methods
