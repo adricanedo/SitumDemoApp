@@ -1,8 +1,6 @@
 package cordova.plugin.situm.indoor.navigation;
 
 
-import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.ionicframework.demoapp675353.MainActivity;
@@ -25,6 +23,7 @@ import es.situm.sdk.SitumSdk;
 import es.situm.sdk.directions.DirectionsRequest;
 import es.situm.sdk.error.Error;
 import es.situm.sdk.location.LocationListener;
+import es.situm.sdk.location.LocationManager;
 import es.situm.sdk.location.LocationRequest;
 import es.situm.sdk.location.LocationStatus;
 import es.situm.sdk.model.cartography.Building;
@@ -47,9 +46,6 @@ public class SitumIndoorNavigation extends CordovaPlugin {
 
     // The building identifier where positioning will start.
     // You can see your buildings IDs and names running this example in the Logcat
-    private static final String BUILDING_ID = "YOUR_BUILDING_ID";
-
-
     private HashMap<String, Building> buildingsList = new HashMap<String, Building>();
     private HashMap<String, Floor> floorsList = new HashMap<String, Floor>();
     private HashMap<String, Poi> poisList = new HashMap<String, Poi>();
@@ -80,6 +76,12 @@ public class SitumIndoorNavigation extends CordovaPlugin {
             JSONObject building = args.getJSONObject(0);
             this.fetchIndoorPOIsFromBuilding(building, callbackContext);
             return true;
+        } else if (action.equals("startLocationUpdate")) {
+            JSONObject building = args.getJSONObject(0);
+            if (building != null) {
+                this.startLocationUpdate(building, callbackContext);
+            }
+            return true;
         }
         return false;
     }
@@ -97,11 +99,6 @@ public class SitumIndoorNavigation extends CordovaPlugin {
 
                 for (Building building : buildings) {
                     Log.i(TAG, "onSuccess: " + building.getIdentifier() + " - " + building.getName());
-
-                    if (BUILDING_ID.equals(building.getIdentifier())) {
-//                        selectedBuilding = building;
-                    }
-
                     JSONObject bjo = new JSONObject();
                     try {
                         bjo.put("address", building.getAddress());
@@ -130,7 +127,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
                     Log.e(TAG, "onSuccess: you have no buildings. Create one in the Dashboard");
                     cbc.error("you have no buildings. Create one in the Dashboard");
                 } else {
-                    cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, buildingsJA.toString()));
+                    cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, buildingsJA));
                 }
             }
 
@@ -139,8 +136,6 @@ public class SitumIndoorNavigation extends CordovaPlugin {
                 Log.e(TAG, "onFailure:" + error);
                 cbc.error("Expected one non-empty string argument.");
             }
-
-            DirectionsRequest dr = new DirectionsRequest.Builder().from()
         });
     }
 
@@ -179,7 +174,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
                         Log.e(TAG, "onSuccess: you have no floors. Create one in the Dashboard");
                         cbc.error("you have no floors. Create one in the Dashboard");
                     } else {
-                        cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, floorsJA.toString()));
+                        cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, floorsJA));
                     }
                 }
 
@@ -205,16 +200,16 @@ public class SitumIndoorNavigation extends CordovaPlugin {
                     JSONArray poisJA = new JSONArray();
 
                     for (Poi poi : pois) {
-                        Log.i(TAG, "onSuccess: " + poi.getFloorIdentifier() + " - " + poi.getName());
-
-
                         JSONObject poiJO = new JSONObject();
                         try {
-                            poiJO.put("identifier", poi.getIdentifier());
-//                            poiJO.put("building-identifier", poi.getBuildingIdentifier());
-//                            poiJO.put("level", poi.getLevel());
-//                            poiJO.put("map-url", poi.getMapUrl());
-//                            poiJO.put("scale", poi.getScale());
+                            poiJO.put("building-identifier", poi.getBuildingIdentifier());
+                            poiJO.put("cartesian-coordinate", cartesianCoordinateToJsonObject(poi.getCartesianCoordinate()));
+                            poiJO.put("coordinate", coordinateToJsonObject(poi.getCoordinate()));
+                            poiJO.put("floor-identifier", poi.getFloorIdentifier());
+                            poiJO.put("name", poi.getName());
+                            poiJO.put("position", pointToJsonObject(poi.getPosition()));
+                            poiJO.put("isindoor", poi.isIndoor());
+                            poiJO.put("isoutdoor", poi.isOutdoor());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -228,7 +223,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
                         Log.e(TAG, "onSuccess: you have no floors. Create one in the Dashboard");
                         cbc.error("you have no floors. Create one in the Dashboard");
                     } else {
-                        cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, poisJA.toString()));
+                        cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, poisJA));
                     }
                 }
 
@@ -243,52 +238,82 @@ public class SitumIndoorNavigation extends CordovaPlugin {
     }
 
 
-  private void startLocationUpdate(CallbackContext callbackContext) {
+  private void startLocationUpdate(JSONObject building, CallbackContext callbackContext) {
     final CallbackContext cb = callbackContext;
 
-    LocationRequest.Builder builder =  new LocationRequest.Builder();
-    LocationListener locationListener = new LocationListener() {
-      @Override
-      public void onLocationChanged(@NonNull Location location) {
-        JSONObject locationChanged = new JSONObject();
-        JSONObject locationJO = new JSONObject();
-        try {
-          locationJO.put("accuracy", location.getAccuracy());
-          locationJO.put("bearing", angleToJsonObject(location.getBearing()));
-          locationJO.put("bearing-quality", location.getQuality().name());
-          locationJO.put("building-identifier", location.getBuildingIdentifier());
-          locationJO.put("cartesian-bearing", angleToJsonObject(location.getCartesianBearing()));
-          locationJO.put("coordinate", coordinateToJsonObject(location.getCoordinate()));
-          locationJO.put("floor-identifier", location.getFloorIdentifier());
-          locationJO.put("position", pointToJsonObject(location.getPosition()));
-          locationJO.put("provider", location.getProvider());
-          locationJO.put("quality", location.getQuality().name());
-          locationJO.put("has-bearing", location.hasBearing());
-          locationJO.put("has-cartesian-bearing", location.hasCartesianBearing());
-          locationJO.put("isindoor", location.isIndoor());
-          locationJO.put("isoutdoor", location.isOutdoor());
-
-          locationChanged.put("type", "location-changed");
-          locationChanged.put("location", locationJO);
-        } catch (JSONException e) {
+      Building selectedBuilding = null;
+      try {
+          selectedBuilding = buildingsList.get(building.get("identifier"));
+      } catch (JSONException e) {
           e.printStackTrace();
-        }
-        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, locationChanged);
-        pluginResult.setKeepCallback(true);
-        cb.sendPluginResult(pluginResult);
       }
 
-      @Override
-      public void onStatusChanged(@NonNull LocationStatus locationStatus) {
-        
-      }
+      if (selectedBuilding != null) {
+          LocationRequest locationRequest = new LocationRequest.Builder()
+                  .buildingIdentifier(selectedBuilding.getIdentifier())
+                  .build();
 
-      @Override
-      public void onError(@NonNull Error error) {
-        cb.error(error.getMessage());
+          LocationListener locationListener = new LocationListener() {
+              @Override
+              public void onLocationChanged(Location location) {
+                  JSONObject locationChanged = new JSONObject();
+                  JSONObject locationJO = new JSONObject();
+                  try {
+                      locationJO.put("accuracy", location.getAccuracy());
+                      locationJO.put("bearing", angleToJsonObject(location.getBearing()));
+                      locationJO.put("bearing-quality", location.getBearingQuality().toString());
+                      locationJO.put("building-identifier", location.getBuildingIdentifier());
+                      locationJO.put("cartesian-bearing", angleToJsonObject(location.getCartesianBearing()));
+                      locationJO.put("coordinate", coordinateToJsonObject(location.getCoordinate()));
+                      locationJO.put("floor-identifier", location.getFloorIdentifier());
+                      locationJO.put("position", pointToJsonObject(location.getPosition()));
+                      locationJO.put("provider", location.getProvider());
+                      locationJO.put("quality", location.getQuality().toString());
+                      locationJO.put("has-bearing", location.hasBearing());
+                      locationJO.put("has-cartesian-bearing", location.hasCartesianBearing());
+                      locationJO.put("isindoor", location.isIndoor());
+                      locationJO.put("isoutdoor", location.isOutdoor());
+
+                      locationChanged.put("type", "location-changed");
+                      locationChanged.put("value", locationJO);
+                  } catch (JSONException e) {
+                      e.printStackTrace();
+                  }
+                  PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, locationChanged);
+                  pluginResult.setKeepCallback(true);
+                  cb.sendPluginResult(pluginResult);
+              }
+
+              @Override
+              public void onStatusChanged(LocationStatus locationStatus) {
+                  JSONObject locationChanged = new JSONObject();
+                  try {
+                      locationChanged.put("type", "status-changed");
+                      locationChanged.put("value", locationStatus.toString());
+                  } catch (JSONException e) {
+                      e.printStackTrace();
+                  }
+                  PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, locationChanged);
+                  pluginResult.setKeepCallback(true);
+                  cb.sendPluginResult(pluginResult);
+              }
+
+              @Override
+              public void onError(Error error) {
+                  cb.error(error.getMessage());
+              }
+          };
+          SitumSdk.locationManager().requestLocationUpdates(locationRequest, locationListener);
+      } else {
+          try {
+              cb.error("Building with id="+building.get("identifier")+"not found");
+          } catch (JSONException e) {
+              e.printStackTrace();
+          }
       }
-    };
   }
+
+
     // Utility Methods
 
     private JSONObject coordinateToJsonObject(Coordinate coordinate) {
