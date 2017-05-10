@@ -8,9 +8,9 @@ SitumIndoorNavigation.prototype.fetchBuildings = function(success, error) {
 
 SitumIndoorNavigation.prototype.fetchIndoorPOIsFromBuilding = function(building, onLocationChanged, onStatusChanged, error) {
 	var success =  = function(res) {
-		if(res.type == 'location-changed') {
+		if(res.type == 'locationChanged') {
 			onLocationChanged(res.value);
-		} else if(res.type == 'status-changed') {
+		} else if(res.type == 'statusChanged') {
 			onStatusChanged(res.value);
 		}
 	};
