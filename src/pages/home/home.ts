@@ -25,7 +25,7 @@ export class HomePage {
     this.plt.ready().then((readySource) => {
       console.log("Plugin Call");
       window.plugins.SitumIndoorNavigation.fetchBuildings(function(res){
-        console.log("RESPONSE "+res);
+        console.log("RESPONSE "+JSON.stringify(res));
         ref.buildings = res;
         ref.selectedBuilding = res[0];
         ref.startLocationUpdate();
@@ -36,13 +36,18 @@ export class HomePage {
   }
 
   startLocationUpdate() {
+    var ref = this;
     var onLocationChanged = function(res) {
       console.log("Location changed "+JSON.stringify(res));
       this.location = res;
+
+      setTimeout(function() {
+        ref.startNavigation();
+      }, 3000);
     };
     var onStatusChanged = function(res) {
       this.status = res;
-      console.log("Status changed "+res);
+      console.log("Status changed "+res);  
     };
 
     var onError = function(error) {
@@ -54,12 +59,15 @@ export class HomePage {
 
   startNavigation() {
     if (this.selectedBuilding.identifier == this.location.buildingIdentifier) {
-      this.getPOIs();
+      // this.getPOIs();
     }
+
+     this.getPOIs();
   }
 
   getPOIs() {
     var success = function (res) {
+      console.log("Response POIS "+JSON.stringify(res));
       this.poisList = res;
     };
     var error = function (error) {
@@ -67,5 +75,7 @@ export class HomePage {
     }
     window.plugins.SitumIndoorNavigation.fetchIndoorPOIsFromBuilding(this.selectedBuilding, success, error);
   }
+
+
 
 }

@@ -55605,27 +55605,74 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var HomePage = (function () {
-    //ionic plugin add https://github.com/sdev99/SitumIndoorNavigation.git --variable API_USER_EMAIL="qaiyumohamed@gmail.com" --variable API_KEY="9ebe6ce727fad5052f1402b513d48be50c2c7936b562754306285fb99ec84816"
-    function HomePage(navCtrl) {
+    function HomePage(navCtrl, plt) {
         this.navCtrl = navCtrl;
-        setTimeout(function () {
+        this.plt = plt;
+        //ionic plugin add https://github.com/sdev99/SitumIndoorNavigation.git --variable API_USER_EMAIL="qaiyumohamed@gmail.com" --variable API_KEY="9ebe6ce727fad5052f1402b513d48be50c2c7936b562754306285fb99ec84816"
+        this.buildings = [];
+        this.location = {};
+        this.status = "";
+        this.selectedBuilding = {};
+        this.poisList = [];
+    }
+    HomePage.prototype.ionViewDidLoad = function () {
+        var ref = this;
+        this.plt.ready().then(function (readySource) {
             console.log("Plugin Call");
-            window.plugins.SitumIndoorNavigation.fetchBuildings("test", function (res) {
-                console.log("RESPONSE " + res);
+            window.plugins.SitumIndoorNavigation.fetchBuildings(function (res) {
+                console.log("RESPONSE " + JSON.stringify(res));
+                ref.buildings = res;
+                ref.selectedBuilding = res[0];
+                ref.startLocationUpdate();
             }, function (error) {
                 console.log("Error " + error);
             });
-        }, 5000);
-    }
+        });
+    };
+    HomePage.prototype.startLocationUpdate = function () {
+        var ref = this;
+        var onLocationChanged = function (res) {
+            console.log("Location changed " + JSON.stringify(res));
+            this.location = res;
+            setTimeout(function () {
+                ref.startNavigation();
+            }, 3000);
+        };
+        var onStatusChanged = function (res) {
+            this.status = res;
+            console.log("Status changed " + res);
+        };
+        var onError = function (error) {
+            console.log("Error on location update " + error);
+        };
+        window.plugins.SitumIndoorNavigation.startLocationUpdate(this.selectedBuilding, onLocationChanged, onStatusChanged, onError);
+    };
+    HomePage.prototype.startNavigation = function () {
+        if (this.selectedBuilding.identifier == this.location.buildingIdentifier) {
+            // this.getPOIs();
+        }
+        this.getPOIs();
+    };
+    HomePage.prototype.getPOIs = function () {
+        var success = function (res) {
+            console.log("Response POIS " + JSON.stringify(res));
+            this.poisList = res;
+        };
+        var error = function (error) {
+            console.log("POI Fecth error " + error);
+        };
+        window.plugins.SitumIndoorNavigation.fetchIndoorPOIsFromBuilding(this.selectedBuilding, success, error);
+    };
     return HomePage;
 }());
 HomePage = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"/Users/ignisit/Downloads/SwiftyCam-master/DemoApp/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Ionic Blank\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  The world is your oyster.\n  <p>\n    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.\n  </p>\n</ion-content>\n'/*ion-inline-end:"/Users/ignisit/Downloads/SwiftyCam-master/DemoApp/src/pages/home/home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>\n\n      Ionic Blank\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  The world is your oyster.\n\n  <p>\n\n    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.\n\n  </p>\n\n</ion-content>\n\n'/*ion-inline-end:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\home\home.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */]) === "function" && _b || Object])
 ], HomePage);
 
+var _a, _b;
 //# sourceMappingURL=home.js.map
 
 /***/ }),
@@ -74344,7 +74391,7 @@ var MyApp = (function () {
     return MyApp;
 }());
 MyApp = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({template:/*ion-inline-start:"/Users/ignisit/Downloads/SwiftyCam-master/DemoApp/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/ignisit/Downloads/SwiftyCam-master/DemoApp/src/app/app.html"*/
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({template:/*ion-inline-start:"F:\Projects\SitumPlugin\SitumDemoApp\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n\n'/*ion-inline-end:"F:\Projects\SitumPlugin\SitumDemoApp\src\app\app.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
 ], MyApp);

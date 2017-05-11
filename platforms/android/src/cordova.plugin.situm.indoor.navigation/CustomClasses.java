@@ -19,6 +19,7 @@ import es.situm.sdk.model.location.CartesianCoordinate;
 import es.situm.sdk.model.location.Coordinate;
 import es.situm.sdk.model.location.Dimensions;
 import es.situm.sdk.model.location.Location;
+import es.situm.sdk.model.navigation.NavigationProgress;
 
 /**
  * Created by ignisit on 5/11/17.
@@ -381,4 +382,24 @@ class CustomClasses {
         return  indication;
     }
 
+
+    // NavigationProgress
+
+  protected JSONObject navigationProgressToJsonObject(NavigationProgress navigationProgress) {
+    JSONObject jo = new JSONObject();
+    try {
+      jo.put("closestPointInRoute", pointToJsonObject(navigationProgress.getClosestPointInRoute()));
+      jo.put("currentIndication", indicationToJsonObject(navigationProgress.getCurrentIndication()));
+      jo.put("nextIndication", indicationToJsonObject(navigationProgress.getNextIndication()));
+      jo.put("distanceToClosestPointInRoute", navigationProgress.getDistanceToClosestPointInRoute());
+      jo.put("distanceToEndStep", navigationProgress.getDistanceToEndStep());
+      jo.put("distanceToGoal", navigationProgress.getDistanceToGoal());
+      jo.put("routeStep", routeStepToJsonObject(navigationProgress.getRouteStep()));
+      jo.put("timeToEndStep", navigationProgress.getTimeToEndStep());
+      jo.put("timeToGoal", navigationProgress.getTimeToGoal());
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+    return  jo;
+  }
 }
