@@ -15,7 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -23,19 +22,17 @@ import es.situm.sdk.SitumSdk;
 import es.situm.sdk.directions.DirectionsRequest;
 import es.situm.sdk.error.Error;
 import es.situm.sdk.location.LocationListener;
-import es.situm.sdk.location.LocationManager;
 import es.situm.sdk.location.LocationRequest;
 import es.situm.sdk.location.LocationStatus;
 import es.situm.sdk.model.cartography.Building;
 import es.situm.sdk.model.cartography.Floor;
 import es.situm.sdk.model.cartography.Poi;
 import es.situm.sdk.model.cartography.Point;
-import es.situm.sdk.model.location.Angle;
-import es.situm.sdk.model.location.Bounds;
-import es.situm.sdk.model.location.CartesianCoordinate;
-import es.situm.sdk.model.location.Coordinate;
-import es.situm.sdk.model.location.Dimensions;
+import es.situm.sdk.model.directions.Route;
 import es.situm.sdk.model.location.Location;
+import es.situm.sdk.model.navigation.NavigationProgress;
+import es.situm.sdk.navigation.NavigationListener;
+import es.situm.sdk.navigation.NavigationRequest;
 import es.situm.sdk.utils.Handler;
 
 /**
@@ -50,6 +47,17 @@ public class SitumIndoorNavigation extends CordovaPlugin {
     private HashMap<String, Floor> floorsList = new HashMap<String, Floor>();
     private HashMap<String, Poi> poisList = new HashMap<String, Poi>();
 
+    private  CustomClasses customClasses = new CustomClasses();
+
+    private HashMap<String, Route> routesStored = new HashMap<String, Route>();
+
+
+
+    private String currentTimeStamp() {
+        Long tsLong = System.currentTimeMillis()/1000;
+        String ts = tsLong.toString();
+        return  ts;
+    }
     /**
      * Sets the context of the Command. This can then be used to do things like
      * get file paths associated with the Activity.
@@ -82,6 +90,13 @@ public class SitumIndoorNavigation extends CordovaPlugin {
                 this.startLocationUpdate(building, callbackContext);
             }
             return true;
+        } else if (action.equals("getRoute")) {
+            JSONObject fromLocation = args.getJSONObject(0);
+            JSONObject toPoi = args.getJSONObject(1);
+            if (fromLocation != null && toPoi != null) {
+                this.getRoute(fromLocation, toPoi, callbackContext);
+            }
+            return true;
         }
         return false;
     }
@@ -99,30 +114,10 @@ public class SitumIndoorNavigation extends CordovaPlugin {
 
                 for (Building building : buildings) {
                     Log.i(TAG, "onSuccess: " + building.getIdentifier() + " - " + building.getName());
-                    JSONObject bjo = new JSONObject();
-                    try {
-                        bjo.put("address", building.getAddress());
-                        bjo.put("bounds", boundsToJsonObject(building.getBounds()));
-                        bjo.put("boundsRotated", boundsToJsonObject(building.getBoundsRotated()));
-                        bjo.put("center", coordinateToJsonObject(building.getCenter()));
-                        bjo.put("dimensions", dimensionsToJsonObject(building.getDimensions()));
-                        bjo.put("infoHtml", building.getInfoHtml());
-                        bjo.put("name", building.getName());
-                        bjo.put("pictureThumbUrl", building.getPictureThumbUrl().toString());
-                        bjo.put("pictureUrl", building.getPictureUrl().toString());
-                        bjo.put("rotation", angleToJsonObject(building.getRotation()));
-                        bjo.put("userIdentifier", building.getUserIdentifier());
-                        bjo.put("identifier", building.getIdentifier());
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
+                    JSONObject bjo = customClasses.buildingToJsonObject(building);
                     buildingsJA.put(bjo);
-
                     buildingsList.put(building.getIdentifier(), building);
                 }
-
                 if (buildings.isEmpty()) {
                     Log.e(TAG, "onSuccess: you have no buildings. Create one in the Dashboard");
                     cbc.error("you have no buildings. Create one in the Dashboard");
@@ -152,24 +147,10 @@ public class SitumIndoorNavigation extends CordovaPlugin {
 
                     for (Floor floor : floors) {
                         Log.i(TAG, "onSuccess: " + floor.getIdentifier() + " - " + floor.getLevel());
-
-
-                        JSONObject floorJO = new JSONObject();
-                        try {
-                            floorJO.put("altitude", floor.getAltitude());
-                            floorJO.put("buildingIdentifier", floor.getBuildingIdentifier());
-                            floorJO.put("level", floor.getLevel());
-                            floorJO.put("mapUrl", floor.getMapUrl());
-                            floorJO.put("scale", floor.getScale());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
+                        JSONObject floorJO = customClasses.floorToJsonObject(floor);
                         floorsJA.put(floorJO);
-
                         floorsList.put(String.valueOf(floor.getLevel()), floor);
                     }
-
                     if (floors.isEmpty()) {
                         Log.e(TAG, "onSuccess: you have no floors. Create one in the Dashboard");
                         cbc.error("you have no floors. Create one in the Dashboard");
@@ -200,25 +181,10 @@ public class SitumIndoorNavigation extends CordovaPlugin {
                     JSONArray poisJA = new JSONArray();
 
                     for (Poi poi : pois) {
-                        JSONObject poiJO = new JSONObject();
-                        try {
-                            poiJO.put("buildingIdentifier", poi.getBuildingIdentifier());
-                            poiJO.put("cartesianCoordinate", cartesianCoordinateToJsonObject(poi.getCartesianCoordinate()));
-                            poiJO.put("coordinate", coordinateToJsonObject(poi.getCoordinate()));
-                            poiJO.put("floorIdentifier", poi.getFloorIdentifier());
-                            poiJO.put("name", poi.getName());
-                            poiJO.put("position", pointToJsonObject(poi.getPosition()));
-                            poiJO.put("isIndoor", poi.isIndoor());
-                            poiJO.put("isOutdoor", poi.isOutdoor());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
+                        JSONObject poiJO = customClasses.poiToJsonObject(poi);
                         poisJA.put(poiJO);
-
                         poisList.put(String.valueOf(poi.getName()), poi);
                     }
-
                     if (pois.isEmpty()) {
                         Log.e(TAG, "onSuccess: you have no floors. Create one in the Dashboard");
                         cbc.error("you have no floors. Create one in the Dashboard");
@@ -237,8 +203,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
         }
     }
 
-
-  private void startLocationUpdate(JSONObject building, CallbackContext callbackContext) {
+    private void startLocationUpdate(JSONObject building, CallbackContext callbackContext) {
     final CallbackContext cb = callbackContext;
 
       Building selectedBuilding = null;
@@ -256,26 +221,9 @@ public class SitumIndoorNavigation extends CordovaPlugin {
           LocationListener locationListener = new LocationListener() {
               @Override
               public void onLocationChanged(Location location) {
+                  JSONObject locationJO = customClasses.locationToJsonObject(location);
                   JSONObject locationChanged = new JSONObject();
-                  JSONObject locationJO = new JSONObject();
                   try {
-                      locationJO.put("accuracy", location.getAccuracy());
-                      locationJO.put("bearing", angleToJsonObject(location.getBearing()));
-                      locationJO.put("bearingQuality", location.getBearingQuality().toString());
-                      locationJO.put("buildingIdentifier", location.getBuildingIdentifier());
-                      locationJO.put("cartesianBearing", angleToJsonObject(location.getCartesianBearing()));
-                      locationJO.put("cartesianCoordinate", cartesianCoordinateToJsonObject(location.getCartesianCoordinate()));
-                      locationJO.put("coordinate", coordinateToJsonObject(location.getCoordinate()));
-                      locationJO.put("floorIdentifier", location.getFloorIdentifier());
-                      locationJO.put("position", pointToJsonObject(location.getPosition()));
-                      locationJO.put("provider", location.getProvider());
-                      locationJO.put("quality", location.getQuality().toString());
-                      locationJO.put("hasBearing", location.hasBearing());
-                      locationJO.put("timestamp", location.getTime());
-                      locationJO.put("hasCartesianBearing", location.hasCartesianBearing());
-                      locationJO.put("isIndoor", location.isIndoor());
-                      locationJO.put("isOutdoor", location.isOutdoor());
-
                       locationChanged.put("type", "locationChanged");
                       locationChanged.put("value", locationJO);
                   } catch (JSONException e) {
@@ -316,126 +264,68 @@ public class SitumIndoorNavigation extends CordovaPlugin {
   }
 
     private void getRoute(JSONObject fromLocation, JSONObject toPOI, CallbackContext callbackContext) {
-//      DirectionsRequest directionsRequest = new DirectionsRequest.Builder().from()
-//      SitumSdk.directionsManager().requestDirections()
+        final CallbackContext cb = callbackContext;
+
+        try {
+            final Location location = customClasses.locationJsonObjectToLocation(fromLocation);
+            Point endPoint = customClasses.pointJsonObjectToPoint(toPOI.getJSONObject("position"));
+
+            DirectionsRequest directionsRequest = new DirectionsRequest.Builder().from(location).to(endPoint).build();
+
+            SitumSdk.directionsManager().requestDirections(directionsRequest, new Handler<Route>() {
+                @Override
+                public void onSuccess(Route route) {
+                    JSONObject routeJO = customClasses.routeToJsonObject(route);
+                    try {
+                        routeJO.put("timeStamp",currentTimeStamp());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, routeJO);
+                    cb.sendPluginResult(pluginResult);
+                    routesStored.put(currentTimeStamp(), route);
+                }
+
+                @Override
+                public void onFailure(Error error) {
+                    cb.error("Error while calculating route "+error.getMessage());
+                }
+            });
+        } catch (JSONException e) {
+            cb.error("Error while calculating route "+e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
-    // Utility Methods for Custom Object to JSON Object
+    private void startNavigation(JSONObject route, CallbackContext callbackContext) {
+        final CallbackContext cb = callbackContext;
 
-    private JSONObject coordinateToJsonObject(Coordinate coordinate) {
-        JSONObject jo = new JSONObject();
         try {
-            jo.put("latitude", coordinate.getLatitude());
-            jo.put("longitude", coordinate.getLongitude());
+            Route routeObj = routesStored.get(route.getString("timeStamp"));
+            if (routeObj != null) {
+                NavigationRequest navigationRequest = new NavigationRequest.Builder().route(routeObj).build();
+                SitumSdk.navigationManager().requestNavigationUpdates(navigationRequest, new NavigationListener() {
+                    @Override
+                    public void onDestinationReached() {
+
+                    }
+
+                    @Override
+                    public void onProgress(NavigationProgress navigationProgress) {
+
+                    }
+
+                    @Override
+                    public void onUserOutsideRoute() {
+
+                    }
+                });
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return  jo;
-    }
 
-  private JSONObject cartesianCoordinateToJsonObject(CartesianCoordinate cartesianCoordinate) {
-    JSONObject jo = new JSONObject();
-    try {
-      jo.put("x", cartesianCoordinate.getX());
-      jo.put("y", cartesianCoordinate.getY());
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-    return  jo;
-  }
-
-    private JSONObject dimensionsToJsonObject(Dimensions dimensions) {
-        JSONObject jo = new JSONObject();
-        try {
-            jo.put("width", dimensions.getWidth());
-            jo.put("height", dimensions.getHeight());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return  jo;
-    }
-
-    private JSONObject boundsToJsonObject(Bounds bounds) {
-        JSONObject jo = new JSONObject();
-        try {
-            jo.put("northEast", coordinateToJsonObject(bounds.getNorthEast()));
-            jo.put("northWest", coordinateToJsonObject(bounds.getNorthWest()));
-            jo.put("southEast", coordinateToJsonObject(bounds.getSouthEast()));
-            jo.put("southWest", coordinateToJsonObject(bounds.getSouthWest()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return  jo;
-    }
-
-    private JSONObject angleToJsonObject(Angle angle) {
-        JSONObject jo = new JSONObject();
-        try {
-            jo.put("degrees", angle.degrees());
-            jo.put("degreesClockwise", angle.degreesClockwise());
-            jo.put("radians", angle.radians());
-            jo.put("radiansMinusPiPi", angle.radiansMinusPiPi());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return  jo;
-    }
-
-    private JSONObject pointToJsonObject(Point point) {
-      JSONObject jo = new JSONObject();
-      try {
-        jo.put("buildingIdentifier", point.getBuildingIdentifier());
-        jo.put("cartesianCoordinate", cartesianCoordinateToJsonObject(point.getCartesianCoordinate()));
-        jo.put("coordinate", coordinateToJsonObject(point.getCoordinate()));
-        jo.put("floorIdentifier", point.getFloorIdentifier());
-        jo.put("isIndoor", point.isIndoor());
-        jo.put("isOutdoor", point.isOutdoor());
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
-      return  jo;
-    }
-
-
-    // Utility Methods for JSON Object to Custom Object
-    private Location locationJsonObjectToLocation(JSONObject jo) {
-      Location location = null;
-      try {
-        location = new Location.Builder(jo.getLong("timestamp"), jo.getString("provider"), pointJsonObjectToPoint(jo.getJSONObject("position")), Float.valueOf(jo.getString("accuracy"))).build();
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
-      return  location;
-    }
-
-    private Coordinate coordinateJsonObjectToCoordinate(JSONObject jo) {
-      Coordinate coordinate = null;
-      try {
-        coordinate = new Coordinate(jo.getDouble("latitude"), jo.getDouble("longitude"));
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
-      return  coordinate;
-    }
-
-    private CartesianCoordinate cartesianCoordinateJsonObjectToCartesianCoordinate(JSONObject jo) {
-      CartesianCoordinate cartesianCoordinate = null;
-      try {
-        cartesianCoordinate = new CartesianCoordinate(jo.getDouble("x"), jo.getDouble("y"));
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
-      return  cartesianCoordinate;
-    }
-
-    private Point pointJsonObjectToPoint(JSONObject jo) {
-      Point point = null;
-      try {
-        point = new Point(jo.getString("buildingIdentifier"), jo.getString("floorIdentifier"), coordinateJsonObjectToCoordinate(jo.getJSONObject("coordinate")), cartesianCoordinateJsonObjectToCartesianCoordinate(jo.getJSONObject("cartesianCoordinate")));
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
-      return  point;
     }
 
 }

@@ -34,6 +34,7 @@
         </config-file>
 
 		<source-file src="src/android/SitumIndoorNavigation.java" target-dir="src/cordova.plugin.situm.indoor.navigation"/>
+		<source-file src="src/android/CustomClasses.java" target-dir="src/cordova.plugin.situm.indoor.navigation"/>
 
 		<framework src="src/android/situm.gradle" custom="true" type="gradleReference"/>
 	</platform>

@@ -14,15 +14,19 @@ SitumIndoorNavigation.prototype.fetchIndoorPOIsFromBuilding = function(building,
 			onStatusChanged(res.value);
 		}
 	};
-	cordova.exec(success, error, "SitumIndoorNavigation", "startLocationUpdate", [building]);
-};
-
-SitumIndoorNavigation.prototype.fetchIndoorPOIsFromBuilding = function(building, success, error) {
 	cordova.exec(success, error, "SitumIndoorNavigation", "fetchIndoorPOIsFromBuilding", [building]);
 };
 
 SitumIndoorNavigation.prototype.fetchFloorsForBuilding = function(building, success, error) {
 	cordova.exec(success, error, "SitumIndoorNavigation", "fetchFloorsForBuilding", [building]);
+};
+
+SitumIndoorNavigation.prototype.startLocationUpdate = function(building, success, error) {
+	cordova.exec(success, error, "SitumIndoorNavigation", "startLocationUpdate", [building]);
+};
+
+SitumIndoorNavigation.prototype.getRoute = function(fromLocation, toPOI, success, error) {
+	cordova.exec(success, error, "SitumIndoorNavigation", "getRoute", [fromLocation, toPOI]);
 };
 
 

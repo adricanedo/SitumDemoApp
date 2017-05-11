@@ -2,9 +2,29 @@ cordova.define("cordova-plugin-situm-indoor-navigation.SitumIndoorNavigation", f
 function SitumIndoorNavigation(){
 }
 
-SitumIndoorNavigation.prototype.fetchBuildings = function(arg0, success, error) {
-  cordova.exec(success, error, "SitumIndoorNavigation", "fetchBuildings", [arg0]);
+SitumIndoorNavigation.prototype.fetchBuildings = function(success, error) {
+  cordova.exec(success, error, "SitumIndoorNavigation", "fetchBuildings", []);
 };
+
+SitumIndoorNavigation.prototype.fetchIndoorPOIsFromBuilding = function(building, onLocationChanged, onStatusChanged, error) {
+	var success =  = function(res) {
+		if(res.type == 'locationChanged') {
+			onLocationChanged(res.value);
+		} else if(res.type == 'statusChanged') {
+			onStatusChanged(res.value);
+		}
+	};
+	cordova.exec(success, error, "SitumIndoorNavigation", "startLocationUpdate", [building]);
+};
+
+SitumIndoorNavigation.prototype.fetchIndoorPOIsFromBuilding = function(building, success, error) {
+	cordova.exec(success, error, "SitumIndoorNavigation", "fetchIndoorPOIsFromBuilding", [building]);
+};
+
+SitumIndoorNavigation.prototype.fetchFloorsForBuilding = function(building, success, error) {
+	cordova.exec(success, error, "SitumIndoorNavigation", "fetchFloorsForBuilding", [building]);
+};
+
 
 SitumIndoorNavigation.install = function () {
   if (!window.plugins) {
