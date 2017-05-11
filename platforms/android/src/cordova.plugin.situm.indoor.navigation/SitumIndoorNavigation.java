@@ -271,6 +271,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
                       locationJO.put("provider", location.getProvider());
                       locationJO.put("quality", location.getQuality().toString());
                       locationJO.put("hasBearing", location.hasBearing());
+                      locationJO.put("timestamp", location.getTime());
                       locationJO.put("hasCartesianBearing", location.hasCartesianBearing());
                       locationJO.put("isIndoor", location.isIndoor());
                       locationJO.put("isOutdoor", location.isOutdoor());
@@ -314,8 +315,12 @@ public class SitumIndoorNavigation extends CordovaPlugin {
       }
   }
 
+    private void getRoute(JSONObject fromLocation, JSONObject toPOI, CallbackContext callbackContext) {
+//      DirectionsRequest directionsRequest = new DirectionsRequest.Builder().from()
+//      SitumSdk.directionsManager().requestDirections()
+    }
 
-    // Utility Methods
+    // Utility Methods for Custom Object to JSON Object
 
     private JSONObject coordinateToJsonObject(Coordinate coordinate) {
         JSONObject jo = new JSONObject();
@@ -389,6 +394,48 @@ public class SitumIndoorNavigation extends CordovaPlugin {
         e.printStackTrace();
       }
       return  jo;
+    }
+
+
+    // Utility Methods for JSON Object to Custom Object
+    private Location locationJsonObjectToLocation(JSONObject jo) {
+      Location location = null;
+      try {
+        location = new Location.Builder(jo.getLong("timestamp"), jo.getString("provider"), pointJsonObjectToPoint(jo.getJSONObject("position")), Float.valueOf(jo.getString("accuracy"))).build();
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+      return  location;
+    }
+
+    private Coordinate coordinateJsonObjectToCoordinate(JSONObject jo) {
+      Coordinate coordinate = null;
+      try {
+        coordinate = new Coordinate(jo.getDouble("latitude"), jo.getDouble("longitude"));
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+      return  coordinate;
+    }
+
+    private CartesianCoordinate cartesianCoordinateJsonObjectToCartesianCoordinate(JSONObject jo) {
+      CartesianCoordinate cartesianCoordinate = null;
+      try {
+        cartesianCoordinate = new CartesianCoordinate(jo.getDouble("x"), jo.getDouble("y"));
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+      return  cartesianCoordinate;
+    }
+
+    private Point pointJsonObjectToPoint(JSONObject jo) {
+      Point point = null;
+      try {
+        point = new Point(jo.getString("buildingIdentifier"), jo.getString("floorIdentifier"), coordinateJsonObjectToCoordinate(jo.getJSONObject("coordinate")), cartesianCoordinateJsonObjectToCartesianCoordinate(jo.getJSONObject("cartesianCoordinate")));
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+      return  point;
     }
 
 }
