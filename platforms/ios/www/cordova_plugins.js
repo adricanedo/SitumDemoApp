@@ -56,6 +56,14 @@ module.exports = [
         "clobbers": [
             "window.plugins.SitumIndoorNavigation"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-googlemaps/www/googlemaps-cdv-plugin.js",
+        "id": "cordova-plugin-googlemaps.cordova-plugin-googlemaps",
+        "pluginId": "cordova-plugin-googlemaps",
+        "clobbers": [
+            "cordova-plugin-googlemaps"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -68,7 +76,9 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.1",
     "ionic-plugin-keyboard": "2.2.1",
     "cordova-plugin-compat": "1.1.0",
-    "cordova-plugin-situm-indoor-navigation": "0.0.1"
+    "cordova-plugin-situm-indoor-navigation": "0.0.1",
+    "com.googlemaps.ios": "2.2.0",
+    "cordova-plugin-googlemaps": "1.4.0"
 }
 // BOTTOM OF METADATA
 });

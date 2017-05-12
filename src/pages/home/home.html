@@ -1,14 +1,22 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>
+			Situm Indoor Navigation
+		</ion-title>
+	</ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+	<h1 padding>
+		Select Your Building
+	</h1>
+	<ion-list>
+	<ion-item>
+		title <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" item-right [navPush]="locationInfoPage" [navParams]="{'building':{'dta':1}}"></ion-icon>
+	</ion-item>
+		<ion-item *ngFor="let item of buildings">
+			{{ item.name }}
+			  <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" item-right [navPush]="locationInfoPage" [navParams]="{'building':item}"></ion-icon>
+		</ion-item>
+	</ion-list>
 </ion-content>

@@ -32,6 +32,41 @@
     <feature name="Keyboard">
         <param name="ios-package" onload="true" value="IonicKeyboard" />
     </feature>
+    <feature name="GoogleMaps">
+        <param name="ios-package" value="GoogleMaps" />
+        <param name="onload" value="true" />
+        <param name="onreset" value="true" />
+    </feature>
+    <feature name="External">
+        <param name="ios-package" value="External" />
+    </feature>
+    <feature name="Geocoder">
+        <param name="ios-package" value="Geocoder" />
+    </feature>
+    <feature name="Map">
+        <param name="ios-package" value="Map" />
+    </feature>
+    <feature name="Circle">
+        <param name="ios-package" value="Circle" />
+    </feature>
+    <feature name="GroundOverlay">
+        <param name="ios-package" value="GroundOverlay" />
+    </feature>
+    <feature name="KmlOverlay">
+        <param name="ios-package" value="KmlOverlay" />
+    </feature>
+    <feature name="Marker">
+        <param name="ios-package" value="Marker" />
+    </feature>
+    <feature name="Polygon">
+        <param name="ios-package" value="Polygon" />
+    </feature>
+    <feature name="Polyline">
+        <param name="ios-package" value="Polyline" />
+    </feature>
+    <feature name="TileOverlay">
+        <param name="ios-package" value="TileOverlay" />
+    </feature>
     <name>DemoApp</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -77,8 +112,6 @@
     <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
     <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     <preference name="AllowInlineMediaPlayback" value="false" />
-    <preference name="BackupWebStorage" value="none" />
-    <preference name="DisallowOverscroll" value="true" />
     <preference name="EnableViewportScale" value="false" />
     <preference name="KeyboardDisplayRequiresUserAction" value="true" />
     <preference name="MediaPlaybackRequiresUserAction" value="false" />
@@ -93,7 +126,9 @@
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="16" />
+    <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="ShowSplashScreen" value="true" />
     <preference name="SplashScreen" value="screen" />

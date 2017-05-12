@@ -29,6 +29,10 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.demoapp675353"
+        },
+        "cordova-plugin-googlemaps": {
+            "API_KEY_FOR_ANDROID": "AIzaSyCBV1baMbFwbBCi5vDPdbeGKINGVwcIZWY",
+            "PACKAGE_NAME": "com.ionicframework.demoapp675353"
         }
     },
     "dependent_plugins": {
