@@ -4,10 +4,13 @@
 
 	<preference name="API_USER_EMAIL" />
 	<preference name="API_KEY" />
-	
+
 	<js-module name="SitumIndoorNavigation" src="www/SitumIndoorNavigation.js">
 		<clobbers target="window.plugins.SitumIndoorNavigation"/>
 	</js-module>
+
+	<dependency id="cordova-plugin-compat" version="^1.0.0" />
+	
 	<platform name="android">
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="SitumIndoorNavigation">

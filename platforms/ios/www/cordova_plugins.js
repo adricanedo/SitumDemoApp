@@ -67,6 +67,7 @@ module.exports.metadata =
     "cordova-plugin-statusbar": "2.2.1",
     "cordova-plugin-whitelist": "1.3.1",
     "ionic-plugin-keyboard": "2.2.1",
+    "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-situm-indoor-navigation": "0.0.1"
 }
 // BOTTOM OF METADATA

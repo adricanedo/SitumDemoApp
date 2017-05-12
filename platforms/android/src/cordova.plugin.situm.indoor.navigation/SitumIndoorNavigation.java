@@ -14,6 +14,7 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PermissionHelper;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -216,9 +217,9 @@ public class SitumIndoorNavigation extends CordovaPlugin {
     }
   }
 
-  @Override
-  public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
-    super.onRequestPermissionResult(requestCode, permissions, grantResults);
+  public void onRequestPermissionResult(int requestCode, String[] permissions,
+                                        int[] grantResults) throws JSONException
+  {
 
     if (requestCode == LOCATION_PERMISSION_RESULT) {
       locationUpdate();
@@ -235,8 +236,8 @@ public class SitumIndoorNavigation extends CordovaPlugin {
       locationUpdate();
     } else {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        cordova.getActivity().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-          Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_RESULT);
+        PermissionHelper.requestPermissions(this,LOCATION_PERMISSION_RESULT, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+          Manifest.permission.ACCESS_COARSE_LOCATION});
       }
     }
   }

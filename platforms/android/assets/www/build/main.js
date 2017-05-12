@@ -55620,7 +55620,7 @@ var HomePage = (function () {
         this.plt.ready().then(function (readySource) {
             console.log("Plugin Call");
             window.plugins.SitumIndoorNavigation.fetchBuildings(function (res) {
-                console.log("RESPONSE " + res);
+                console.log("RESPONSE " + JSON.stringify(res));
                 ref.buildings = res;
                 ref.selectedBuilding = res[0];
                 ref.startLocationUpdate();

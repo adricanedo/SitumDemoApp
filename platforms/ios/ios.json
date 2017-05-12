@@ -60,6 +60,9 @@
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "io.ionic.starter"
         },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.demoapp675353"
+        },
         "cordova-plugin-situm-indoor-navigation": {
             "API_USER_EMAIL": "qaiyumohamed@gmail.com",
             "API_KEY": "9ebe6ce727fad5052f1402b513d48be50c2c7936b562754306285fb99ec84816",
@@ -133,6 +136,7 @@
         "cordova-plugin-statusbar": "2.2.1",
         "cordova-plugin-whitelist": "1.3.1",
         "ionic-plugin-keyboard": "2.2.1",
+        "cordova-plugin-compat": "1.1.0",
         "cordova-plugin-situm-indoor-navigation": "0.0.1"
     }
 }

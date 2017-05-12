@@ -53,4 +53,5 @@ SitumIndoorNavigation.install = function () {
 };
 
 cordova.addConstructor(SitumIndoorNavigation.install);
+
 });
