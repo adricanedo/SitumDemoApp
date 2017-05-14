@@ -11,12 +11,12 @@
 		Select Your Building
 	</h1>
 	<ion-list>
-	<ion-item>
-		title <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" item-right [navPush]="locationInfoPage" [navParams]="{'building':{'dta':1}}"></ion-icon>
-	</ion-item>
-		<ion-item *ngFor="let item of buildings">
+	<!-- <ion-item [navPush]="locationInfoPage" [navParams]="{'building':{'dta':1}}">
+		title <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" item-right ></ion-icon>
+	</ion-item> -->
+		<ion-item *ngFor="let item of buildings"  [navPush]="locationInfoPage" [navParams]="{'building':item}">
 			{{ item.name }}
-			  <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" item-right [navPush]="locationInfoPage" [navParams]="{'building':item}"></ion-icon>
+			  <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" item-right></ion-icon>
 		</ion-item>
 	</ion-list>
 </ion-content>

@@ -1,6 +1,5 @@
 import { Component , NgZone , ElementRef , ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams , LoadingController } from 'ionic-angular';
-import { GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, CameraPosition, MarkerOptions, Marker } from '@ionic-native/google-maps';
 
 declare var window: any;
 declare var google: any;
@@ -18,25 +17,32 @@ declare var google: any;
  })
  export class LocationInfoPage {
  	selectedBuilding:any;
- 	location:any;
+ 	currentLocation:any;
+ 	
+ 	locationErrorMsg = "";
+ 	navigationIndicationsMessage = "";
+
  	status = "Not available";
  	poisList:any = [];
  	loading;
- 	selectedPOI:any = {};
+ 	selectedPOI:any;
+ 	currentRoute:any;
 
+ 	map;
+ 	currentPosMarker;
+ 	selectedPoiName = "";
 
- 	constructor(private googleMaps: GoogleMaps, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams , private zone: NgZone) {
- 		console.log("NAVA DATA "+JSON.stringify(navParams.get('building')));
+ 	routesPolylines = [];
 
+ 	mapZoom = 18;
+
+ 	constructor( public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams , private zone: NgZone) {
  		this.selectedBuilding = navParams.get('building');
  	}
 
  	ionViewDidLoad() {
  		console.log('ionViewDidLoad LocationInfoPage');
-
  		this.getPOIs();
- 		
-
  	}
 
  	ngAfterViewInit() {
@@ -61,8 +67,18 @@ declare var google: any;
  		var ref = this;
  		var onLocationChanged = function(res) {
  			console.log("Location changed "+JSON.stringify(res));
- 			ref.location = res; 			
+
+ 			ref.zone.run(() => {
+ 				ref.currentLocation = res;
+ 				ref.locationErrorMsg = "";
+
+ 				var position = ref.currentLocation.position;
+ 				ref.updateMarkerPosition(position.coordinate.latitude, position.coordinate.longitude);
+
+ 			});
  		};
+
+
  		var onStatusChanged = function(res) {
  			ref.zone.run(() => {
  				ref.status = res;
@@ -70,19 +86,21 @@ declare var google: any;
  			console.log("Status changed "+res);  
  		};
 
+
  		var onError = function(error) {
+ 			ref.zone.run(() => {
+ 				ref.locationErrorMsg = error;
+ 			});
  			console.log("Error on location update "+error);
  		};
+
+
  		if(window.plugins && window.plugins.SitumIndoorNavigation) {
  			window.plugins.SitumIndoorNavigation.startLocationUpdate(this.selectedBuilding, onLocationChanged, onStatusChanged, onError);
  		}
  	}
 
- 	startNavigation() {
- 		if (this.selectedBuilding.identifier == this.location.buildingIdentifier) {
- 			// this.getPOIs();
- 		}
- 	}
+ 	
 
  	getPOIs() {
  		var ref = this;
@@ -96,7 +114,7 @@ declare var google: any;
  			ref.startLocationUpdate();
  		};
 
- 		var error = function (error) {
+ 		var onError = function (error) {
  			ref.hideLoading;
  			ref.startLocationUpdate();
  			console.log("POI Fecth error "+error);
@@ -104,49 +122,130 @@ declare var google: any;
  		if(window.plugins && window.plugins.SitumIndoorNavigation) {
  			this.showLoading("Fetching Point of interests");
 
- 			window.plugins.SitumIndoorNavigation.fetchIndoorPOIsFromBuilding(ref.selectedBuilding, success, error);
+ 			window.plugins.SitumIndoorNavigation.fetchIndoorPOIsFromBuilding(ref.selectedBuilding, success, onError);
  		}
  	}
 
- 	poiSelected(poi) {
- 		this.selectedPOI = poi;
+ 	
+ 	showMap() {
+ 		let element = document.getElementById('map_canvas');
+ 		var mapOptions = {
+ 			center:new google.maps.LatLng(0, 0),
+ 			zoom: 18,
+ 			panControl:false,
+ 			zoomControl:false,
+ 			draggable:true,
+ 			scrollwheel:true,
+ 			disableDoubleClickZoom:false,
+ 			mapTypeId: google.maps.MapTypeId.ROADMAP
+ 		};
+
+ 		this.map =  new google.maps.Map(element, mapOptions)
  	}
 
- 	showMap() {
 
- 		let element: HTMLElement = document.getElementById('map_canvas');
+ 	updateMarkerPosition(lat, lng) {
+ 		if (!this.map) {
+ 			console.log("Map is not initialized");
+ 			return;
+ 		}
+ 		let ionic = new google.maps.LatLng(lat, lng);
+ 		if (this.currentPosMarker == null) {
+ 			var markerImage = new google.maps.MarkerImage('img/point-icon.png',
+ 				new google.maps.Size(25, 25),
+ 				new google.maps.Point(0, 0),
+ 				new google.maps.Point(12.5, 12.5));
 
- 		// var googleMaps =  new GoogleMaps();
- 		let map: GoogleMap = this.googleMaps.create(element);
+ 			this.currentPosMarker = new google.maps.Marker({
+ 				position: ionic,
+ 				map: this.map,
+ 				title: ""
+ 			});
+ 		}
 
- 		map.one(GoogleMapsEvent.MAP_READY).then(
- 			() => {
- 				console.log('Map is ready!');
- 			},
- 			(error) => {
- 				console.log('Map error !'+error);
- 			}
- 			);
+ 		this.currentPosMarker.setPosition(ionic);
+ 		this.map.setCenter(ionic);
+ 	}
 
- 		let ionic: LatLng = new LatLng(43.0741904,-89.3809802);
 
- 		let position: CameraPosition = {
- 			target: ionic,
- 			zoom: 18,
- 			tilt: 30
- 		};
+ 	drawRouteOnMap() {
+ 		let points = this.currentRoute.points;
 
- 		map.moveCamera(position);
+ 		var coordinates = [];
+ 		for (var i = 0; i < points.length; ++i) {
+ 			let point = points[i];
+ 			let coordinate = point.coordinate; 		
+ 			let latLng = new google.maps.LatLng(coordinate.latitude, coordinate.longitude);
+ 			coordinates.push(latLng);
+ 		}
+ 		this.addPolyline(coordinates);
+ 	}
 
- 		let markerOptions: MarkerOptions = {
- 			position: ionic,
- 			title: 'Ionic'
- 		};
-
- 		map.addMarker(markerOptions).then((marker: Marker) => {
- 			marker.showInfoWindow();
+ 	addPolyline(coordinates) {
+ 		var polyline = new google.maps.Polyline({
+ 			path: coordinates,
+ 			strokeColor: "#0B5EA7",
+ 			strokeOpacity: 1.0,
+ 			strokeWeight: 2,
+ 			map: this.map
  		});
+ 		this.routesPolylines.push(polyline);
+ 	}
+
+ 	showRoute() {
+ 		this.showMap();
 
 
+ 		var ref = this;
+ 		for (var i = 0; i <this.poisList.length; ++i) {
+ 			let poi = this.poisList[i];
+ 			if (poi.name == this.selectedPoiName) {
+ 				this.selectedPOI = poi;
+ 			}
+ 		}
+ 		if (window.plugins && window.plugins.SitumIndoorNavigation) {
+ 			var success = function (route) {
+ 				ref.zone.run(() => {
+ 					ref.currentRoute = route;
+ 					ref.drawRouteOnMap();
+ 					console.log("Route response "+JSON.stringify(route)); 
+ 				});
+ 			};
+ 			var onError = function (error) {
+ 				console.log("Error in getting route "+error);
+ 			};
+ 			window.plugins.SitumIndoorNavigation.getRoute(this.currentLocation, this.selectedPOI, success, onError);
+ 		}
+ 	}
+
+ 	startNavigation() {
+ 		var ref = this;
+ 		if (window.plugins && window.plugins.SitumIndoorNavigation) {
+ 			var onDestinationReached = function () {
+ 				console.log("Destination Reached");
+ 				ref.zone.run(() => {
+ 					ref.locationErrorMsg = "Destination Reached";
+ 				}); 
+ 			};
+ 			var onProgress = function (navigationProgress) {
+ 				console.log("Navigation Progress  "+JSON.stringify(navigationProgress));
+ 				ref.zone.run(() => {
+ 					ref.navigationIndicationsMessage = navigationProgress.currentIndication.indicationType+" Distance : "+ navigationProgress.currentIndication.distance+" Total  Distance : "+ navigationProgress.currentIndication.distanceToNextLevel;
+ 				}); 
+ 			};
+ 			var onUserOutsideRoute = function() {
+ 				console.log("User Outside Route");
+ 				ref.zone.run(() => {
+ 					ref.locationErrorMsg = "User outside route";
+ 				}); 				
+ 			};
+ 			var onError = function(error) {
+ 				console.log("Navigation Error "+error);
+ 				ref.zone.run(() => {
+ 					ref.locationErrorMsg = error;
+ 				}); 				
+ 			};
+ 			window.plugins.SitumIndoorNavigation.startNaviagtion(ref.currentRoute, onDestinationReached, onProgress, onUserOutsideRoute, onError);
+ 		}
  	}
  }

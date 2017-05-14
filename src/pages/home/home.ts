@@ -1,5 +1,5 @@
 import { Component , NgZone } from '@angular/core';
-import { NavController , Platform } from 'ionic-angular';
+import { NavController , Platform , LoadingController } from 'ionic-angular';
 
 import { LocationInfoPage } from '../location-info/location-info';
 
@@ -19,7 +19,9 @@ export class HomePage {
   status:any = "";
   poisList:any = [];
 
-  constructor(public navCtrl: NavController, public plt:Platform, private zone: NgZone) {
+  loading;
+
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public plt:Platform, private zone: NgZone) {
   	
   }
 
@@ -29,15 +31,30 @@ export class HomePage {
     this.plt.ready().then((readySource) => {
       console.log("Plugin Call");
       if(window.plugins && window.plugins.SitumIndoorNavigation) {
+
+        ref.showLoading("Fetching buildings");
         window.plugins.SitumIndoorNavigation.fetchBuildings(function(res){
           console.log("RESPONSE "+JSON.stringify(res));
+          ref.hideLoading();
           ref.zone.run(() => {
             ref.buildings = res;
           });
-        }, function(error){
+        }, function(error) {
+          ref.hideLoading();
           console.log("Error "+error);
         });  
       }    
     });
   }
+
+  showLoading(msg) {
+     this.loading = this.loadingCtrl.create({
+       content: msg
+     });
+     this.loading.present();
+   }
+
+   hideLoading() {
+     this.loading.dismiss();
+   }
 }

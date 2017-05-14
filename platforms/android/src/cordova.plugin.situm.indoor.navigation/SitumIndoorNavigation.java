@@ -48,9 +48,9 @@ public class SitumIndoorNavigation extends CordovaPlugin {
   private static final int LOCATION_PERMISSION_RESULT = 763;
   // The building identifier where positioning will start.
   // You can see your buildings IDs and names running this example in the Logcat
-  private HashMap<String, Building> buildingsList = new HashMap<String, Building>();
-  private HashMap<String, Floor> floorsList = new HashMap<String, Floor>();
-  private HashMap<String, Poi> poisList = new HashMap<String, Poi>();
+  private HashMap<String, Building> buildingsStored = new HashMap<String, Building>();
+  private HashMap<String, Floor> floorsStored = new HashMap<String, Floor>();
+  private HashMap<String, Poi> poisStored = new HashMap<String, Poi>();
 
   private CustomClasses customClasses = new CustomClasses();
 
@@ -130,7 +130,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
           Log.i(TAG, "onSuccess: " + building.getIdentifier() + " - " + building.getName());
           JSONObject bjo = customClasses.buildingToJsonObject(building);
           buildingsJA.put(bjo);
-          buildingsList.put(building.getIdentifier(), building);
+          buildingsStored.put(building.getIdentifier(), building);
         }
         if (buildings.isEmpty()) {
           Log.e(TAG, "onSuccess: you have no buildings. Create one in the Dashboard");
@@ -152,7 +152,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
     final CallbackContext cbc = callbackContext;
 
     try {
-      Building selectedBuilding = buildingsList.get(building.getString("identifier"));
+      Building selectedBuilding = buildingsStored.get(building.getString("identifier"));
 
       SitumSdk.communicationManager().fetchFloorsFromBuilding(selectedBuilding, new Handler<Collection<Floor>>() {
         @Override
@@ -163,7 +163,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
             Log.i(TAG, "onSuccess: " + floor.getIdentifier() + " - " + floor.getLevel());
             JSONObject floorJO = customClasses.floorToJsonObject(floor);
             floorsJA.put(floorJO);
-            floorsList.put(String.valueOf(floor.getLevel()), floor);
+            floorsStored.put(String.valueOf(floor.getLevel()), floor);
           }
           if (floors.isEmpty()) {
             Log.e(TAG, "onSuccess: you have no floors. Create one in the Dashboard");
@@ -187,7 +187,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
     final CallbackContext cbc = callbackContext;
 
     try {
-      Building selectedBuilding = buildingsList.get(building.getString("identifier"));
+      Building selectedBuilding = buildingsStored.get(building.getString("identifier"));
 
       SitumSdk.communicationManager().fetchIndoorPOIsFromBuilding(selectedBuilding, new Handler<Collection<Poi>>() {
         @Override
@@ -197,7 +197,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
           for (Poi poi : pois) {
             JSONObject poiJO = customClasses.poiToJsonObject(poi);
             poisJA.put(poiJO);
-            poisList.put(String.valueOf(poi.getName()), poi);
+            poisStored.put(poi.getName(), poi);
           }
           if (pois.isEmpty()) {
             Log.e(TAG, "onSuccess: you have no floors. Create one in the Dashboard");
@@ -220,7 +220,6 @@ public class SitumIndoorNavigation extends CordovaPlugin {
   public void onRequestPermissionResult(int requestCode, String[] permissions,
                                         int[] grantResults) throws JSONException
   {
-
     if (requestCode == LOCATION_PERMISSION_RESULT) {
       locationUpdate();
     }
@@ -245,7 +244,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
   private void locationUpdate() {
     Building selectedBuilding = null;
     try {
-      selectedBuilding = buildingsList.get(selectedBuildingJO.get("identifier"));
+      selectedBuilding = buildingsStored.get(selectedBuildingJO.get("identifier"));
     } catch (JSONException e) {
       e.printStackTrace();
     }
@@ -289,7 +288,9 @@ public class SitumIndoorNavigation extends CordovaPlugin {
 
         @Override
         public void onError(Error error) {
-          locationCallback.error(error.getMessage());
+          PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, error.getMessage());
+          pluginResult.setKeepCallback(true);
+          locationCallback.sendPluginResult(pluginResult);
         }
       };
       SitumSdk.locationManager().requestLocationUpdates(locationRequest, locationListener);
@@ -307,7 +308,13 @@ public class SitumIndoorNavigation extends CordovaPlugin {
 
     try {
       final Location location = customClasses.locationJsonObjectToLocation(fromLocation);
-      Point endPoint = customClasses.pointJsonObjectToPoint(toPOI.getJSONObject("position"));
+      Poi poi = poisStored.get(toPOI.getString("name"));
+      Point endPoint;
+      if (poi != null) {
+        endPoint = poi.getPosition();
+      } else {
+        endPoint = customClasses.pointJsonObjectToPoint(toPOI.getJSONObject("position"));
+      }
 
       DirectionsRequest directionsRequest = new DirectionsRequest.Builder().from(location).to(endPoint).build();
 
