@@ -24665,3 +24665,12 @@ ion-navbar.toolbar {
     padding-top: calc(16px + 20px);
   }
 }
+
+page-location-info .indication-meessage {
+  white-space: normal;
+  width: 100%;
+  color: #00ff00;
+  height: auto;
+  font-size: 18px;
+  text-align: center;
+}

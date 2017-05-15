@@ -55678,6 +55678,7 @@ var LocationInfoPage = (function () {
         this.navParams = navParams;
         this.zone = zone;
         this.locationErrorMsg = "";
+        this.navigationIndicationsMessage = "";
         this.status = "Not available";
         this.poisList = [];
         this.selectedPoiName = "";
@@ -55705,6 +55706,7 @@ var LocationInfoPage = (function () {
         this.loading.dismiss();
     };
     LocationInfoPage.prototype.startLocationUpdate = function () {
+        var isMapCenterSet = false;
         var ref = this;
         var onLocationChanged = function (res) {
             console.log("Location changed " + JSON.stringify(res));
@@ -55713,6 +55715,11 @@ var LocationInfoPage = (function () {
                 ref.locationErrorMsg = "";
                 var position = ref.currentLocation.position;
                 ref.updateMarkerPosition(position.coordinate.latitude, position.coordinate.longitude);
+                if (!isMapCenterSet) {
+                    var ionic = new google.maps.LatLng(position.coordinate.latitude, position.coordinate.longitude);
+                    isMapCenterSet = true;
+                    ref.map.setCenter(ionic);
+                }
             });
         };
         var onStatusChanged = function (res) {
@@ -55758,18 +55765,12 @@ var LocationInfoPage = (function () {
             zoom: 18,
             panControl: false,
             zoomControl: false,
-            draggable: false,
-            scrollwheel: false,
+            draggable: true,
+            scrollwheel: true,
             disableDoubleClickZoom: false,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         this.map = new google.maps.Map(element, mapOptions);
-        // var ref = this;
-        // this.currentRoute = JSON.parse('{"edges":[{"distance":3.671413450379128,"distanceToGoal":82.21803561472719,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.681276321411133,"y":45.52434539794922},"coordinate":{"latitude":22.73401217030953,"longitude":75.88387613566098},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":1,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.697494652828386,"y":41.85296776968067},"coordinate":{"latitude":22.733985426404487,"longitude":75.88385501266008},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":true,"isLast":false},{"distance":12.910631316656902,"distanceToGoal":78.54662216434805,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.697494652828386,"y":41.85296776968067},"coordinate":{"latitude":22.733985426404487,"longitude":75.88385501266008},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":2,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":33.608,"y":41.91},"coordinate":{"latitude":22.73391652490244,"longitude":75.88395639909828},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":false,"isLast":false},{"distance":25.206789264005838,"distanceToGoal":65.63599084769115,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":33.608,"y":41.91},"coordinate":{"latitude":22.73391652490244,"longitude":75.88395639909828},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":3,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":18.956,"y":62.421},"coordinate":{"latitude":22.734144115009748,"longitude":75.88396042898692},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":false,"isLast":false},{"distance":17.62567746215731,"distanceToGoal":40.429201583685305,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":18.956,"y":62.421},"coordinate":{"latitude":22.734144115009748,"longitude":75.88396042898692},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":4,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.365,"y":55.986},"coordinate":{"latitude":22.734009293517396,"longitude":75.8840516238365},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":false,"isLast":false},{"distance":22.10478104392803,"distanceToGoal":22.803524121527996,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.365,"y":55.986},"coordinate":{"latitude":22.734009293517396,"longitude":75.8840516238365},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":5,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.988,"y":78.082},"coordinate":{"latitude":22.73416638142843,"longitude":75.88418439191331},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":false,"isLast":false},{"distance":0.698743077599968,"distanceToGoal":0.698743077599968,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.988,"y":78.082},"coordinate":{"latitude":22.73416638142843,"longitude":75.88418439191331},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":6,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":false,"isLast":true}],"firstStep":{"distance":3.671413450379128,"distanceToGoal":82.21803561472719,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.681276321411133,"y":45.52434539794922},"coordinate":{"latitude":22.73401217030953,"longitude":75.88387613566098},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":1,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.697494652828386,"y":41.85296776968067},"coordinate":{"latitude":22.733985426404487,"longitude":75.88385501266008},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":true,"isLast":false},"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.681276321411133,"y":45.52434539794922},"coordinate":{"latitude":22.73401217030953,"longitude":75.88387613566098},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"indications":[{"distance":3.671413450379128,"distanceToNextLevel":0,"indicationType":"GO_AHEAD","orientation":0,"orientationType":"STRAIGHT","stepIdxDestination":1,"stepIdxOrigin":1,"neededLevelChange":false},{"distance":12.910631316656902,"distanceToNextLevel":0,"indicationType":"TURN","orientation":1.5707963267948966,"orientationType":"LEFT","stepIdxDestination":2,"stepIdxOrigin":2,"neededLevelChange":false},{"distance":25.206789264005838,"distanceToNextLevel":0,"indicationType":"TURN","orientation":2.1866698416935555,"orientationType":"LEFT","stepIdxDestination":3,"stepIdxOrigin":3,"neededLevelChange":false},{"distance":17.62567746215731,"distanceToNextLevel":0,"indicationType":"TURN","orientation":-2.564819316922282,"orientationType":"BACKWARD","stepIdxDestination":4,"stepIdxOrigin":4,"neededLevelChange":false},{"distance":22.10478104392803,"distanceToNextLevel":0,"indicationType":"TURN","orientation":1.9163406445015858,"orientationType":"LEFT","stepIdxDestination":5,"stepIdxOrigin":5,"neededLevelChange":false},{"distance":0.698743077599968,"distanceToNextLevel":0,"indicationType":"TURN","orientation":0.8636388863695328,"orientationType":"LEFT","stepIdxDestination":6,"stepIdxOrigin":6,"neededLevelChange":false}],"lastStep":{"distance":0.698743077599968,"distanceToGoal":0.698743077599968,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.988,"y":78.082},"coordinate":{"latitude":22.73416638142843,"longitude":75.88418439191331},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":6,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":false,"isLast":true},"nodes":[{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.681276321411133,"y":45.52434539794922},"coordinate":{"latitude":22.73401217030953,"longitude":75.88387613566098},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.697494652828386,"y":41.85296776968067},"coordinate":{"latitude":22.733985426404487,"longitude":75.88385501266008},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":33.608,"y":41.91},"coordinate":{"latitude":22.73391652490244,"longitude":75.88395639909828},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":18.956,"y":62.421},"coordinate":{"latitude":22.734144115009748,"longitude":75.88396042898692},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.365,"y":55.986},"coordinate":{"latitude":22.734009293517396,"longitude":75.8840516238365},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.988,"y":78.082},"coordinate":{"latitude":22.73416638142843,"longitude":75.88418439191331},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false}],"points":[{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.681276321411133,"y":45.52434539794922},"coordinate":{"latitude":22.73401217030953,"longitude":75.88387613566098},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.697494652828386,"y":41.85296776968067},"coordinate":{"latitude":22.733985426404487,"longitude":75.88385501266008},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":33.608,"y":41.91},"coordinate":{"latitude":22.73391652490244,"longitude":75.88395639909828},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":18.956,"y":62.421},"coordinate":{"latitude":22.734144115009748,"longitude":75.88396042898692},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.365,"y":55.986},"coordinate":{"latitude":22.734009293517396,"longitude":75.8840516238365},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.988,"y":78.082},"coordinate":{"latitude":22.73416638142843,"longitude":75.88418439191331},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false}],"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"steps":[{"distance":3.671413450379128,"distanceToGoal":82.21803561472719,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.681276321411133,"y":45.52434539794922},"coordinate":{"latitude":22.73401217030953,"longitude":75.88387613566098},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":1,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.697494652828386,"y":41.85296776968067},"coordinate":{"latitude":22.733985426404487,"longitude":75.88385501266008},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":true,"isLast":false},{"distance":12.910631316656902,"distanceToGoal":78.54662216434805,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":20.697494652828386,"y":41.85296776968067},"coordinate":{"latitude":22.733985426404487,"longitude":75.88385501266008},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":2,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":33.608,"y":41.91},"coordinate":{"latitude":22.73391652490244,"longitude":75.88395639909828},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":false,"isLast":false},{"distance":25.206789264005838,"distanceToGoal":65.63599084769115,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":33.608,"y":41.91},"coordinate":{"latitude":22.73391652490244,"longitude":75.88395639909828},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":3,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":18.956,"y":62.421},"coordinate":{"latitude":22.734144115009748,"longitude":75.88396042898692},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":false,"isLast":false},{"distance":17.62567746215731,"distanceToGoal":40.429201583685305,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":18.956,"y":62.421},"coordinate":{"latitude":22.734144115009748,"longitude":75.88396042898692},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":4,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.365,"y":55.986},"coordinate":{"latitude":22.734009293517396,"longitude":75.8840516238365},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":false,"isLast":false},{"distance":22.10478104392803,"distanceToGoal":22.803524121527996,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.365,"y":55.986},"coordinate":{"latitude":22.734009293517396,"longitude":75.8840516238365},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":5,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.988,"y":78.082},"coordinate":{"latitude":22.73416638142843,"longitude":75.88418439191331},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":false,"isLast":false},{"distance":0.698743077599968,"distanceToGoal":0.698743077599968,"from":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.988,"y":78.082},"coordinate":{"latitude":22.73416638142843,"longitude":75.88418439191331},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"id":6,"to":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isFirst":false,"isLast":true}],"timeStamp":"1494739811"}');
-        // setTimeout(function(){
-        // 	ref.updateMarkerPosition(22.73401217030953, 75.88387613566098);
-        // 	ref.drawRouteOnMap();
-        // } ,3000);
     };
     LocationInfoPage.prototype.updateMarkerPosition = function (lat, lng) {
         if (!this.map) {
@@ -55786,7 +55787,6 @@ var LocationInfoPage = (function () {
             });
         }
         this.currentPosMarker.setPosition(ionic);
-        this.map.setCenter(ionic);
     };
     LocationInfoPage.prototype.drawRouteOnMap = function () {
         var points = this.currentRoute.points;
@@ -55810,7 +55810,15 @@ var LocationInfoPage = (function () {
         this.routesPolylines.push(polyline);
     };
     LocationInfoPage.prototype.showRoute = function () {
-        this.showMap();
+        if (this.currentPosMarker) {
+            this.currentPosMarker.setMap(null);
+            for (var i = 0; i < this.routesPolylines.length; ++i) {
+                var polyline = this.routesPolylines[i];
+                polyline.setMap(null);
+            }
+            this.routesPolylines = [];
+            this.currentPosMarker = null;
+        }
         var ref = this;
         for (var i = 0; i < this.poisList.length; ++i) {
             var poi = this.poisList[i];
@@ -55837,20 +55845,26 @@ var LocationInfoPage = (function () {
         if (window.plugins && window.plugins.SitumIndoorNavigation) {
             var onDestinationReached = function () {
                 console.log("Destination Reached");
+                ref.zone.run(function () {
+                    ref.navigationIndicationsMessage = "Destination Reached";
+                });
             };
             var onProgress = function (navigationProgress) {
                 console.log("Navigation Progress  " + JSON.stringify(navigationProgress));
+                ref.zone.run(function () {
+                    ref.navigationIndicationsMessage = navigationProgress.currentIndication.indicationType + " Distance : " + navigationProgress.currentIndication.distanceToNextLevel + " Total  Distance : " + navigationProgress.currentIndication.distance;
+                });
             };
             var onUserOutsideRoute = function () {
                 console.log("User Outside Route");
                 ref.zone.run(function () {
-                    ref.locationErrorMsg = "User outside route";
+                    ref.navigationIndicationsMessage = "User outside route";
                 });
             };
             var onError = function (error) {
                 console.log("Navigation Error " + error);
                 ref.zone.run(function () {
-                    ref.locationErrorMsg = error;
+                    ref.navigationIndicationsMessage = error;
                 });
             };
             window.plugins.SitumIndoorNavigation.startNaviagtion(ref.currentRoute, onDestinationReached, onProgress, onUserOutsideRoute, onError);
@@ -55861,12 +55875,11 @@ var LocationInfoPage = (function () {
 LocationInfoPage = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPage */])(),
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
-        selector: 'page-location-info',template:/*ion-inline-start:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\location-info\location-info.html"*/'<!--\n\n  Generated template for the LocationInfoPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n	<ion-navbar>\n\n		<ion-title>Buildig Info</ion-title>\n\n	</ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n	<ion-list>  \n\n		<ion-item><b>Status : </b> {{status}}</ion-item>\n\n		<ion-item><b>Building : </b> {{selectedBuilding.name}}</ion-item>\n\n		<ion-item>\n\n			<ion-label>Select POI</ion-label>\n\n			<ion-select [(ngModel)]="selectedPoiName">\n\n				<ion-option value="{{item.name}}" *ngFor="let item of poisList">{{item.name}}</ion-option>      \n\n			</ion-select>\n\n		</ion-item>\n\n\n\n		\n\n\n\n		<ion-item *ngIf="locationErrorMsg.length > 0" style="color:#ff0000;">\n\n		{{locationErrorMsg}}\n\n		</ion-item>\n\n\n\n		<button ion-button full *ngIf="selectedPoiName.length>0" (click)="showRoute()">Show Route</button>\n\n		\n\n		<ion-item>\n\n		<div id="map_canvas" style="width: 100%;height: 80vw;"></div>\n\n		</ion-item>\n\n\n\n		<button ion-button full *ngIf="currentRoute" (click)="startNavigation()">Start Navigation</button>\n\n	</ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\location-info\location-info.html"*/,
+        selector: 'page-location-info',template:/*ion-inline-start:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\location-info\location-info.html"*/'<!--\n\n  Generated template for the LocationInfoPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n	<ion-navbar>\n\n		<ion-title>Buildig Info</ion-title>\n\n	</ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n	<ion-list>  \n\n		<ion-item><b>Status : </b> {{status}}</ion-item>\n\n		<ion-item><b>Building : </b> {{selectedBuilding.name}}</ion-item>\n\n		<ion-item>\n\n			<ion-label>Select POI</ion-label>\n\n			<ion-select [(ngModel)]="selectedPoiName">\n\n				<ion-option value="{{item.name}}" *ngFor="let item of poisList">{{item.name}}</ion-option>      \n\n			</ion-select>\n\n		</ion-item>\n\n\n\n		\n\n\n\n		<ion-item *ngIf="locationErrorMsg.length > 0" style="color:#ff0000;">\n\n			Location - {{locationErrorMsg}}\n\n		</ion-item>\n\n\n\n		\n\n\n\n		<button ion-button full *ngIf="selectedPoiName.length>0" (click)="showRoute()">Show Route</button>\n\n		<!-- <button ion-button full *ngIf="currentRoute" (click)="showRoute()">Show Indications</button> -->\n\n\n\n		<ion-item>\n\n			<div id="map_canvas" style="width: 100%;height: 80vw;"></div>\n\n		</ion-item>\n\n\n\n		<ion-item *ngIf="navigationIndicationsMessage.length > 0">\n\n			Navigation - <p class="indication-meessage" > {{navigationIndicationsMessage}}</p>\n\n		</ion-item>\n\n		<button ion-button full *ngIf="currentRoute" (click)="startNavigation()">Start Navigation</button>\n\n	</ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\location-info\location-info.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* NgZone */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* NgZone */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* NgZone */]])
 ], LocationInfoPage);
 
-var _a, _b, _c, _d;
 //# sourceMappingURL=location-info.js.map
 
 /***/ }),

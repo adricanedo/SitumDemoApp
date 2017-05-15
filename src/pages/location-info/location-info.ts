@@ -64,6 +64,7 @@ declare var google: any;
  	}
 
  	startLocationUpdate() {
+ 		var isMapCenterSet = false;
  		var ref = this;
  		var onLocationChanged = function(res) {
  			console.log("Location changed "+JSON.stringify(res));
@@ -75,6 +76,12 @@ declare var google: any;
  				var position = ref.currentLocation.position;
  				ref.updateMarkerPosition(position.coordinate.latitude, position.coordinate.longitude);
 
+ 				if (!isMapCenterSet) {
+ 					let ionic = new google.maps.LatLng(position.coordinate.latitude, position.coordinate.longitude);
+ 					isMapCenterSet = true;
+ 					ref.map.setCenter(ionic);
+ 				}
+ 				 		
  			});
  		};
 
@@ -128,6 +135,8 @@ declare var google: any;
 
  	
  	showMap() {
+
+ 		
  		let element = document.getElementById('map_canvas');
  		var mapOptions = {
  			center:new google.maps.LatLng(0, 0),
@@ -164,7 +173,6 @@ declare var google: any;
  		}
 
  		this.currentPosMarker.setPosition(ionic);
- 		this.map.setCenter(ionic);
  	}
 
 
@@ -193,8 +201,15 @@ declare var google: any;
  	}
 
  	showRoute() {
- 		this.showMap();
-
+ 		if (this.currentPosMarker) {
+ 			this.currentPosMarker.setMap(null);
+ 			for (var i = 0; i < this.routesPolylines.length; ++i) {
+ 				var polyline = this.routesPolylines[i];
+ 				polyline.setMap(null);
+ 			}
+ 			this.routesPolylines = [];
+ 			this.currentPosMarker = null;
+ 		}
 
  		var ref = this;
  		for (var i = 0; i <this.poisList.length; ++i) {
@@ -224,25 +239,25 @@ declare var google: any;
  			var onDestinationReached = function () {
  				console.log("Destination Reached");
  				ref.zone.run(() => {
- 					ref.locationErrorMsg = "Destination Reached";
+ 					ref.navigationIndicationsMessage = "Destination Reached";
  				}); 
  			};
  			var onProgress = function (navigationProgress) {
  				console.log("Navigation Progress  "+JSON.stringify(navigationProgress));
  				ref.zone.run(() => {
- 					ref.navigationIndicationsMessage = navigationProgress.currentIndication.indicationType+" Distance : "+ navigationProgress.currentIndication.distance+" Total  Distance : "+ navigationProgress.currentIndication.distanceToNextLevel;
+ 					ref.navigationIndicationsMessage = navigationProgress.currentIndication.indicationType+" Distance : "+ navigationProgress.currentIndication.distanceToNextLevel+" Total  Distance : "+ navigationProgress.currentIndication.distance;
  				}); 
  			};
  			var onUserOutsideRoute = function() {
  				console.log("User Outside Route");
  				ref.zone.run(() => {
- 					ref.locationErrorMsg = "User outside route";
+ 					ref.navigationIndicationsMessage = "User outside route";
  				}); 				
  			};
  			var onError = function(error) {
  				console.log("Navigation Error "+error);
  				ref.zone.run(() => {
- 					ref.locationErrorMsg = error;
+ 					ref.navigationIndicationsMessage = error;
  				}); 				
  			};
  			window.plugins.SitumIndoorNavigation.startNaviagtion(ref.currentRoute, onDestinationReached, onProgress, onUserOutsideRoute, onError);
