@@ -9,14 +9,6 @@ module.exports = [
         ]
     },
     {
-        "id": "cordova-plugin-situm-indoor-navigation.SitumIndoorNavigation",
-        "file": "plugins/cordova-plugin-situm-indoor-navigation/www/SitumIndoorNavigation.js",
-        "pluginId": "cordova-plugin-situm-indoor-navigation",
-        "clobbers": [
-            "window.plugins.SitumIndoorNavigation"
-        ]
-    },
-    {
         "id": "cordova-plugin-splashscreen.SplashScreen",
         "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
         "pluginId": "cordova-plugin-splashscreen",
@@ -40,19 +32,28 @@ module.exports = [
             "cordova.plugins.Keyboard"
         ],
         "runs": true
+    },
+    {
+        "id": "cordova-plugin-situm-indoor-navigation.SitumIndoorNavigation",
+        "file": "plugins/cordova-plugin-situm-indoor-navigation/www/SitumIndoorNavigation.js",
+        "pluginId": "cordova-plugin-situm-indoor-navigation",
+        "clobbers": [
+            "window.plugins.SitumIndoorNavigation"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-console": "1.0.5",
     "cordova-plugin-device": "1.1.4",
-    "cordova-plugin-situm-indoor-navigation": "0.0.1",
     "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.1",
     "cordova-plugin-whitelist": "1.3.1",
-    "ionic-plugin-keyboard": "2.2.1"
+    "ionic-plugin-keyboard": "2.2.1",
+    "cordova-plugin-compat": "1.1.0",
+    "cordova-plugin-cocoapod-support": "1.3.0",
+    "cordova-plugin-situm-indoor-navigation": "0.0.1"
 };
 // BOTTOM OF METADATA
 });

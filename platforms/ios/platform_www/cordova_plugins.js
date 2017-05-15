@@ -1,84 +1,75 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/cordova-plugin-console/www/console-via-logger.js",
         "id": "cordova-plugin-console.console",
+        "file": "plugins/cordova-plugin-console/www/console-via-logger.js",
         "pluginId": "cordova-plugin-console",
         "clobbers": [
             "console"
         ]
     },
     {
-        "file": "plugins/cordova-plugin-console/www/logger.js",
         "id": "cordova-plugin-console.logger",
+        "file": "plugins/cordova-plugin-console/www/logger.js",
         "pluginId": "cordova-plugin-console",
         "clobbers": [
             "cordova.logger"
         ]
     },
     {
-        "file": "plugins/cordova-plugin-device/www/device.js",
         "id": "cordova-plugin-device.device",
+        "file": "plugins/cordova-plugin-device/www/device.js",
         "pluginId": "cordova-plugin-device",
         "clobbers": [
             "device"
         ]
     },
     {
-        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-        "id": "cordova-plugin-splashscreen.SplashScreen",
-        "pluginId": "cordova-plugin-splashscreen",
-        "clobbers": [
-            "navigator.splashscreen"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
-        "id": "cordova-plugin-statusbar.statusbar",
-        "pluginId": "cordova-plugin-statusbar",
-        "clobbers": [
-            "window.StatusBar"
-        ]
-    },
-    {
-        "file": "plugins/ionic-plugin-keyboard/www/ios/keyboard.js",
-        "id": "ionic-plugin-keyboard.keyboard",
-        "pluginId": "ionic-plugin-keyboard",
-        "clobbers": [
-            "cordova.plugins.Keyboard"
-        ],
-        "runs": true
-    },
-    {
-        "file": "plugins/cordova-plugin-situm-indoor-navigation/www/SitumIndoorNavigation.js",
         "id": "cordova-plugin-situm-indoor-navigation.SitumIndoorNavigation",
+        "file": "plugins/cordova-plugin-situm-indoor-navigation/www/SitumIndoorNavigation.js",
         "pluginId": "cordova-plugin-situm-indoor-navigation",
         "clobbers": [
             "window.plugins.SitumIndoorNavigation"
         ]
     },
     {
-        "file": "plugins/cordova-plugin-googlemaps/www/googlemaps-cdv-plugin.js",
-        "id": "cordova-plugin-googlemaps.cordova-plugin-googlemaps",
-        "pluginId": "cordova-plugin-googlemaps",
+        "id": "cordova-plugin-splashscreen.SplashScreen",
+        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+        "pluginId": "cordova-plugin-splashscreen",
         "clobbers": [
-            "cordova-plugin-googlemaps"
+            "navigator.splashscreen"
         ]
+    },
+    {
+        "id": "cordova-plugin-statusbar.statusbar",
+        "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+        "pluginId": "cordova-plugin-statusbar",
+        "clobbers": [
+            "window.StatusBar"
+        ]
+    },
+    {
+        "id": "ionic-plugin-keyboard.keyboard",
+        "file": "plugins/ionic-plugin-keyboard/www/ios/keyboard.js",
+        "pluginId": "ionic-plugin-keyboard",
+        "clobbers": [
+            "cordova.plugins.Keyboard"
+        ],
+        "runs": true
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
+    "cordova-plugin-cocoapod-support": "1.3.0",
+    "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-console": "1.0.5",
     "cordova-plugin-device": "1.1.4",
+    "cordova-plugin-situm-indoor-navigation": "0.0.1",
     "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.1",
     "cordova-plugin-whitelist": "1.3.1",
-    "ionic-plugin-keyboard": "2.2.1",
-    "cordova-plugin-compat": "1.1.0",
-    "cordova-plugin-situm-indoor-navigation": "0.0.1",
-    "com.googlemaps.ios": "2.2.0",
-    "cordova-plugin-googlemaps": "1.4.0"
-}
+    "ionic-plugin-keyboard": "2.2.1"
+};
 // BOTTOM OF METADATA
 });

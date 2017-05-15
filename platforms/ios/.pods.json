@@ -1,0 +1,14 @@
+{
+	"pods": {
+		"RestKit": {
+			"name": "RestKit",
+			"version": " 0.20.0"
+		},
+		"CocoaAsyncSocket": {
+			"name": "CocoaAsyncSocket"
+		}
+	},
+	"sources": {},
+	"iosMinVersion": "7.0",
+	"useFrameworks": true
+}

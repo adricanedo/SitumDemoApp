@@ -8,34 +8,34 @@
     },
     "installed_plugins": {
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "io.ionic.starter"
+            "PACKAGE_NAME": "com.ionicframework.demoapp675353"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "io.ionic.starter"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "io.ionic.starter"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "io.ionic.starter"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "io.ionic.starter"
-        },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "io.ionic.starter"
+            "PACKAGE_NAME": "com.ionicframework.demoapp675353"
         },
         "cordova-plugin-situm-indoor-navigation": {
             "API_USER_EMAIL": "qaiyumohamed@gmail.com",
             "API_KEY": "9ebe6ce727fad5052f1402b513d48be50c2c7936b562754306285fb99ec84816",
             "PACKAGE_NAME": "com.ionicframework.demoapp675353"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ionicframework.demoapp675353"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.demoapp675353"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.demoapp675353"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.demoapp675353"
         }
     },
     "dependent_plugins": {
-        "cordova-plugin-compat": {
+        "cordova-plugin-cocoapod-support": {
             "PACKAGE_NAME": "com.ionicframework.demoapp675353"
         },
-        "com.googlemaps.ios": {
+        "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.ionicframework.demoapp675353"
         }
     }

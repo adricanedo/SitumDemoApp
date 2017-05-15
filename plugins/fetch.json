@@ -50,16 +50,23 @@
     "cordova-plugin-compat": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-compat"
+            "id": "cordova-plugin-compat@^1.0.0"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "com.googlemaps.ios": {
+        "source": {
+            "type": "registry",
+            "id": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk"
         },
         "is_top_level": false,
         "variables": {}
     },
     "cordova-plugin-situm-indoor-navigation": {
         "source": {
-            "type": "git",
-            "url": "https://github.com/sdev99/SitumIndoorNavigation.git",
-            "subdir": "."
+            "type": "registry",
+            "id": "https://github.com/sdev99/SitumIndoorNavigation.git"
         },
         "is_top_level": true,
         "variables": {
@@ -67,10 +74,10 @@
             "API_KEY": "9ebe6ce727fad5052f1402b513d48be50c2c7936b562754306285fb99ec84816"
         }
     },
-    "com.googlemaps.ios": {
+    "cordova-plugin-cocoapod-support": {
         "source": {
             "type": "registry",
-            "id": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk"
+            "id": "cordova-plugin-cocoapod-support"
         },
         "is_top_level": false,
         "variables": {}

@@ -3,9 +3,6 @@
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
-    <feature name="SitumIndoorNavigation">
-        <param name="android-package" value="cordova.plugin.situm.indoor.navigation.SitumIndoorNavigation" />
-    </feature>
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
         <param name="onload" value="true" />
@@ -67,4 +64,7 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="FadeSplashScreen" value="false" />
     <preference name="loadUrlTimeoutValue" value="60000" />
+    <feature name="SitumIndoorNavigation">
+        <param name="android-package" value="cordova.plugin.situm.indoor.navigation.SitumIndoorNavigation" />
+    </feature>
 </widget>

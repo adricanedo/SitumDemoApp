@@ -32,6 +32,19 @@
     <string/>
     <key>NSMainNibFile~ipad</key>
     <string/>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+      <string>UIInterfaceOrientationPortrait</string>
+      <string>UIInterfaceOrientationLandscapeLeft</string>
+      <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+      <string>UIInterfaceOrientationPortrait</string>
+      <string>UIInterfaceOrientationLandscapeLeft</string>
+      <string>UIInterfaceOrientationPortraitUpsideDown</string>
+      <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
     <key>UIRequiresFullScreen</key>
     <true/>
     <key>NSAppTransportSecurity</key>
@@ -47,29 +60,7 @@
       <key>NSAllowsArbitraryLoads</key>
       <true/>
     </dict>
-    <key>Google Maps API Key</key>
-    <string>AIzaSyCBV1baMbFwbBCi5vDPdbeGKINGVwcIZWY</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>$NSLocationWhenInUseUsageDescription</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>$NSLocationAlwaysUsageDescription</string>
     <key>LSApplicationQueriesSchemes</key>
-    <array>
-      <string>googlechromes</string>
-      <string>comgooglemaps</string>
-    </array>
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>CFBundleURLName</key>
-        <string>com.ionicframework.demoapp675353</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>com.ionicframework.demoapp675353</string>
-        </array>
-      </dict>
-    </array>
+    <array/>
   </dict>
 </plist>
