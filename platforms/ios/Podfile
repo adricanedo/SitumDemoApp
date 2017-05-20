@@ -1,6 +1,5 @@
 platform :ios, '7.0'
-use_frameworks!
 target 'DemoApp' do
-	pod 'RestKit', ' 0.20.0'
+	pod 'RestKit', '0.24.0'
 	pod 'CocoaAsyncSocket'
 end

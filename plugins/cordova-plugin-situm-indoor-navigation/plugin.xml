@@ -9,7 +9,8 @@
 
 	<dependency id="cordova-plugin-compat" version="^1.0.0"/>
 	<dependency id="cordova-plugin-cocoapod-support"/>
-
+	<dependency id="cordova-custom-config" />
+	
 	<platform name="android">
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="SitumIndoorNavigation">
@@ -48,6 +49,7 @@
 			</feature>
 		</config-file>
 		<source-file src="src/ios/SitumIndoorNavigation.m"/>
+		<source-file src="src/ios/CustomClasses.m"/>
 
 		<config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
 			<string>Location is required to find out where you are</string>
@@ -60,9 +62,9 @@
 		<framework src="libstdc++.dylib" />
 		<framework src="libz.dylib" />
 
-		<pods-config ios-min-version="5.0" use-frameworks="true">
-		</pods-config>
-		<pod name="RestKit" version=" 0.20.0" />
+		<!-- <pods-config ios-min-version="8.0" use-frameworks="true">
+		</pods-config> -->
+		<pod name="RestKit" version="0.24.0" />
 		<pod name="CocoaAsyncSocket"/>
 	</platform>
 </plugin>
