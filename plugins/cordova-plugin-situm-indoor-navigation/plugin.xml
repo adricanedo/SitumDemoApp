@@ -10,7 +10,7 @@
 	<dependency id="cordova-plugin-compat" version="^1.0.0"/>
 	<dependency id="cordova-plugin-cocoapod-support"/>
 	<dependency id="cordova-custom-config" />
-	
+
 	<platform name="android">
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="SitumIndoorNavigation">
@@ -57,6 +57,9 @@
 		<config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
 			<string>Location is required to find out where you are</string>
 		</config-file>
+
+
+		<preference name="ios-XCBuildConfiguration-ENABLE_BITCODE" value="NO" />
 
 		<framework src="src/ios/vendor/SitumSDK.framework" custom="true" />
 		<framework src="libstdc++.dylib" />
