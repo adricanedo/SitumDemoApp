@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class SITIndoorLocationManager;
+
 /**
  *  Protocol to provide additional information of what happens inside the SITIndoorLocationManager
  */

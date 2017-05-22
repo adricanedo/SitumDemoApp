@@ -10,6 +10,10 @@
 
 @import CoreLocation;
 
+#import "SITProductFlags.h"
+
+@class SITMSitumMessage;
+
 /*
 #import "ESTBeaconManager.h"
 #import "ESTBeaconRegion.h"
@@ -60,7 +64,16 @@ typedef void (^SITBeaconManagerBeaconReportBeaconsHandler)(CLRegion *region, NSA
 
 - (void)stop;
 
+#ifdef SITUM_PROTOBUF
+
+- (void)completeDataInMessage:(SITMSitumMessage *)message
+            withInfoSinceDate:(NSDate *)date;
+
+#else 
+
 - (NSData *)lastUpdatedDataSince:(NSDate *)date;
+
+#endif
 
 - (void)removeDataSince:(NSDate *)date;
 

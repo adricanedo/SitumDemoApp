@@ -8,13 +8,21 @@
 
 #import "SITAPIBaseModel.h"
 
-typedef enum
+
+/**
+ Action of an event
+
+ - kSITOccurrenceViewed: an event has been seen
+ - kSITOccurrenceClicked: an event has been clicked
+ - kSITOccurrenceConverted: an event has been converted
+ */
+typedef NS_ENUM(NSInteger, kSITOccurrenceAction)
 {
     kSITOccurrenceViewed = 0,
     kSITOccurrenceClicked,
     kSITOccurrenceConverted,
     
-}kSITOccurrenceAction;
+};
 
 /**
  *  Describes importante situations around events

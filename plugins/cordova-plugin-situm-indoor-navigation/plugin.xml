@@ -9,7 +9,6 @@
 
 	<dependency id="cordova-plugin-compat" version="^1.0.0"/>
 	<dependency id="cordova-plugin-cocoapod-support"/>
-	<dependency id="cordova-custom-config" />
 
 	<platform name="android">
 		<config-file parent="/*" target="res/xml/config.xml">
@@ -59,15 +58,13 @@
 		</config-file>
 
 
-		<preference name="ios-XCBuildConfiguration-ENABLE_BITCODE" value="NO" />
-
 		<framework src="src/ios/vendor/SitumSDK.framework" custom="true" />
-		<framework src="libstdc++.dylib" />
+		<framework src="lib.dylib" />
 		<framework src="libz.dylib" />
 
 		<!-- <pods-config ios-min-version="8.0" use-frameworks="true">
 		</pods-config> -->
-		<pod name="RestKit" version="0.24.0" />
+		<pod name="RestKit" version="0.25.0" />
 		<pod name="CocoaAsyncSocket"/>
 	</platform>
 </plugin>

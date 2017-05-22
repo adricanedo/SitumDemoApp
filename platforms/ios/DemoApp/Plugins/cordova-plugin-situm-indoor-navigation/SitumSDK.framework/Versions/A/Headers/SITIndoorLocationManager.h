@@ -9,58 +9,32 @@
 #import <Foundation/Foundation.h>
 
 #import "SITIndoorLocationError.h"
-
-/**
- *  SITIndoorLocationManagerState
- *
- *  @discussion: Represents the current state of the indoor localization manager.
- */
-typedef NS_ENUM(int, SITIndoorLocationManagerStates){
-    /**
-     *  Indoor Localization is not running.
-     */
-    kSITIndoorLocationManagerStateStopped = 0,
-    
-    /**
-     *  Indoor Localization is running.
-     */
-    kSITIndoorLocationManagerStateStarted,    
-};
-
-@class SITIndoorBuilding, SITIndoorLevel, SITIndoorLocation, SITIndoorRoute;
-@protocol SITIndoorLocationManagerDelegate;
-
-/**
- *  The type of block callback for handling indoor locations data.
- *
- *  @param indoorLocation SITIndoorLocation object.
- *  @param error          NSError object in case there was a problem generating locations.
- */
-typedef void (^SITIndoorLocationHandler)(SITIndoorLocation *indoorLocation, NSError *error);
+#import "SITIndoorLocationInterface.h"
 
 /*!
  * This class provide you with methods to  of entry to the SitumSDK.
  */
-@interface SITIndoorLocationManager : NSObject
+__attribute__ ((deprecated))
+@interface SITIndoorLocationManager : NSObject DEPRECATED_MSG_ATTRIBUTE("Use SITLocationManager instead");
 
 /**
  *  Indoor Location Manager State
  *
  *  @return the current state of the indoor location manager
  */
-@property (nonatomic, readonly) SITIndoorLocationManagerStates state;
+@property (nonatomic, readonly) SITIndoorLocationManagerStates state ;
 
 /**
  *  Object implementing SITIndoorLocationManagerDelegate Protocol
  */
-@property (nonatomic, weak) id<SITIndoorLocationManagerDelegate> delegate;
+@property (nonatomic, weak) id<SITIndoorLocationManagerDelegate> delegate DEPRECATED_MSG_ATTRIBUTE("Use SITLocationManager delegate property instead");;
 
 
 /*!
  *  Call this method to receive a reference to an initialized object of this class
  *  @discussion You should always use this method to obtain the manager object and should not try to create instances directly.
  */
-+ (instancetype)sharedManager;
++ (instancetype)sharedManager DEPRECATED_MSG_ATTRIBUTE("Use sharedManager of the SITLocationManager class instead");
 
 /*!
  *  Start reporting location
@@ -76,7 +50,7 @@ typedef void (^SITIndoorLocationHandler)(SITIndoorLocation *indoorLocation, NSEr
 - (BOOL)startReportingIndoorLocationForBuilding:(SITIndoorBuilding *)building
                                         toQueue:(NSOperationQueue *)operationQueue
                                     withOptions:(NSDictionary *)options
-                                    withHandler:(SITIndoorLocationHandler)indoorLocationHandler;
+                                    withHandler:(SITIndoorLocationHandler)indoorLocationHandler DEPRECATED_MSG_ATTRIBUTE("Use requestLocationUpdates of the SITLocationManager class instead");
 
 
 /*!
@@ -85,7 +59,7 @@ typedef void (^SITIndoorLocationHandler)(SITIndoorLocation *indoorLocation, NSEr
  *
  *  @return A Boolean value meaning if the operation was performed successfully or not.
  */
-- (BOOL)stopReportingIndoorLocation;
+- (BOOL)stopReportingIndoorLocation DEPRECATED_MSG_ATTRIBUTE("Use removeUpdates of the SITLocationManager class instead");
 
 /**
  *  Tell the system to adjust following location updates to a particular route
@@ -94,19 +68,19 @@ typedef void (^SITIndoorLocationHandler)(SITIndoorLocation *indoorLocation, NSEr
  *
  *  @return BOOL value indicating if the operation has been successfull (YES) or not (NO)
  */
-- (BOOL)adjustLocationToRoute:(SITIndoorRoute *)route;
+- (BOOL)adjustLocationToRoute:(SITIndoorRoute *)route DEPRECATED_MSG_ATTRIBUTE("Use requestNavigationUpdates: of the SITNavigationManager to retrive progress of a route instead");
 
 /**
  *  Tell the system to cancel adjusting location updates to a particular route
  *
  *  @return BOOL value indicating if the operating has been successfull (YES) or not (NO).
  */
-- (BOOL)stopAdjustingLocation;
+- (BOOL)stopAdjustingLocation DEPRECATED_MSG_ATTRIBUTE("Use removeUpdates: of the SITNavigationManager to stop receiving progress updates");
 
 /**
  *  Check if the system is adjusting locations to a particular route
  *
  *  @return BOOL value indicating if the location is being adjusted (YES) or not (NO)
  */
-- (BOOL)isAdjustingLocation;
+- (BOOL)isAdjustingLocation DEPRECATED_MSG_ATTRIBUTE("Use isRunning of the SITNavigationManager  to check receiving progress updates");
 @end

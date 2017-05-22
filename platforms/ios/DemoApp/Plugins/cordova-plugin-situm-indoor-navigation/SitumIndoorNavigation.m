@@ -22,7 +22,8 @@
     // } else {
     //     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     // }
-
+[SITServices provideAPIKey:@"9ebe6ce727fad5052f1402b513d48be50c2c7936b562754306285fb99ec84816" forEmail:@"qaiyumohamed@gmail.com"];
+    
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 

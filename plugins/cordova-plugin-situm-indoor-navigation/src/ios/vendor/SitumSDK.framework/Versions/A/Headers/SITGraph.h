@@ -15,6 +15,8 @@
 
 #import "SITIndoorRoute.h"
 
+@class PESGraph;
+
 /**
  *  This model describes a graph representation of the paths of a building where a user can walk.
  */
@@ -45,6 +47,12 @@
 - (void)prepareGraph;
 
 
+#pragma mark - Hide this methods before commit
+- (void)setNodes:(NSArray *)nodes;
+
+- (void)setLinks:(NSArray *)links;
+
+- (PESGraph *)internalGraphAccessible:(BOOL)accessible;
 
 @end
 #endif

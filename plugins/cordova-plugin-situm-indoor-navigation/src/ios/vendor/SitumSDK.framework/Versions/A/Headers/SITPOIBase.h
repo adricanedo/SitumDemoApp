@@ -15,12 +15,14 @@
 /**
  *  Unique integer identifier
  */
-@property (nonatomic, strong) NSNumber *identifier;
+@property (nonatomic, strong) NSNumber *identifier __attribute__((deprecated)) DEPRECATED_MSG_ATTRIBUTE("Use identifier property of the SITResource base class instead");
+;
 
 /**
  *  Relationship to an SITIndoorBuilding object
  */
-@property (nonatomic, strong) NSNumber *project_identifier;
+@property (nonatomic, strong) NSNumber *project_identifier __attribute__((deprecated))DEPRECATED_MSG_ATTRIBUTE("Use buildingIdentifier property of the SITResource base class instead");
+
 
 /**
  *  Name
@@ -35,7 +37,8 @@
 /**
  *  Identifier of a SITPOICategory object
  */
-@property (nonatomic, strong) NSNumber *categoryIdentifier;
+@property (nonatomic, strong) NSNumber *categoryIdentifier DEPRECATED_MSG_ATTRIBUTE("Use category.identifier property of the category field instead");
+;
 
 /**
  *  Relationship to a SITPOICategory object

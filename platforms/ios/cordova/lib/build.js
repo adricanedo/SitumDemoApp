@@ -221,18 +221,18 @@ return require('./list-devices').run()
 function findXCodeProjectIn(projectPath) {
     // 'Searching for Xcode project in ' + projectPath);
     var xcodeProjFiles = shell.ls(projectPath).filter(function (name) {
-        return path.extname(name) === '.xcodeproj';
+        return path.extname(name) === '.xcworkspace';
     });
 
     if (xcodeProjFiles.length === 0) {
         return Q.reject('No Xcode project found in ' + projectPath);
     }
     if (xcodeProjFiles.length > 1) {
-        events.emit('warn','Found multiple .xcodeproj directories in \n' +
+        events.emit('warn','Found multiple .xcworkspace directories in \n' +
             projectPath + '\nUsing first one');
     }
 
-    var projectName = path.basename(xcodeProjFiles[0], '.xcodeproj');
+    var projectName = path.basename(xcodeProjFiles[0], '.xcworkspace');
     return Q.resolve(projectName);
 }
 

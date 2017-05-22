@@ -15,6 +15,7 @@
 #import "SITCommunicationInterface.h"
 #import "SITCommunicationConstants.h"
 
+#import "SITFloor.h"
 
 /*!
  * This class is the interface to perform operations related with Situm Servers.
@@ -83,6 +84,94 @@
  */
 - (BOOL)fetchIndoorBuildingsWithCompletion:(SITBuildingFetchHandler)buildindFetchHandler DEPRECATED_MSG_ATTRIBUTE("Use - (BOOL)fetchIndoorBuildingsWithOptions:withCompletion:");
 
+
+/**
+ Retrieve the list of floors associated with a building
+
+ @param buildingIdentifier unique identifier of the building
+ @param options parameters that modify the internal behaviour
+ @param success the kind of block that will be executed when the operation has successfully been performed
+ @param failure the kind of block that will be executed when the operation fails
+ @return error error that describes why the operation could not be executed (a nil value means the request is valid and will be executed)
+ @discussion Keys of the options dictionary: forceRequest boolean value that determines if the operation should hit the server (YES) or the cachesystem (NO)
+ */
+- (NSError *)fetchFloorsForBuilding:(NSString *)buildingIdentifier
+                        withOptions:(NSDictionary *)options
+                            success:(SITSuccessHandler)success
+                            failure:(SITFailureCompletion)failure;
+
+
+/**
+ Retrieve the list of buildings
+
+ @param options parameters that modify the internal behaviour
+ @param success the kind of block that will be executed when the operation has successfully been performed. Information can be accessed through the results key on the mapping result dictionary
+ @param failure the kind of block that will be executed when the operation fails with an error describing what has failed
+ @return error error that describes why the operation could not be executed (a nil value means the request is valid and will be executed)
+ @discussion Keys of the options dictionary: forceRequest boolean value that determines if the operation should hit the server (YES) or the cachesystem (NO)
+ */
+- (NSError *)fetchBuildingsWithOptions:(NSDictionary *)options
+                          success:(SITSuccessHandler)success
+                          failure:(SITFailureCompletion)failure;
+
+
+/**
+ Retrieve the list of indoor points of interest associated with a building
+
+ @param buildingIdentifier unique identifier of the building
+ @param options parameters that modify the internal behaviour (see discussion section)
+ @param success the kind of block that will be executed when the operation has successfully been performed. Information can be accessed through the results key on the mapping result dictionary
+ @param failure the kind of block that will be executed when the operation fails with an error describing what has failed
+ @return error that describes why the operation could not be executed (a nil value means the request is valid and will be executed)
+ @discussion Keys of the options dictionary: forceRequest boolean value that determines if the operation should hit the server (YES) or the cachesystem (NO)
+ */
+- (NSError *)fetchPoisOfBuilding:(NSString *)buildingIdentifier
+                     withOptions:(NSDictionary *)options
+                         success:(SITSuccessHandler)success
+                         failure:(SITFailureCompletion)failure;
+
+/**
+ Retrieve the list of outdoor points of interest associated with a building
+
+ @param buildingIdentifier unique identifier of the building
+ @param options parameters that modify the internal behaviour (see discussion section)
+ @param success the kind of block that will be executed when the operation has successfully been performed. Information can be accessed through the results key on the mapping result dictionary
+ @param failure the kind of block that will be executed when the operation fails with an error describing what has failed
+ @return error that describes why the operation could not be executed (a nil value means the request is valid and will be executed)
+ @discussion Keys of the options dictionary: forceRequest boolean value that determines if the operation should hit the server (YES) or the cachesystem (NO)
+ */
+- (NSError *)fetchOutdoorPoisOfBuilding:(NSString *)buildingIdentifier
+                            withOptions:(NSDictionary *)options
+                                success:(SITSuccessHandler)success
+                                failure:(SITFailureCompletion)failure;
+
+
+/**
+ Retrieve the information of a building.
+
+ @param buildingIdentifier unique identifier of the building.
+ @param options parameters that modify the internal behaviour (see discussion section)
+ @param success the kind of block that will be executed when the operation has successfully been performed. Information can be accessed through the results key on the mapping result dictionary
+ @param failure failure the kind of block that will be executed when the operation fails with an error describing what has failed
+ @return error that describes why the operation could not be executed (a nil value means the request is valid and will be executed)
+ @discussion Keys of the options dictionary: forceRequest boolean value that determines if the operation should hit the server (YES) or the cachesystem (NO)
+ */
+- (NSError *)fetchBuildingInfo:(NSString *)buildingIdentifier
+                   withOptions:(NSDictionary *)options
+                       success:(SITSuccessHandler)success
+                       failure:(SITFailureCompletion)failure;
+
+
+/**
+ Retrieve the floorplan of a floor
+
+ @param floor SITFloor object
+ @param imageFetchHandler the kind of block that will be executed when the operation has successfully been performed (a nil data would mean the operation has failed)
+ @return error that describes why the operation could not be executed (a nil value means the request is valid and will be executed)
+ */
+- (BOOL)fetchMapFromFloor:(SITFloor *)floor
+           withCompletion:(SITImageFetchHandler)imageFetchHandler; // This should check cache first
+
 /**
  *  Retrieve the buildings you are allowed to see. This is an asynchronous operation.
  *
@@ -128,7 +217,7 @@
 
 - (BOOL)fetchIndoorLevelsFromIndoorBuilding:(SITIndoorBuilding *)indoorBuilding
                                 withOptions:(NSDictionary *)options
-                             withCompletion:(SITIndoorLevelFetchHandler)indoorLevelFetchHandler;
+                             withCompletion:(SITIndoorLevelFetchHandler)indoorLevelFetchHandler DEPRECATED_MSG_ATTRIBUTE("Use - fetchFloorsForBuilding:withOptions:success:failure instead");
 
 
 /*!
@@ -140,7 +229,7 @@
  *  @return This method gives the user a flag that indicates if the operation has been performed or not.
  */
 - (BOOL)fetchIndoorLevelMapFromIndoorLevel:(SITIndoorLevel *)indoorLevel
-                            withCompletion:(SITIndoorLevelMapFetchHandler)indoorLevelMapHandler;
+                            withCompletion:(SITIndoorLevelMapFetchHandler)indoorLevelMapHandler DEPRECATED_MSG_ATTRIBUTE("Use - fetchMapFromFloor:withCompletion: instead");;
 
 /*!
  *  Retrieve POIs from a building.
@@ -167,7 +256,7 @@
  */
 - (BOOL)fetchPOIsFromIndoorBuilding:(SITIndoorBuilding *)indoorBuilding
                      withOptions:(NSDictionary *)options
-                     withCompletion:(SITPOIFetchHandler)POIFetchHandler;
+                     withCompletion:(SITPOIFetchHandler)POIFetchHandler DEPRECATED_MSG_ATTRIBUTE("Use - (BOOL)fetchPoisOfBuilding:withOptions:success:failure:");;
 
 /**
  *  Retrieve the contents of an icon of a category

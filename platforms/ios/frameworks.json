@@ -1,4 +1,4 @@
 {
-    "libz.dylib": 1,
-    "libstdc++.dylib": 1
+    "lib.dylib": 1,
+    "libz.dylib": 1
 }

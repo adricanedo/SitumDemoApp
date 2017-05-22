@@ -18,8 +18,30 @@
 #import "SITPOI.h"
 #import "SITPOIExterior.h"
 
+static NSString* const kSITBuildingInfoKey = @"indoorBuilding";
+static NSString* const kSITFloorsInfoKey = @"levels";
+static NSString* const kSITIndoorPOIsInfoKey = @"indoor_pois";
+static NSString* const kSITOutdoorPOIsInfoKey = @"outdoorPois";
+static NSString* const kSITEventsInfoKey = @"events";
+static NSString* const kSITGraphInfoKey = @"graph";
+
 @class SITGraph;
-/*!
+
+typedef void (^SITImageFetchHandler)(NSData *imageData);
+
+
+typedef void (^SITFailureOperationHandler)(NSError *error);
+
+/**
+ The type of block callback that will get executed when a repository operation has successfully been performed
+
+ @param mapping create a class instead of passing a dictionary??
+ @discussion discuss about the keys of the dictionary
+ */
+typedef void (^SITSuccessHandler)(NSDictionary *mapping);
+
+
+/*!=
  *  The type of block callback for handling indoor buildings data
  *
  *  @param indoorBuildings An array of objects that encapsulates a collection of SITIndoorBuilding objects based on Authentication

@@ -11,6 +11,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "SITBuildingInfo.h"
+
 #import "SITIndoorLocationManager.h"
 #import "SITServices.h"
 
@@ -25,12 +27,24 @@
 
 #import "SITGraph.h"
 
+#import "SITNode.h"
+#import "SITLink.h"
+
 #import "SITEvent.h"
+
+#import "SITAngle.h"
+#import "SITDimensions.h"
+#import "SITMultilanguageString.h"
+#import "SITResource.h"
+#import "SITURL.h"
+#import "SITBuilding.h"
+#import "SITBuildingResource.h"
+#import "SITFloor.h"
+#import "SITFloorResource.h"
 
 #import "SITCommunicationConstants.h"
 #import "SITCommunicationInterface.h"
 #import "SITCommunicationManager.h"
-
 
 #import "SITIndoorPoint.h"
 #import "SITIndoorRoute.h"
@@ -46,6 +60,32 @@
 #import "SITPOICategory.h"
 
 #import "SITSearchManager.h"
+
+#import "SITCoordinateConverter.h"
+
+#import "SITLocation.h"
+#import "SITLocationRequest.h"
+#import "SITLocationError.h"
+#import "SITLocationInterface.h"
+#import "SITLocationManager.h"
+
+#import "SITDirectionsRequest.h"
+#import "SITCartesianCoordinate.h"
+#import "SITPoint.h"
+#import "SITRouteStep.h"
+#import "SITRoute.h"
+
+#import "SITDirectionsInterface.h"
+#import "SITDirectionsManager.h"
+
+#import "SITNavigationProgress.h"
+#import "SITNavigationInterface.h"
+#import "SITNavigationError.h"
+#import "SITNavigationManager.h"
+#import "SITNavigationRequest.h"
+
+#import "SITBounds.h"
+
 
 /*!
  *  The Situm Framework (SitumSDK.framework) provides information about the buildings supporting indoor location services as well as location data of a user inside a building. The framework uses a multi-sensor approach to find the user's location inside a building.
@@ -71,7 +111,7 @@
  *  ---------------------
  *  Additionally, you will have to include some external dependencies.
  *  
- *  **RestKit** - In order to install RestKit (https://github.com/RestKit/RestKit) you should check the installation page and follow its instructions (https://github.com/RestKit/RestKit/wiki/Installing-RestKit-v0.20.x-as-a-Git-Submodule)
+ *  **RestKit** - The quickest way is to install it through Cocoapods.  In order to install RestKit (https://github.com/RestKit/RestKit) manually  you should check the installation page and follow its instructions (https://github.com/RestKit/RestKit/wiki/Installing-RestKit-v0.20.x-as-a-Git-Submodule) 
  *
  *  **GCDAsyncUdpSocket** - Under the external-dependencies folder inside the general framework folder you can see the header and implementation files you should add to your project. Drag and drop them to your project and make sure you enable the **Copy Items if needed** option.
  *
@@ -81,40 +121,14 @@
  *
  *  1. Select **AppDelegate.h** from the project navigator.
  *  2. include the line: **#import <Situm/Situm.h>** before the interface section.
- *  3. In your **didFinishLaunchingWithOptions:** method insert the call **[SITServices provideAPIKey:@"APIKey" forEmail:@"email"]** where you should replace the **@"APIKey"** string with your developer API Key you can find at http://dashboard.situm.es/accounts/users/apps.
- *
- *  2. Getting Started
- *  ==================
- *  Apart from the SITServices class which let you authenticate as a developer, the core functionality of the SitumSDK for iOS is in SITCommunicationManager and SITIndoorLocationManager.
- *
- *  Retrieving Information
- *  ----------------------
- *  Before receiving updates about the user's current location you should retieve the information of the building supporting indoor location.
- *  You can do that with the following sentences:
- *  
- *  SITCommunicationManager *communicationManager = [SITCommunicationManager sharedManager];
- *
- *  [communicationManager fetchIndoorBuildingsWithCompletion:^(NSArray *indoorBuildings, NSError *error) {
- *   }];
- *
- *  Obtaining Indoor Location Updates
- *  ---------------------------------
- *  To start receiving updates on the user's current location you use the SITIndoorLocationManager as following:
- *  
- *  SITIndoorLocationManager *indoorLocationManager = [SITIndoorLocationManager sharedManager];
- * 
- *  [indoorlocationManager startReportingIndoorLocationForBuilding:indoorBuilding toQueue: [NSOperationQueue mainQueue] withHandler:^(SITIndoorLocation *indoorLocation, NSError *error) {
- *  }];
- *
- *  The indoorBuilding object should be one of the results obtained in the previous section.
- *  You should expect one update every second.
- *  This methods returns inmediatelly.
- *
- *  The SITIndoorLocation instance received by this method contains information of the user's current location.
- *  The x and y properties of are from bottom left to top roght. This means (0.0) would be at bottom left of the level map image.
- *
- */
+ *  3. In your **didFinishLaunchingWithOptions:** method insert the call **[SITServices provideAPIKey:@"APIKey" forEmail:@"email"]** where you should replace the **@"APIKey"** string with your developer API Key you can find at https://dashboard.situm.es/accounts/profile
+ 
+ * IMPORTANT: Additional configuration:
+ * Add libc++.tbd, libz.tbd, CoreLocation and CoreMotion to Link Binary With Libraries section of the build phases tab of the Settings pane.
+ * Additionally you should include the following key in your Info.plist file:
+ * NSLocationWhenInUseUsageDescription or NSLocationAlwaysUsageDescription with the following value "Location is required to find out where you are" or a custom message that you like.
 
+ */
 
 @interface SitumSDK : NSObject
 

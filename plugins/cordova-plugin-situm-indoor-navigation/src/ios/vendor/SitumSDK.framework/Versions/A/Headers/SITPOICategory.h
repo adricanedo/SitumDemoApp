@@ -8,40 +8,41 @@
 
 #import <Foundation/Foundation.h>
 
+#import "SITResource.h"
+#import "SITMultilanguageString.h"
+#import "SITURL.h"
 /**
  *  It represents the types of POI
  */
-@interface SITPOICategory : NSObject
+@interface SITPOICategory : SITResource
 
-/**
- *  It represents a unique integer value for each category
- */
-@property (nonatomic, strong) NSNumber *identifier;
+
+@property (nonatomic, strong) SITMultilanguageString *name;
 
 /**
  *  Name of the category in English
  */
-@property (nonatomic, strong) NSString *nameEn;
+@property (nonatomic, strong) NSString *nameEn DEPRECATED_MSG_ATTRIBUTE("Use -valueForLocale method of the name property instead.");
 
 /**
  *  Name of the category in Spanish
  */
-@property (nonatomic, strong) NSString *nameEs;
+@property (nonatomic, strong) NSString *nameEs DEPRECATED_MSG_ATTRIBUTE("Use -valueForLocale method of the name property instead.");
 
 /**
- *  Unique identifier of a category
+ *  Complementary text identifier of a category
  */
 @property (nonatomic, strong) NSString *code;
 
 /**
  *  Relative URL where the icon of the category for the normal state can be retrieved
  */
-@property (nonatomic, strong) NSString *iconURL;
+@property (nonatomic, strong) SITURL *iconURL;
 
 /**
  *  Relative URL where the icon of the category for the selected state can be retrieved
  */
-@property (nonatomic, strong) NSString *selectedIconURL;
+@property (nonatomic, strong) SITURL *selectedIconURL;
 
 /**
  *  Determines the visibility of a category (YES means available to all users, NO means available to a particular user). 
