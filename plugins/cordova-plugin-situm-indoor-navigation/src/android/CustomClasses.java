@@ -297,7 +297,6 @@ class CustomClasses {
             jo.put("lastStep", routeStepToJsonObject(route.getLastStep()));
             jo.put("nodes", nodesJsonArray);
             jo.put("points", pointsJsonArray);
-            jo.put("indications", indicationsJsonArray);
             jo.put("to", pointToJsonObject(route.getTo()));
             jo.put("steps", stepsJsonArray);
 

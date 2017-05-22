@@ -256,17 +256,28 @@
 - (NSDictionary *) routeToJsonObject:(SITRoute *) route {
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
     
+    NSMutableArray *pointsJsonArray = [[NSMutableArray alloc] init];
     NSMutableArray *stepsJsonArray = [[NSMutableArray alloc] init];
     for (SITRouteStep *routeStep in route.routeSteps) {
         [stepsJsonArray addObject:[self routeStepToJsonObject:routeStep]];
+        [pointsJsonArray addObject:[self pointToJsonObject:routeStep.to]];
     }
+    [pointsJsonArray addObject:[self pointToJsonObject:route.destination]];
+    
     NSMutableArray *indicationsJsonArray = [[NSMutableArray alloc] init];
     for (SITIndication *indication in route.indications) {
         [indicationsJsonArray addObject:[self indicationToJsonObject:indication]];
     }
     
-    [jo setObject:[NSNumber numberWithDouble:coordinate.latitude] forKey:@"latitude"];
-    [jo setObject:[NSNumber numberWithDouble:coordinate.longitude] forKey:@"longitude"];
+    [jo setObject:stepsJsonArray.copy forKey:@"edges"];
+    [jo setObject:stepsJsonArray.firstObject forKey:@"firstStep"];
+    [jo setObject:[self pointToJsonObject:route.origin] forKey:@"from"];
+    [jo setObject:indicationsJsonArray forKey:@"indications"];
+    [jo setObject:stepsJsonArray.lastObject forKey:@"lastStep"];
+    [jo setObject:pointsJsonArray forKey:@"nodes"];
+    [jo setObject:pointsJsonArray forKey:@"points"];
+    [jo setObject:[self pointToJsonObject:route.destination] forKey:@"to"];
+    [jo setObject:stepsJsonArray.copy forKey:@"steps"];
     return jo.copy;
 
 }
@@ -275,22 +286,32 @@
 
 - (NSDictionary *) routeStepToJsonObject:(SITRouteStep *) routeStep {
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
-    [jo setObject:[NSNumber numberWithDouble:coordinate.latitude] forKey:@"latitude"];
-    [jo setObject:[NSNumber numberWithDouble:coordinate.longitude] forKey:@"longitude"];
+    [jo setObject:[NSNumber numberWithDouble:routeStep.stepDistance] forKey:@"distance"];
+    [jo setObject:[NSNumber numberWithDouble:routeStep.distanceToGoal] forKey:@"distanceToGoal"];
+    [jo setObject:[self pointToJsonObject:routeStep.from] forKey:@"from"];
+    [jo setObject:[NSNumber numberWithInteger:routeStep.nextStepIndex] forKey:@"nextStepIndex"];
+    [jo setObject:[self pointToJsonObject:routeStep.from] forKey:@"to"];
+    [jo setObject:[NSNumber numberWithInteger:routeStep.index] forKey:@"id"];
+    [jo setObject:[NSNumber numberWithBool:routeStep.isFirst] forKey:@"isFirst"];
+    [jo setObject:[NSNumber numberWithBool:routeStep.isLast] forKey:@"isLast"];
     return jo.copy;
-
 }
 
 - (SITRouteStep *) routeStepJsonObjectToRouteStep:(NSDictionary *) jo {
-
+    SITPoint *fromPoint = (SITPoint*)[jo objectForKey:@"from"];
+    SITPoint *toPoint = (SITPoint*)[jo objectForKey:@"to"];
+    
+    SITRouteStep *routeStep = [[SITRouteStep alloc] initWithIndex:[(NSNumber*)[jo valueForKey:@"id"] integerValue] from:fromPoint to:toPoint isFirst:[(NSNumber*)[jo valueForKey:@"isFirst"] boolValue] isLast:[(NSNumber*)[jo valueForKey:@"isLast"] boolValue] nextStepIndex:[(NSNumber*)[jo valueForKey:@"nextStepIndex"] integerValue] stepDistance:[(NSNumber*)[jo valueForKey:@"distance"] doubleValue] distanceToGoal:[(NSNumber*)[jo valueForKey:@"distanceToGoal"] doubleValue]];
+    
+    return routeStep;
 }
 
 // Indication
 
 - (NSDictionary *) indicationToJsonObject:(SITIndication *) indication {
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
-    [jo setObject:[NSNumber numberWithDouble:coordinate.latitude] forKey:@"latitude"];
-    [jo setObject:[NSNumber numberWithDouble:coordinate.longitude] forKey:@"longitude"];
+//    [jo setObject:[NSNumber numberWithDouble:coordinate.latitude] forKey:@"latitude"];
+//    [jo setObject:[NSNumber numberWithDouble:coordinate.longitude] forKey:@"longitude"];
     return jo.copy;
 
 }
@@ -303,8 +324,8 @@
 
 - (NSDictionary *) navigationProgressToJsonObject:(SITNavigationProgress *) navigationProgress {
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
-    [jo setObject:[NSNumber numberWithDouble:coordinate.latitude] forKey:@"latitude"];
-    [jo setObject:[NSNumber numberWithDouble:coordinate.longitude] forKey:@"longitude"];
+//    [jo setObject:[NSNumber numberWithDouble:coordinate.latitude] forKey:@"latitude"];
+//    [jo setObject:[NSNumber numberWithDouble:coordinate.longitude] forKey:@"longitude"];
     return jo.copy;
 
 }
