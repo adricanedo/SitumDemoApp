@@ -6,12 +6,13 @@
 //
 //
 
-#import <Foundation/Foundation.h>
-#import <SitumSDK/SitumSDK.h>
+
+#import "EnumManager.m"
 
 @interface CustomClasses : NSObject {
     // Member variables go here.
 }
++ (CustomClasses *)shared;
 
 //Building
 
@@ -84,7 +85,17 @@
 @end
 
 
+static CustomClasses *customClassesSharedObj;
+
 @implementation CustomClasses
+
++ (CustomClasses *)shared {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        customClassesSharedObj = [[CustomClasses alloc] init];
+    });
+    return customClassesSharedObj;
+}
 
 //Building
 
@@ -310,23 +321,44 @@
 
 - (NSDictionary *) indicationToJsonObject:(SITIndication *) indication {
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
-//    [jo setObject:[NSNumber numberWithDouble:coordinate.latitude] forKey:@"latitude"];
-//    [jo setObject:[NSNumber numberWithDouble:coordinate.longitude] forKey:@"longitude"];
+    [jo setObject:[NSNumber numberWithDouble:indication.horizontalDistance] forKey:@"distance"];
+    [jo setObject:[NSNumber numberWithFloat:indication.verticalDistance] forKey:@"distanceToNextLevel"];
+    [jo setObject:[EnumManager.shared indicationTypeToString:indication.action] forKey:@"indicationType"];
+    [jo setObject:[NSNumber numberWithFloat:indication.orientationChange] forKey:@"orientation"];
+    [jo setObject:[EnumManager.shared orientationTypeToString:indication.orientation] forKey:@"orientationType"];
+    [jo setObject:[NSNumber numberWithInteger:indication.destinationStepIndex] forKey:@"stepIdxDestination"];
+    [jo setObject:[NSNumber numberWithInteger:indication.originStepIndex] forKey:@"stepIdxOrigin"];
+    [jo setObject:[NSNumber numberWithBool:indication.needLevelChange] forKey:@"neededLevelChange"];
     return jo.copy;
-
 }
 
 - (SITIndication *) indicationJsonObjectToIndication:(NSDictionary *) jo {
-
+    NSInteger stepIdxOrigin = [(NSNumber*)[jo valueForKey:@"stepIdxOrigin"] integerValue];
+    NSInteger stepIdxDestination = [(NSNumber*)[jo valueForKey:@"stepIdxDestination"] integerValue];
+    float horizontalDistance = [(NSNumber*)[jo valueForKey:@"distance"] floatValue];
+    float orientationChange = [(NSNumber*)[jo valueForKey:@"orientation"] floatValue];
+    float verticalDistance = [(NSNumber*)[jo valueForKey:@"distanceToNextLevel"] floatValue];
+    kSITIndicationActions action = [EnumManager.shared stringToIndicationType:[jo valueForKey:@"indicationType"]];
+    kSITIndicationOrientation orientation = [EnumManager.shared stringToOrientationType:[jo valueForKey:@"orientationType"]];
+    
+    SITIndication *indication = [[SITIndication alloc] initWithOriginStepIndex:stepIdxOrigin destinationStepIndex:stepIdxDestination action:action horizontalDistance:horizontalDistance orientation:orientation orientationChange:orientationChange verticalDistance:verticalDistance];
+    
+    return indication;
 }
 
 // NavigationProgress
 
 - (NSDictionary *) navigationProgressToJsonObject:(SITNavigationProgress *) navigationProgress {
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
-//    [jo setObject:[NSNumber numberWithDouble:coordinate.latitude] forKey:@"latitude"];
-//    [jo setObject:[NSNumber numberWithDouble:coordinate.longitude] forKey:@"longitude"];
+    [jo setObject:[self pointToJsonObject:navigationProgress.closestPointToRoute] forKey:@"closestPointInRoute"];
+    [jo setObject:[self indicationToJsonObject:navigationProgress.currentIndication] forKey:@"currentIndication"];
+    [jo setObject:[NSNumber numberWithFloat:navigationProgress.distanceToGoal] forKey:@"distanceToEndStep"];
+    [jo setObject:[NSNumber numberWithFloat:navigationProgress.distanceToEndStep] forKey:@"distanceToGoal"];
+    [jo setObject:[NSNumber numberWithFloat:navigationProgress.timeToEndStep] forKey:@"timeToEndStep"];
+    [jo setObject:[NSNumber numberWithFloat:navigationProgress.timeToGoal] forKey:@"timeToGoal"];
     return jo.copy;
-
 }
+    
+// Enum to string
+
 @end

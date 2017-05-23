@@ -49,6 +49,7 @@
 		</config-file>
 		<source-file src="src/ios/SitumIndoorNavigation.m"/>
 		<source-file src="src/ios/CustomClasses.m"/>
+		<source-file src="src/ios/EnumManager.m"/>
 
 		<config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
 			<string>Location is required to find out where you are</string>

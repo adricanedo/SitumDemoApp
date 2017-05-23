@@ -5,10 +5,10 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
 		0C4053A43BBB4C369C3A7043 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = CE95B36CD80E45FFBEA471E6 /* CDVDevice.m */; };
+		0D8061631ED40591009D9068 /* EnumManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D8061621ED40591009D9068 /* EnumManager.m */; };
 		0D835E541ED2FFC9001F86E5 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D835E531ED2FFC9001F86E5 /* libz.1.dylib */; };
 		0F8E91D320BA4DC4907E1B73 /* CDVViewController+SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = EF79BE33BFCC4BB6828D3BB1 /* CDVViewController+SplashScreen.m */; };
 		128A52F6AFBE46C9B2D57F81 /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C0C6710C024653A5D48140 /* IonicKeyboard.m */; };
@@ -53,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		0207DA571B56EA530066E2B4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = DemoApp/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		0D8061621ED40591009D9068 /* EnumManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EnumManager.m; path = "cordova-plugin-situm-indoor-navigation/EnumManager.m"; sourceTree = "<group>"; };
 		0D835E511ED2FF8F001F86E5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		0D835E531ED2FFC9001F86E5 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		1BB84714321C4F7AA180DEA9 /* CustomClasses.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CustomClasses.m; path = "cordova-plugin-situm-indoor-navigation/CustomClasses.m"; sourceTree = "<group>"; };
@@ -76,14 +77,12 @@
 		69C0C6710C024653A5D48140 /* IonicKeyboard.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = IonicKeyboard.m; path = "ionic-plugin-keyboard/IonicKeyboard.m"; sourceTree = "<group>"; };
 		6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CDVLaunchScreen.storyboard; path = DemoApp/CDVLaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		75D26E5240C6436BAC6FDEB5 /* CDVStatusBar.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVStatusBar.m; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; };
-		786D19280B5E46809122711B /* lib.dylib */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.dylib"; name = lib.dylib; path = usr/lib/lib.dylib; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* DemoApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "DemoApp-Info.plist"; path = "DemoApp/DemoApp-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = SOURCE_ROOT; };
 		966448FDD65801DC6F8EEAB7 /* libPods-DemoApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9761F7E6550D4FBEB540FE6E /* CDVSplashScreen.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVSplashScreen.m; path = "cordova-plugin-splashscreen/CDVSplashScreen.m"; sourceTree = "<group>"; };
 		A9F41FE29CDE45A3855D1FFE /* CDVLogger.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVLogger.m; path = "cordova-plugin-console/CDVLogger.m"; sourceTree = "<group>"; };
 		B5C2C8D4012D40D4B022661D /* IonicKeyboard.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = IonicKeyboard.h; path = "ionic-plugin-keyboard/IonicKeyboard.h"; sourceTree = "<group>"; };
 		BF61656FCD0042C696AC3DF5 /* SitumSDK.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SitumSDK.framework; path = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumSDK.framework"; sourceTree = "<group>"; };
-		C734E89134F248558D3CDC5E /* libz.dylib */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		CE95B36CD80E45FFBEA471E6 /* CDVDevice.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVDevice.m; path = "cordova-plugin-device/CDVDevice.m"; sourceTree = "<group>"; };
 		D09A6F90F3C74CB180B69B7C /* CDVDevice.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVDevice.h; path = "cordova-plugin-device/CDVDevice.h"; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
@@ -177,8 +176,6 @@
 				0D835E531ED2FFC9001F86E5 /* libz.1.dylib */,
 				0D835E511ED2FF8F001F86E5 /* libz.tbd */,
 				BF61656FCD0042C696AC3DF5 /* SitumSDK.framework */,
-				786D19280B5E46809122711B /* lib.dylib */,
-				C734E89134F248558D3CDC5E /* libz.dylib */,
 				966448FDD65801DC6F8EEAB7 /* libPods-DemoApp.a */,
 			);
 			name = Frameworks;
@@ -212,6 +209,7 @@
 				D09A6F90F3C74CB180B69B7C /* CDVDevice.h */,
 				406ADE323D5849FDA9E226B6 /* SitumIndoorNavigation.m */,
 				1BB84714321C4F7AA180DEA9 /* CustomClasses.m */,
+				0D8061621ED40591009D9068 /* EnumManager.m */,
 				9761F7E6550D4FBEB540FE6E /* CDVSplashScreen.m */,
 				EF79BE33BFCC4BB6828D3BB1 /* CDVViewController+SplashScreen.m */,
 				2A6191AD5BBC41F88E5E85AE /* CDVSplashScreen.h */,
@@ -405,6 +403,7 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				D171C9BEB7444169BAE3C447 /* CDVLogger.m in Sources */,
+				0D8061631ED40591009D9068 /* EnumManager.m in Sources */,
 				0C4053A43BBB4C369C3A7043 /* CDVDevice.m in Sources */,
 				4A6BF50667684AEC817AF5F0 /* SitumIndoorNavigation.m in Sources */,
 				D5F095566753432A83399921 /* CustomClasses.m in Sources */,
