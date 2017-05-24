@@ -2,8 +2,8 @@
 
 #import <Cordova/CDV.h>
 //#import <SitumSDK/SitumSDK.h>
-#import "CustomClasses.m"
-
+#import "CustomClasses.h"
+#import "EnumManager.h"
 
 @interface SitumIndoorNavigation : CDVPlugin<SITDirectionsDelegate, SITLocationDelegate, SITNavigationDelegate> {
   // Member variables go here.

@@ -48,7 +48,9 @@
 			</feature>
 		</config-file>
 		<source-file src="src/ios/SitumIndoorNavigation.m"/>
+		<source-file src="src/ios/CustomClasses.h"/>
 		<source-file src="src/ios/CustomClasses.m"/>
+		<source-file src="src/ios/EnumManager.h"/>
 		<source-file src="src/ios/EnumManager.m"/>
 
 		<config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
@@ -64,8 +66,8 @@
 		<framework src="libz.dylib" />
 
 		<!-- <pods-config ios-min-version="8.0" use-frameworks="true">
-		</pods-config> -->
-		<pod name="RestKit" version="0.25.0" />
-		<pod name="CocoaAsyncSocket"/>
-	</platform>
+	</pods-config> -->
+	<pod name="RestKit" version="0.25.0" />
+	<pod name="CocoaAsyncSocket"/>
+</platform>
 </plugin>

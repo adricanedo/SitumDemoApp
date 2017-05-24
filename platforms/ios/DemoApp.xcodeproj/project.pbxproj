@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
 		0C4053A43BBB4C369C3A7043 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = CE95B36CD80E45FFBEA471E6 /* CDVDevice.m */; };
@@ -56,6 +57,8 @@
 		0D8061621ED40591009D9068 /* EnumManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EnumManager.m; path = "cordova-plugin-situm-indoor-navigation/EnumManager.m"; sourceTree = "<group>"; };
 		0D835E511ED2FF8F001F86E5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		0D835E531ED2FFC9001F86E5 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		0DB7D6AC1ED5458700CD4EB7 /* CustomClasses.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomClasses.h; sourceTree = "<group>"; };
+		0DB7D6AE1ED5459800CD4EB7 /* EnumManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnumManager.h; sourceTree = "<group>"; };
 		1BB84714321C4F7AA180DEA9 /* CustomClasses.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CustomClasses.m; path = "cordova-plugin-situm-indoor-navigation/CustomClasses.m"; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -209,6 +212,8 @@
 				D09A6F90F3C74CB180B69B7C /* CDVDevice.h */,
 				406ADE323D5849FDA9E226B6 /* SitumIndoorNavigation.m */,
 				1BB84714321C4F7AA180DEA9 /* CustomClasses.m */,
+				0DB7D6AC1ED5458700CD4EB7 /* CustomClasses.h */,
+				0DB7D6AE1ED5459800CD4EB7 /* EnumManager.h */,
 				0D8061621ED40591009D9068 /* EnumManager.m */,
 				9761F7E6550D4FBEB540FE6E /* CDVSplashScreen.m */,
 				EF79BE33BFCC4BB6828D3BB1 /* CDVViewController+SplashScreen.m */,
@@ -273,8 +278,13 @@
 				LastUpgradeCheck = 510;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = P428BUHYJR;
+						DevelopmentTeam = 2KB9FYS7ZE;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -434,8 +444,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ahmad Qaiyum Mohamed (2KB9FYS7ZE)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = P428BUHYJR;
+				DEVELOPMENT_TEAM = 2KB9FYS7ZE;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"DemoApp/Plugins/cordova-plugin-situm-indoor-navigation\"",
@@ -447,7 +458,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "DemoApp/DemoApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -473,9 +484,10 @@
 					"\"SystemConfiguration\"",
 					"-lstdc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.situm.demoapp;
 				PRODUCT_NAME = DemoApp;
-				PROVISIONING_PROFILE = "d2a814c5-0c4d-4044-b67d-398c03df4013";
-				PROVISIONING_PROFILE_SPECIFIER = ignisdevprofile;
+				PROVISIONING_PROFILE = "d09000f4-b214-4a81-9184-c7416341046a";
+				PROVISIONING_PROFILE_SPECIFIER = appdissitum;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -489,8 +501,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ahmad Qaiyum Mohamed (2KB9FYS7ZE)";
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2KB9FYS7ZE;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"DemoApp/Plugins/cordova-plugin-situm-indoor-navigation\"",
@@ -500,7 +513,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "DemoApp/DemoApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -526,8 +539,10 @@
 					"\"SystemConfiguration\"",
 					"-lstdc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.situm.demoapp;
 				PRODUCT_NAME = DemoApp;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "d09000f4-b214-4a81-9184-c7416341046a";
+				PROVISIONING_PROFILE_SPECIFIER = appdissitum;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

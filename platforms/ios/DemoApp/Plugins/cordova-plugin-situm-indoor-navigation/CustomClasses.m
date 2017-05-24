@@ -7,83 +7,15 @@
 //
 
 
-#import "EnumManager.m"
+#import "CustomClasses.h"
+#import "EnumManager.h"
 
-@interface CustomClasses : NSObject {
-    // Member variables go here.
+NSString* emptyStrCheck(NSString *str) {
+    if (!str || str == nil) {
+        return @"";
+    }
+    return str;
 }
-+ (CustomClasses *)shared;
-
-//Building
-
-- (NSDictionary *) buildingToJsonObject:(SITBuilding *) building;
-
-//Floor
-
-- (NSDictionary *) floorToJsonObject:(SITFloor *) floor;
-
-// POI
-
-- (NSDictionary *) poiToJsonObject:(SITPOI *) poi;
-
-// Location
-
-- (NSDictionary *) locationToJsonObject:(SITLocation *) location;
-
-- (SITLocation *) locationJsonObjectToLocation:(NSDictionary *) jo;
-
- // Coordinate
-
-- (NSDictionary *) coordinateToJsonObject:(CLLocationCoordinate2D) coordinate;
-
-- (CLLocationCoordinate2D) coordinateJsonObjectToCoordinate:(NSDictionary *) jo;
-
-// Point
-
-- (NSDictionary *) pointToJsonObject:(SITPoint *) point;
-
-- (SITPoint *) pointJsonObjectToPoint:(NSDictionary *) jo;
-
-// CartesianCoordinate
-
-- (NSDictionary *) cartesianCoordinateToJsonObject:(SITCartesianCoordinate *) cartesianCoordinate;
-
-- (SITCartesianCoordinate *) cartesianCoordinateJsonObjectToCartesianCoordinate:(NSDictionary *) jo;
-
-// Dimensions
-
-- (NSDictionary *) dimensionsToJsonObject:(SITDimensions *) dimensions;
-
- // Bounds
-
-- (NSDictionary *) boundsToJsonObject:(SITBounds) bounds;
-
-// Angle
-
-- (NSDictionary *) angleToJsonObject:(SITAngle *) angle;
-
-// Route
-
-- (NSDictionary *) routeToJsonObject:(SITRoute *) route;
-
-//RouteStep
-
-- (NSDictionary *) routeStepToJsonObject:(SITRouteStep *) routeStep;
-
-- (SITRouteStep *) routeStepJsonObjectToRouteStep:(NSDictionary *) jo;
-
-// Indication
-
-- (NSDictionary *) indicationToJsonObject:(SITIndication *) indication;
-
-- (SITIndication *) indicationJsonObjectToIndication:(NSDictionary *) jo;
-
-// NavigationProgress
-
-- (NSDictionary *) navigationProgressToJsonObject:(SITNavigationProgress *) navigationProgress;
-
-@end
-
 
 static CustomClasses *customClassesSharedObj;
 
@@ -102,18 +34,18 @@ static CustomClasses *customClassesSharedObj;
 - (NSDictionary *) buildingToJsonObject:(SITBuilding *) building {
     
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
-    [jo setObject:building.address forKey:@"address"];
+    [jo setObject:emptyStrCheck(building.address) forKey:@"address"];
     [jo setObject:[self boundsToJsonObject:building.bounds] forKey:@"bounds"];
     [jo setObject:[self boundsToJsonObject:building.rotatedBounds] forKey:@"boundsRotated"];
     [jo setObject:[self coordinateToJsonObject:building.center] forKey:@"center"];
     [jo setObject:[self dimensionsToJsonObject:building.dimensions] forKey:@"dimensions"];
-    [jo setObject:building.infoHTML forKey:@"infoHtml"];
-    [jo setObject:building.name forKey:@"name"];
-    [jo setObject:building.pictureThumbURL.direction forKey:@"pictureThumbUrl"];
-    [jo setObject:building.pictureURL.direction forKey:@"pictureUrl"];
+    [jo setObject:emptyStrCheck(building.infoHTML) forKey:@"infoHtml"];
+    [jo setObject:emptyStrCheck(building.name) forKey:@"name"];
+    [jo setObject:emptyStrCheck(building.pictureThumbURL.direction) forKey:@"pictureThumbUrl"];
+    [jo setObject:emptyStrCheck(building.pictureURL.direction) forKey:@"pictureUrl"];
     [jo setObject:[self angleToJsonObject:building.rotation] forKey:@"rotation"];
-    [jo setObject:building.userIdentifier forKey:@"userIdentifier"];
-    [jo setObject:building.identifier forKey:@"identifier"];
+    [jo setObject:emptyStrCheck(building.userIdentifier) forKey:@"userIdentifier"];
+    [jo setObject:emptyStrCheck(building.identifier) forKey:@"identifier"];
     
     return jo.copy;
 }
@@ -123,7 +55,7 @@ static CustomClasses *customClassesSharedObj;
 - (NSDictionary *) floorToJsonObject:(SITFloor *) floor {
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
     [jo setObject:[NSNumber numberWithDouble:floor.altitude] forKey:@"altitude"];
-    [jo setObject:floor.buildingIdentifier forKey:@"buildingIdentifier"];
+    [jo setObject:emptyStrCheck(floor.buildingIdentifier) forKey:@"buildingIdentifier"];
     [jo setObject:[NSNumber numberWithInteger:floor.level] forKey:@"level"];
     [jo setObject:floor.mapURL.direction forKey:@"mapUrl"];
     [jo setObject:[NSNumber numberWithDouble:floor.scale] forKey:@"scale"];
@@ -134,11 +66,11 @@ static CustomClasses *customClassesSharedObj;
 
 - (NSDictionary *) poiToJsonObject:(SITPOI *) poi {
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
-    [jo setObject:poi.buildingIdentifier forKey:@"buildingIdentifier"];
+    [jo setObject:emptyStrCheck(poi.buildingIdentifier) forKey:@"buildingIdentifier"];
     [jo setObject:[self cartesianCoordinateToJsonObject:poi.position.cartesianCoordinate] forKey:@"cartesianCoordinate"];
     [jo setObject:[self coordinateToJsonObject:poi.position.coordinate] forKey:@"coordinate"];
-    [jo setObject:poi.position.floorIdentifier forKey:@"floorIdentifier"];
-    [jo setObject:poi.name forKey:@"name"];
+    [jo setObject:emptyStrCheck(poi.position.floorIdentifier) forKey:@"floorIdentifier"];
+    [jo setObject:emptyStrCheck(poi.name) forKey:@"name"];
     [jo setObject:[self pointToJsonObject:poi.position] forKey:@"position"];
     [jo setObject:[NSNumber numberWithBool:poi.position.isIndoor] forKey:@"isIndoor"];
     [jo setObject:[NSNumber numberWithBool:poi.position.isOutdoor] forKey:@"isOutdoor"];
@@ -151,13 +83,13 @@ static CustomClasses *customClassesSharedObj;
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
     [jo setObject:[NSNumber numberWithFloat:location.accuracy] forKey:@"accuracy"];
     [jo setObject:[self angleToJsonObject:location.bearing] forKey:@"bearing"];
-    [jo setObject:location.position.buildingIdentifier forKey:@"buildingIdentifier"];
+    [jo setObject:emptyStrCheck(location.position.buildingIdentifier) forKey:@"buildingIdentifier"];
     [jo setObject:[self angleToJsonObject:location.cartesianBearing] forKey:@"cartesianBearing"];
     [jo setObject:[self cartesianCoordinateToJsonObject:location.position.cartesianCoordinate] forKey:@"cartesianCoordinate"];
     [jo setObject:[self coordinateToJsonObject:location.position.coordinate] forKey:@"coordinate"];
-    [jo setObject:location.position.floorIdentifier forKey:@"floorIdentifier"];
+    [jo setObject:emptyStrCheck(location.position.floorIdentifier) forKey:@"floorIdentifier"];
     [jo setObject:[self pointToJsonObject:location.position] forKey:@"position"];
-    [jo setObject:location.provider forKey:@"provider"];
+    [jo setObject:emptyStrCheck(location.provider) forKey:@"provider"];
     [jo setObject:[NSNumber numberWithInteger:location.quality] forKey:@"quality"];
     [jo setObject:[NSNumber numberWithDouble:location.timestamp] forKey:@"timestamp"];
     [jo setObject:[NSNumber numberWithBool:location.position.isIndoor] forKey:@"isIndoor"];
@@ -202,10 +134,10 @@ static CustomClasses *customClassesSharedObj;
 
 - (NSDictionary *) pointToJsonObject:(SITPoint *) point {
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
-    [jo setObject:point.buildingIdentifier forKey:@"buildingIdentifier"];
+    [jo setObject:emptyStrCheck(point.buildingIdentifier) forKey:@"buildingIdentifier"];
     [jo setObject:[self cartesianCoordinateToJsonObject:point.cartesianCoordinate] forKey:@"cartesianCoordinate"];
     [jo setObject:[self coordinateToJsonObject:point.coordinate] forKey:@"coordinate"];
-    [jo setObject:point.floorIdentifier forKey:@"floorIdentifier"];
+    [jo setObject:emptyStrCheck(point.floorIdentifier) forKey:@"floorIdentifier"];
     [jo setObject:[NSNumber numberWithDouble:point.isIndoor] forKey:@"isIndoor"];
     [jo setObject:[NSNumber numberWithDouble:point.isOutdoor] forKey:@"isOutdoor"];
     return jo.copy;
@@ -359,6 +291,8 @@ static CustomClasses *customClassesSharedObj;
     return jo.copy;
 }
     
-// Enum to string
+// check nil string
 
 @end
+
+
