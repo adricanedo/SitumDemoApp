@@ -24666,6 +24666,13 @@ ion-navbar.toolbar {
   }
 }
 
+.menu-devider-line {
+  position: relative;
+  height: 1px;
+  width: 100%;
+  float: left;
+}
+
 page-location-info .indication-meessage {
   white-space: normal;
   width: 100%;
@@ -24673,4 +24680,31 @@ page-location-info .indication-meessage {
   height: auto;
   font-size: 18px;
   text-align: center;
+}
+
+page-location-info .map-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+page-location-info .searchbar {
+  z-index: 11;
+}
+
+page-location-info .logo_img_bottom {
+  width: 80px;
+  height: auto;
+  float: right;
+}
+
+page-location-info .search-list-container {
+  z-index: 11;
+  position: relative;
+  height: 150px;
+  overflow-y: scroll;
+  background-color: #ffffff;
+  margin: 0 8px;
 }

@@ -37183,7 +37183,7 @@ function flattenUnsubscriptionErrors(errors) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__components_modal_modal_controller__ = __webpack_require__(135);
 /* unused harmony reexport ModalController */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__components_nav_nav__ = __webpack_require__(68);
-/* unused harmony reexport Nav */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_54__components_nav_nav__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__components_nav_nav_pop__ = __webpack_require__(66);
 /* unused harmony reexport NavPop */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__components_nav_nav_pop_anchor__ = __webpack_require__(137);
@@ -37300,7 +37300,7 @@ function flattenUnsubscriptionErrors(errors) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_110__platform_dom_controller__ = __webpack_require__(8);
 /* unused harmony reexport DomController */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_111__platform_platform__ = __webpack_require__(3);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_111__platform_platform__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_111__platform_platform__["a"]; });
 /* unused harmony reexport setupPlatform */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_112__tap_click_haptic__ = __webpack_require__(35);
 /* unused harmony reexport Haptic */
@@ -37345,7 +37345,7 @@ function flattenUnsubscriptionErrors(errors) {
 /* unused harmony reexport GestureDelegate */
 /* unused harmony reexport BlockerDelegate */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_127__util_events__ = __webpack_require__(181);
-/* unused harmony reexport Events */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_127__util_events__["b"]; });
 /* unused harmony reexport setupEvents */
 /* unused harmony reexport setupProvideEvents */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_128__util_ionic_error_handler__ = __webpack_require__(234);
@@ -55672,11 +55672,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var LocationInfoPage = (function () {
-    function LocationInfoPage(loadingCtrl, navCtrl, navParams, zone) {
+    function LocationInfoPage(loadingCtrl, navCtrl, navParams, zone, events) {
+        var _this = this;
         this.loadingCtrl = loadingCtrl;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.zone = zone;
+        this.events = events;
         this.locationErrorMsg = "";
         this.navigationIndicationsMessage = "";
         this.status = "Not available";
@@ -55684,11 +55686,34 @@ var LocationInfoPage = (function () {
         this.selectedPoiName = "";
         this.routesPolylines = [];
         this.mapZoom = 18;
+        this.isShowSearchList = false;
+        this.searchPlaceHolderText = "Search Building";
+        this.searchType = "Building";
+        this.buildingsArray = [];
+        this.poisArray = [];
+        this.buildingFilterList = [];
+        this.poiFilterList = [];
         this.selectedBuilding = navParams.get('building');
+        events.subscribe('MenuItemChange', function (userEventData) {
+            _this.isShowSearchList = false;
+            _this.searchBar = "";
+            if (userEventData.type == 'Building') {
+                _this.searchPlaceHolderText = "Search Building";
+                _this.searchType = userEventData.type;
+            }
+            else if (userEventData.type == 'POI') {
+                if (_this.selectedBuilding) {
+                    _this.searchType = userEventData.type;
+                    _this.searchPlaceHolderText = "Search POI";
+                }
+            }
+            else if (userEventData.type == 'Start Navigate') {
+            }
+        });
     }
     LocationInfoPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad LocationInfoPage');
-        this.getPOIs();
+        this.getBuildings();
     };
     LocationInfoPage.prototype.ngAfterViewInit = function () {
         var ref = this;
@@ -55704,6 +55729,81 @@ var LocationInfoPage = (function () {
     };
     LocationInfoPage.prototype.hideLoading = function () {
         this.loading.dismiss();
+    };
+    LocationInfoPage.prototype.getBuildings = function () {
+        var ref = this;
+        ref.buildingsArray = JSON.parse('[{"dimensions":{"width":134.936103199873,"height":87.6799409001345},"rotation":{"degrees":-106.8064651489258,"radians":-1.864124417304993},"pictureUrl":"","boundsRotated":{"northEast":{"longitude":101.6093212324227,"latitude":3.156312175006871},"southWest":{"longitude":101.6097253601939,"latitude":3.15770960327443},"northWest":{"longitude":101.6089702219405,"latitude":3.157480336699061},"southEast":{"longitude":101.6100763706761,"latitude":3.15654144158224}},"identifier":"1431","address":"","infoHtml":"","userIdentifier":"","center":{"longitude":101.609523296356,"latitude":3.15701088914065},"pictureThumbUrl":"","bounds":{"northEast":{"longitude":101.6101302874394,"latitude":3.157407352389088},"southWest":{"longitude":101.6089163052726,"latitude":3.156614425892212},"northWest":{"longitude":101.6089163052726,"latitude":3.157407352389088},"southEast":{"longitude":101.6101302874394,"latitude":3.156614425892212}},"name":"eCurve Damansara"},{"dimensions":{"width":79.9909904989713,"height":105.702841045857},"rotation":{"degrees":-323.5189208984375,"radians":-5.646470546722412},"pictureUrl":"","boundsRotated":{"northEast":{"longitude":75.8840625674759,"latitude":22.7345601454708},"southWest":{"longitude":75.88407688417763,"latitude":22.7333632014136},"northWest":{"longitude":75.88468869260144,"latitude":22.73413067926199},"southEast":{"longitude":75.88345075905208,"latitude":22.7337926676224}},"identifier":"1685","address":"","infoHtml":"","userIdentifier":"","center":{"longitude":75.8840697258711,"latitude":22.7339616734422},"pictureThumbUrl":"","bounds":{"northEast":{"longitude":75.88445908137355,"latitude":22.73443892898915},"southWest":{"longitude":75.88368037036865,"latitude":22.73348441789525},"northWest":{"longitude":75.88368037036865,"latitude":22.73443892898915},"southEast":{"longitude":75.88445908137355,"latitude":22.73348441789525}},"name":"Patidar\'sHouse"},{"dimensions":{"width":381.967303904424,"height":199.744691825801},"rotation":{"degrees":-327.6165466308594,"radians":-5.717987537384033},"pictureUrl":"","boundsRotated":{"northEast":{"longitude":101.7123902174465,"latitude":3.150688469597545},"southWest":{"longitude":101.7143297596039,"latitude":3.147312957824195},"northWest":{"longitude":101.7152922195989,"latitude":3.148838410540405},"southEast":{"longitude":101.7114277574515,"latitude":3.149163016881335}},"identifier":"1413","address":"168, Jalan Bukit Bintang, Bukit Bintang, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia","infoHtml":"<p>Pavilion Kuala Lumpur contains over 450 retail shops that are spread across seven levels. There are a number of double-storey&nbsp;flagship&nbsp;stores, of which some are street-front fashion boutiques which constitute the shopping mall.</p>","userIdentifier":"","center":{"longitude":101.713359989226,"latitude":3.14900071371087},"pictureThumbUrl":"","bounds":{"northEast":{"longitude":101.7150782028459,"latitude":3.149903901381587},"southWest":{"longitude":101.7116417756061,"latitude":3.148097526040153},"northWest":{"longitude":101.7116417756061,"latitude":3.149903901381587},"southEast":{"longitude":101.7150782028459,"latitude":3.148097526040153}},"name":"Pavilion Bukit Bintang KL"}]');
+        if (window.plugins && window.plugins.SitumIndoorNavigation) {
+            ref.showLoading("Fetching buildings");
+            window.plugins.SitumIndoorNavigation.fetchBuildings(function (res) {
+                console.log("RESPONSE " + JSON.stringify(res));
+                ref.hideLoading();
+                ref.zone.run(function () {
+                    ref.buildingsArray = res;
+                });
+            }, function (error) {
+                ref.hideLoading();
+                console.log("Error " + error);
+            });
+        }
+    };
+    LocationInfoPage.prototype.getPOIs = function () {
+        var ref = this;
+        ref.poisArray = JSON.parse(' [{"floorIdentifier":"2395","position":{"isIndoor":1,"buildingIdentifier":"1685","coordinate":{"longitude":75.884183049202,"latitude":22.7341725669465},"floorIdentifier":"2395","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"isOutdoor":0},"isIndoor":true,"cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"isOutdoor":false,"buildingIdentifier":"1685","name":"Flat 1","coordinate":{"longitude":75.884183049202,"latitude":22.7341725669465}},{"floorIdentifier":"2395","position":{"isIndoor":1,"buildingIdentifier":"1685","coordinate":{"longitude":75.8839282393456,"latitude":22.7341329857857},"floorIdentifier":"2395","cartesianCoordinate":{"x":17.0300720309583,"y":59.4640739405727},"isOutdoor":0},"isIndoor":true,"cartesianCoordinate":{"x":17.0300720309583,"y":59.4640739405727},"isOutdoor":false,"buildingIdentifier":"1685","name":"Badroom","coordinate":{"longitude":75.8839282393456,"latitude":22.7341329857857}}]');
+        var success = function (res) {
+            ref.hideLoading();
+            ref.zone.run(function () {
+                ref.poisArray = res;
+            });
+            console.log("Response POIS " + JSON.stringify(res));
+            ref.startLocationUpdate();
+        };
+        var onError = function (error) {
+            ref.hideLoading;
+            ref.startLocationUpdate();
+            console.log("POI Fecth error " + error);
+        };
+        if (window.plugins && window.plugins.SitumIndoorNavigation) {
+            this.showLoading("Fetching Point of interests");
+            window.plugins.SitumIndoorNavigation.fetchIndoorPOIsFromBuilding(ref.selectedBuilding, success, onError);
+        }
+    };
+    /*************************************************************************************/
+    /****************************  Search Bar Handle  ***********************************/
+    /*************************************************************************************/
+    LocationInfoPage.prototype.onInput = function (event) {
+        if (this.searchBar.length > 0) {
+            if (this.searchType == 'Building') {
+                this.buildingFilterList = this.buildingsArray;
+            }
+            else if (this.searchType == 'POI') {
+                this.poiFilterList = this.poisArray;
+            }
+            this.isShowSearchList = true;
+        }
+        else {
+            this.buildingFilterList = [];
+            this.poiFilterList = [];
+            this.isShowSearchList = false;
+        }
+    };
+    LocationInfoPage.prototype.onClear = function (event) {
+        this.buildingFilterList = [];
+        this.isShowSearchList = false;
+    };
+    LocationInfoPage.prototype.onCancel = function (event) {
+        this.buildingFilterList = [];
+    };
+    LocationInfoPage.prototype.buildingSelect = function (item) {
+        this.selectedBuilding = item;
+        this.buildingFilterList = [];
+        this.isShowSearchList = false;
+        this.getPOIs();
+    };
+    LocationInfoPage.prototype.poiSelect = function (item) {
+        this.selectedPOI = item;
+        this.poiFilterList = [];
+        this.isShowSearchList = false;
     };
     LocationInfoPage.prototype.startLocationUpdate = function () {
         var isMapCenterSet = false;
@@ -55736,26 +55836,6 @@ var LocationInfoPage = (function () {
         };
         if (window.plugins && window.plugins.SitumIndoorNavigation) {
             window.plugins.SitumIndoorNavigation.startLocationUpdate(this.selectedBuilding, onLocationChanged, onStatusChanged, onError);
-        }
-    };
-    LocationInfoPage.prototype.getPOIs = function () {
-        var ref = this;
-        var success = function (res) {
-            ref.hideLoading();
-            ref.zone.run(function () {
-                ref.poisList = res;
-            });
-            console.log("Response POIS " + JSON.stringify(res));
-            ref.startLocationUpdate();
-        };
-        var onError = function (error) {
-            ref.hideLoading;
-            ref.startLocationUpdate();
-            console.log("POI Fecth error " + error);
-        };
-        if (window.plugins && window.plugins.SitumIndoorNavigation) {
-            this.showLoading("Fetching Point of interests");
-            window.plugins.SitumIndoorNavigation.fetchIndoorPOIsFromBuilding(ref.selectedBuilding, success, onError);
         }
     };
     LocationInfoPage.prototype.showMap = function () {
@@ -55875,11 +55955,12 @@ var LocationInfoPage = (function () {
 LocationInfoPage = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPage */])(),
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
-        selector: 'page-location-info',template:/*ion-inline-start:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\location-info\location-info.html"*/'<!--\n\n  Generated template for the LocationInfoPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n	<ion-navbar>\n\n		<ion-title>Buildig Info</ion-title>\n\n	</ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n	<ion-list>  \n\n		<ion-item><b>Status : </b> {{status}}</ion-item>\n\n		<ion-item><b>Building : </b> {{selectedBuilding.name}}</ion-item>\n\n		<ion-item>\n\n			<ion-label>Select POI</ion-label>\n\n			<ion-select [(ngModel)]="selectedPoiName">\n\n				<ion-option value="{{item.name}}" *ngFor="let item of poisList">{{item.name}}</ion-option>      \n\n			</ion-select>\n\n		</ion-item>\n\n\n\n		\n\n\n\n		<ion-item *ngIf="locationErrorMsg.length > 0" style="color:#ff0000;">\n\n			Location - {{locationErrorMsg}}\n\n		</ion-item>\n\n\n\n		\n\n\n\n		<button ion-button full *ngIf="selectedPoiName.length>0" (click)="showRoute()">Show Route</button>\n\n		<!-- <button ion-button full *ngIf="currentRoute" (click)="showRoute()">Show Indications</button> -->\n\n\n\n		<ion-item>\n\n			<div id="map_canvas" style="width: 100%;height: 80vw;"></div>\n\n		</ion-item>\n\n\n\n		<ion-item *ngIf="navigationIndicationsMessage.length > 0">\n\n			Navigation - <p class="indication-meessage" > {{navigationIndicationsMessage}}</p>\n\n		</ion-item>\n\n		<button ion-button full *ngIf="currentRoute" (click)="startNavigation()">Start Navigation</button>\n\n	</ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\location-info\location-info.html"*/,
+        selector: 'page-location-info',template:/*ion-inline-start:"/Users/ignisit/Downloads/tools/SwiftyCam-masters/DemoApp/src/pages/location-info/location-info.html"*/'<!--\n  Generated template for the LocationInfoPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n	<ion-navbar hideBackButton="true">\n		<button ion-button menuToggle>\n			<ion-icon name="menu"></ion-icon>\n		</button>\n		<ion-title>Building</ion-title>\n	</ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n	<ion-searchbar \n	showCancelButton="false" \n	debounce="100" \n	placeholder="{{searchPlaceHolderText}}" \n	class="searchbar"\n	[(ngModel)]="searchBar"\n	(ionCancel)="onCancel($event)"\n	(ionInput)="onInput($event)"\n	(ionClear)="onClear($event)">\n</ion-searchbar>\n<div class="search-list-container" *ngIf="isShowSearchList">\n	<ion-list *ngIf="searchType == \'Building\'">\n		<ion-item *ngFor="let item of buildingFilterList" (click)="buildingSelect(item)">\n			{{ item.name }}\n		</ion-item>		\n	</ion-list>\n\n	<ion-list *ngIf="searchType == \'POI\'" >\n		<ion-item *ngFor="let item of poiFilterList" (click)="poiSelect(item)">\n			{{ item.name }}\n		</ion-item>\n	</ion-list>\n</div>\n	<!-- <ion-list>  \n		<ion-item><b>Status : </b> {{status}}</ion-item>\n		<ion-item><b>Building : </b> {{selectedBuilding.name}}</ion-item>\n		<ion-item>\n			<ion-label>Select POI</ion-label>\n			<ion-select [(ngModel)]="selectedPoiName">\n				<ion-option value="{{item.name}}" *ngFor="let item of poisList">{{item.name}}</ion-option>      \n			</ion-select>\n		</ion-item>\n\n		\n\n		<ion-item *ngIf="locationErrorMsg.length > 0" style="color:#ff0000;">\n			Location - {{locationErrorMsg}}\n		</ion-item>\n\n		\n\n		<button ion-button full *ngIf="selectedPoiName.length>0" (click)="showRoute()">Show Route</button>\n		<button ion-button full *ngIf="currentRoute" (click)="showRoute()">Show Indications</button>\n\n		<ion-item>\n			<div id="map_canvas" style="width: 100%;height: 80vw;"></div>\n		</ion-item>\n\n		<ion-item *ngIf="navigationIndicationsMessage.length > 0">\n			Navigation - <p class="indication-meessage" > {{navigationIndicationsMessage}}</p>\n		</ion-item>\n		<button ion-button full *ngIf="currentRoute" (click)="startNavigation()">Start Navigation</button>\n	</ion-list> -->\n\n	<div class="map-container">\n		<div id="map_canvas" style="width: 100%;height: 100vh;"></div>\n	</div>\n\n</ion-content>\n<ion-footer>\n	<ion-toolbar padding>\n		{{selectedBuilding?selectedBuilding.name:\'Building not selected\'}}\n\n		<img class="logo_img_bottom" src="../assets/situm_logo.png" />\n	</ion-toolbar>\n</ion-footer>\n'/*ion-inline-end:"/Users/ignisit/Downloads/tools/SwiftyCam-masters/DemoApp/src/pages/location-info/location-info.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* NgZone */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* NgZone */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* NgZone */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Events */]) === "function" && _e || Object])
 ], LocationInfoPage);
 
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=location-info.js.map
 
 /***/ }),
@@ -55960,9 +56041,9 @@ var HomePage = (function () {
 }());
 HomePage = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\home\home.html"*/'<ion-header>\n\n	<ion-navbar>\n\n		<ion-title>\n\n			Situm Indoor Navigation\n\n		</ion-title>\n\n	</ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n	<h1 padding>\n\n		Select Your Building\n\n	</h1>\n\n	<ion-list>\n\n	<!-- <ion-item [navPush]="locationInfoPage" [navParams]="{\'building\':{\'dta\':1}}">\n\n		title <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" item-right ></ion-icon>\n\n	</ion-item> -->\n\n		<ion-item *ngFor="let item of buildings"  [navPush]="locationInfoPage" [navParams]="{\'building\':item}">\n\n			{{ item.name }}\n\n			  <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" item-right></ion-icon>\n\n		</ion-item>\n\n	</ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\home\home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"/Users/ignisit/Downloads/tools/SwiftyCam-masters/DemoApp/src/pages/home/home.html"*/'<ion-header>\n	<ion-navbar>\n	<button ion-button menuToggle>\n			<ion-icon name="menu"></ion-icon>\n		</button>\n		<ion-title>\n			Situm Indoor Navigation\n		</ion-title>\n	</ion-navbar>\n</ion-header>\n\n<ion-content>\n	<h1 padding>\n		Select Your Building\n	</h1>\n	<ion-list>\n	<ion-item [navPush]="locationInfoPage" [navParams]="{\'building\':{\'dta\':1}}">\n		title <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" item-right ></ion-icon>\n	</ion-item>\n		<ion-item *ngFor="let item of buildings"  [navPush]="locationInfoPage" [navParams]="{\'building\':item}">\n			{{ item.name }}\n			  <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" item-right></ion-icon>\n		</ion-item>\n	</ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/ignisit/Downloads/tools/SwiftyCam-masters/DemoApp/src/pages/home/home.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* NgZone */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* NgZone */]])
 ], HomePage);
 
 //# sourceMappingURL=home.js.map
@@ -74676,7 +74757,7 @@ var platformBrowserDynamic = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_location_info_location_info__ = __webpack_require__(98);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -74693,21 +74774,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var MyApp = (function () {
-    function MyApp(platform, statusBar, splashScreen) {
-        this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */];
+    function MyApp(platform, statusBar, splashScreen, events) {
+        var _this = this;
+        this.events = events;
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_location_info_location_info__["a" /* LocationInfoPage */];
         platform.ready().then(function () {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             statusBar.styleDefault();
             splashScreen.hide();
+            _this.pages = [
+                { title: 'Building', icon: 'ios-home-outline' },
+                { title: 'POI', icon: 'ios-map-outline' },
+                { title: 'Start Navigate', icon: 'navigate' }
+            ];
         });
     }
+    MyApp.prototype.openPage = function (page) {
+        this.selectedMenuItem = page.title;
+        this.events.publish('MenuItemChange', { 'type': page.title });
+    };
     return MyApp;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */]),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */])
+], MyApp.prototype, "nav", void 0);
 MyApp = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({template:/*ion-inline-start:"F:\Projects\SitumPlugin\SitumDemoApp\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n\n'/*ion-inline-end:"F:\Projects\SitumPlugin\SitumDemoApp\src\app\app.html"*/
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({template:/*ion-inline-start:"/Users/ignisit/Downloads/tools/SwiftyCam-masters/DemoApp/src/app/app.html"*/'<ion-menu  type="push" [content]="content">\n  <ion-header>\n    <ion-title padding>Situm Demo App</ion-title>\n  </ion-header>\n\n  <ion-content class="side-menu side-menu-gradient">\n    <ion-list>\n      <label *ngFor="let page of pages">\n          <div class="menu-devider-line" ></div>\n          <button menuClose ion-item (click)="openPage(page)" [ngClass]="{\'menu-selected\': (page.title === selectedMenuItem)}">\n            <ion-icon class="icon-menu" name="{{page.icon}}"></ion-icon> \n            <span class="title-menu">{{page.title}}</span>\n          </button>\n      </label>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>   \n'/*ion-inline-end:"/Users/ignisit/Downloads/tools/SwiftyCam-masters/DemoApp/src/app/app.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Events */]])
 ], MyApp);
 
 //# sourceMappingURL=app.component.js.map

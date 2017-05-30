@@ -6,15 +6,41 @@
 -->
 <ion-header>
 
-	<ion-navbar>
-		<ion-title>Buildig Info</ion-title>
+	<ion-navbar hideBackButton="true">
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>Building</ion-title>
 	</ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-	<ion-list>  
+	<ion-searchbar 
+	showCancelButton="false" 
+	debounce="100" 
+	placeholder="{{searchPlaceHolderText}}" 
+	class="searchbar"
+	[(ngModel)]="searchBar"
+	(ionCancel)="onCancel($event)"
+	(ionInput)="onInput($event)"
+	(ionClear)="onClear($event)">
+</ion-searchbar>
+<div class="search-list-container" *ngIf="isShowSearchList">
+	<ion-list *ngIf="searchType == 'Building'">
+		<ion-item *ngFor="let item of buildingFilterList" (click)="buildingSelect(item)">
+			{{ item.name }}
+		</ion-item>		
+	</ion-list>
+
+	<ion-list *ngIf="searchType == 'POI'" >
+		<ion-item *ngFor="let item of poiFilterList" (click)="poiSelect(item)">
+			{{ item.name }}
+		</ion-item>
+	</ion-list>
+</div>
+	<!-- <ion-list>  
 		<ion-item><b>Status : </b> {{status}}</ion-item>
 		<ion-item><b>Building : </b> {{selectedBuilding.name}}</ion-item>
 		<ion-item>
@@ -33,7 +59,7 @@
 		
 
 		<button ion-button full *ngIf="selectedPoiName.length>0" (click)="showRoute()">Show Route</button>
-		<!-- <button ion-button full *ngIf="currentRoute" (click)="showRoute()">Show Indications</button> -->
+		<button ion-button full *ngIf="currentRoute" (click)="showRoute()">Show Indications</button>
 
 		<ion-item>
 			<div id="map_canvas" style="width: 100%;height: 80vw;"></div>
@@ -43,5 +69,17 @@
 			Navigation - <p class="indication-meessage" > {{navigationIndicationsMessage}}</p>
 		</ion-item>
 		<button ion-button full *ngIf="currentRoute" (click)="startNavigation()">Start Navigation</button>
-	</ion-list>
+	</ion-list> -->
+
+	<div class="map-container">
+		<div id="map_canvas" style="width: 100%;height: 100vh;"></div>
+	</div>
+
 </ion-content>
+<ion-footer>
+	<ion-toolbar padding>
+		{{selectedBuilding?selectedBuilding.name:'Building not selected'}}
+
+		<img class="logo_img_bottom" src="../assets/situm_logo.png" />
+	</ion-toolbar>
+</ion-footer>

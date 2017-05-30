@@ -7,4 +7,31 @@ page-location-info {
     font-size: 18px;
     text-align: center;
 	}
+
+	.map-container {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+
+	.searchbar {
+		z-index: 11;
+	}
+
+	.logo_img_bottom {
+		width: 80px;
+		height: auto;
+		float: right;
+	}
+
+	.search-list-container{
+		z-index: 11;
+		position: relative;
+		height: 150px;
+		overflow-y: scroll;
+		background-color: #ffffff;
+		margin: 0 8px;
+	}
 }

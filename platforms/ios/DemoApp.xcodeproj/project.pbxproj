@@ -279,7 +279,7 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = 2KB9FYS7ZE;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -445,8 +445,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ahmad Qaiyum Mohamed (2KB9FYS7ZE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 2KB9FYS7ZE;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"DemoApp/Plugins/cordova-plugin-situm-indoor-navigation\"",
@@ -486,8 +487,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.situm.demoapp;
 				PRODUCT_NAME = DemoApp;
-				PROVISIONING_PROFILE = "d09000f4-b214-4a81-9184-c7416341046a";
-				PROVISIONING_PROFILE_SPECIFIER = appdissitum;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -502,8 +503,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ahmad Qaiyum Mohamed (2KB9FYS7ZE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = 2KB9FYS7ZE;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"DemoApp/Plugins/cordova-plugin-situm-indoor-navigation\"",
@@ -541,8 +543,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.situm.demoapp;
 				PRODUCT_NAME = DemoApp;
-				PROVISIONING_PROFILE = "d09000f4-b214-4a81-9184-c7416341046a";
-				PROVISIONING_PROFILE_SPECIFIER = appdissitum;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
