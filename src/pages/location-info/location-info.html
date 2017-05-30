@@ -18,6 +18,7 @@
 
 <ion-content>
 	<ion-searchbar 
+	(ionFocus)="searchBarOnFocus()"
 	showCancelButton="false" 
 	debounce="100" 
 	placeholder="{{searchPlaceHolderText}}" 

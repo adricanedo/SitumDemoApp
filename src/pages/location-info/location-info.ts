@@ -38,7 +38,7 @@ declare var google: any;
 
  	isShowSearchList = false;
 
- 	searchBar:any;
+ 	searchBar:any = "";
 
  	searchPlaceHolderText = "Search Building";
  	searchType = "Building";
@@ -95,10 +95,10 @@ declare var google: any;
 
  	getBuildings() {
  		let ref = this;
-
+ 		// Test Purpose
  		ref.buildingsArray = JSON.parse('[{"dimensions":{"width":134.936103199873,"height":87.6799409001345},"rotation":{"degrees":-106.8064651489258,"radians":-1.864124417304993},"pictureUrl":"","boundsRotated":{"northEast":{"longitude":101.6093212324227,"latitude":3.156312175006871},"southWest":{"longitude":101.6097253601939,"latitude":3.15770960327443},"northWest":{"longitude":101.6089702219405,"latitude":3.157480336699061},"southEast":{"longitude":101.6100763706761,"latitude":3.15654144158224}},"identifier":"1431","address":"","infoHtml":"","userIdentifier":"","center":{"longitude":101.609523296356,"latitude":3.15701088914065},"pictureThumbUrl":"","bounds":{"northEast":{"longitude":101.6101302874394,"latitude":3.157407352389088},"southWest":{"longitude":101.6089163052726,"latitude":3.156614425892212},"northWest":{"longitude":101.6089163052726,"latitude":3.157407352389088},"southEast":{"longitude":101.6101302874394,"latitude":3.156614425892212}},"name":"eCurve Damansara"},{"dimensions":{"width":79.9909904989713,"height":105.702841045857},"rotation":{"degrees":-323.5189208984375,"radians":-5.646470546722412},"pictureUrl":"","boundsRotated":{"northEast":{"longitude":75.8840625674759,"latitude":22.7345601454708},"southWest":{"longitude":75.88407688417763,"latitude":22.7333632014136},"northWest":{"longitude":75.88468869260144,"latitude":22.73413067926199},"southEast":{"longitude":75.88345075905208,"latitude":22.7337926676224}},"identifier":"1685","address":"","infoHtml":"","userIdentifier":"","center":{"longitude":75.8840697258711,"latitude":22.7339616734422},"pictureThumbUrl":"","bounds":{"northEast":{"longitude":75.88445908137355,"latitude":22.73443892898915},"southWest":{"longitude":75.88368037036865,"latitude":22.73348441789525},"northWest":{"longitude":75.88368037036865,"latitude":22.73443892898915},"southEast":{"longitude":75.88445908137355,"latitude":22.73348441789525}},"name":"Patidar\'sHouse"},{"dimensions":{"width":381.967303904424,"height":199.744691825801},"rotation":{"degrees":-327.6165466308594,"radians":-5.717987537384033},"pictureUrl":"","boundsRotated":{"northEast":{"longitude":101.7123902174465,"latitude":3.150688469597545},"southWest":{"longitude":101.7143297596039,"latitude":3.147312957824195},"northWest":{"longitude":101.7152922195989,"latitude":3.148838410540405},"southEast":{"longitude":101.7114277574515,"latitude":3.149163016881335}},"identifier":"1413","address":"168, Jalan Bukit Bintang, Bukit Bintang, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia","infoHtml":"<p>Pavilion Kuala Lumpur contains over 450 retail shops that are spread across seven levels. There are a number of double-storey&nbsp;flagship&nbsp;stores, of which some are street-front fashion boutiques which constitute the shopping mall.</p>","userIdentifier":"","center":{"longitude":101.713359989226,"latitude":3.14900071371087},"pictureThumbUrl":"","bounds":{"northEast":{"longitude":101.7150782028459,"latitude":3.149903901381587},"southWest":{"longitude":101.7116417756061,"latitude":3.148097526040153},"northWest":{"longitude":101.7116417756061,"latitude":3.149903901381587},"southEast":{"longitude":101.7150782028459,"latitude":3.148097526040153}},"name":"Pavilion Bukit Bintang KL"}]');
+ 		
  		if(window.plugins && window.plugins.SitumIndoorNavigation) {
-
  			ref.showLoading("Fetching buildings");
  			window.plugins.SitumIndoorNavigation.fetchBuildings(function(res){
  				console.log("RESPONSE "+JSON.stringify(res));
@@ -145,18 +145,17 @@ declare var google: any;
  	/*************************************************************************************/
  	
  	onInput(event) {
- 		if(this.searchBar.length > 0) {
- 			if(this.searchType == 'Building') {
- 				this.buildingFilterList = this.buildingsArray;
- 			} else if(this.searchType  == 'POI') {
- 				this.poiFilterList = this.poisArray;
- 			}
- 			this.isShowSearchList = true;
- 		} else {
- 			this.buildingFilterList = [];
- 			this.poiFilterList = [];
- 			this.isShowSearchList = false;
+ 		let ref = this;
+ 		if(this.searchType == 'Building') {
+
+ 			var filteredArray = this.buildingsArray.filter(function(item) {
+ 				return item.name.toLowerCase().indexOf(ref.searchBar.toLowerCase()) !== -1;
+ 			});
+ 			this.buildingFilterList = filteredArray;
+ 		} else if(this.searchType  == 'POI') {
+ 			this.poiFilterList = this.poisArray;
  		}
+ 		this.isShowSearchList = true;
  	}
 
  	onClear(event) {
@@ -168,15 +167,28 @@ declare var google: any;
  		this.buildingFilterList  = [];
  	}
  	
+ 	searchBarOnFocus() {
+ 		this.onInput("");
+ 		console.log("On Focus");
+ 	}
+
  	buildingSelect(item) {
+ 		this.searchBar = item.name;
  		this.selectedBuilding = item;
 
  		this.buildingFilterList = [];
  		this.isShowSearchList = false;
 
+ 		let center = item.center;
+
+ 		let ionic = new google.maps.LatLng(center.latitude, center.longitude);
+ 		this.map.setCenter(ionic);
+
  		this.getPOIs();
  	}
  	poiSelect(item) {
+ 		this.searchBar = item.name;
+
  		this.selectedPOI = item;
 
  		this.poiFilterList = [];

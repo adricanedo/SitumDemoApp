@@ -24703,8 +24703,13 @@ page-location-info .logo_img_bottom {
 page-location-info .search-list-container {
   z-index: 11;
   position: relative;
-  height: 150px;
+  height: auto;
+  max-height: 150px;
   overflow-y: scroll;
   background-color: #ffffff;
   margin: 0 8px;
+}
+
+page-location-info .search-list-container ion-list {
+  margin: 0;
 }

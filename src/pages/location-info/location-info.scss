@@ -29,9 +29,14 @@ page-location-info {
 	.search-list-container{
 		z-index: 11;
 		position: relative;
-		height: 150px;
+		height: auto;
+		max-height: 150px;
 		overflow-y: scroll;
 		background-color: #ffffff;
 		margin: 0 8px;
+
+		ion-list {
+			margin:0;
+		}
 	}
 }
