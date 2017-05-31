@@ -24684,8 +24684,8 @@ page-location-info .indication-meessage {
 
 page-location-info .map-container {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 20;
+  bottom: 20;
   left: 0;
   right: 0;
 }
@@ -24698,6 +24698,27 @@ page-location-info .logo_img_bottom {
   width: 80px;
   height: auto;
   float: right;
+}
+
+page-location-info .floor-list {
+  position: absolute;
+  bottom: 30px;
+  left: 5px;
+  width: 40px;
+  height: auto;
+  background-color: #ffffff;
+}
+
+page-location-info .floor-list ion-list {
+  margin: 0;
+}
+
+page-location-info .floor-list ion-list .item {
+  padding: 0;
+}
+
+page-location-info .floor-list ion-list .item .label {
+  padding-left: 10px;
 }
 
 page-location-info .search-list-container {

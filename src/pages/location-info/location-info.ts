@@ -18,6 +18,8 @@ declare var google: any;
  export class LocationInfoPage {
  	selectedBuilding:any;
  	currentLocation:any;
+ 	slectedFloor:any;
+ 	selectedPOI:any;
  	
  	locationErrorMsg = "";
  	navigationIndicationsMessage = "";
@@ -25,7 +27,6 @@ declare var google: any;
  	status = "Not available";
  	poisList:any = [];
  	loading;
- 	selectedPOI:any;
  	currentRoute:any;
 
  	map;
@@ -47,6 +48,7 @@ declare var google: any;
  	poisArray = [];
  	buildingFilterList = [];
  	poiFilterList = [];
+ 	floorsArray = [];
 
  	constructor( public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams , private zone: NgZone , public events: Events ) {
  		this.selectedBuilding = navParams.get('building');
@@ -113,9 +115,35 @@ declare var google: any;
  		}
  	}
 
+ 	getFloorsForBuilding() {
+ 		let ref = this;
+ 		
+ 		//For testing
+ 		ref.floorsArray = [{level:1}, {level:2}, {level:3}, {level:4},{level:5},{level:6}];
+ 		ref.slectedFloor = ref.floorsArray[0];
+
+ 		if(window.plugins && window.plugins.SitumIndoorNavigation) {
+ 			ref.showLoading("Fetching Floors");
+ 			window.plugins.SitumIndoorNavigation.fetchFloorsForBuilding(ref.selectedBuilding, function(res){
+ 				console.log("RESPONSE "+JSON.stringify(res));
+ 				ref.hideLoading();
+ 				ref.zone.run(() => {
+ 					if (res.length > 0) {
+ 						ref.slectedFloor = res[0];
+ 						ref.floorsArray = res;
+ 					}
+ 				});
+ 				ref.getPOIs();
+ 			}, function(error) {
+ 				ref.hideLoading();
+ 				console.log("Error "+error);
+ 			});  
+ 		}
+ 	}
+
  	getPOIs() {
  		var ref = this;
-
+ 		//For testing
  		ref.poisArray = JSON.parse(' [{"floorIdentifier":"2395","position":{"isIndoor":1,"buildingIdentifier":"1685","coordinate":{"longitude":75.884183049202,"latitude":22.7341725669465},"floorIdentifier":"2395","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"isOutdoor":0},"isIndoor":true,"cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"isOutdoor":false,"buildingIdentifier":"1685","name":"Flat 1","coordinate":{"longitude":75.884183049202,"latitude":22.7341725669465}},{"floorIdentifier":"2395","position":{"isIndoor":1,"buildingIdentifier":"1685","coordinate":{"longitude":75.8839282393456,"latitude":22.7341329857857},"floorIdentifier":"2395","cartesianCoordinate":{"x":17.0300720309583,"y":59.4640739405727},"isOutdoor":0},"isIndoor":true,"cartesianCoordinate":{"x":17.0300720309583,"y":59.4640739405727},"isOutdoor":false,"buildingIdentifier":"1685","name":"Badroom","coordinate":{"longitude":75.8839282393456,"latitude":22.7341329857857}}]');
  		
  		var success = function (res) {
@@ -139,6 +167,9 @@ declare var google: any;
  		}
  	}
 
+ 	floorSelect(item) {
+ 		this.slectedFloor = item;
+ 	}
 
  	/*************************************************************************************/
  	/****************************  Search Bar Handle  ***********************************/
@@ -177,6 +208,10 @@ declare var google: any;
  		this.selectedBuilding = item;
 
  		this.buildingFilterList = [];
+ 		this.poiFilterList = [];
+ 		this.poisArray = [];
+ 		this.floorsArray = [];
+
  		this.isShowSearchList = false;
 
  		let center = item.center;
@@ -184,7 +219,7 @@ declare var google: any;
  		let ionic = new google.maps.LatLng(center.latitude, center.longitude);
  		this.map.setCenter(ionic);
 
- 		this.getPOIs();
+ 		this.getFloorsForBuilding();
  	}
  	poiSelect(item) {
  		this.searchBar = item.name;

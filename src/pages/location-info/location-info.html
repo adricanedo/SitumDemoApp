@@ -76,6 +76,13 @@
 		<div id="map_canvas" style="width: 100%;height: 100vh;"></div>
 	</div>
 
+	<div class="floor-list">
+		<ion-list *ngIf="floorsArray.length > 0" >
+		<ion-item [style.background-color]="(item.level == slectedFloor.level)?'#dddddd':'#ffffff'" *ngFor="let item of floorsArray" (click)="floorSelect(item)">
+			{{ item.level }}
+		</ion-item>
+	</ion-list>
+	</div>
 </ion-content>
 <ion-footer>
 	<ion-toolbar padding>

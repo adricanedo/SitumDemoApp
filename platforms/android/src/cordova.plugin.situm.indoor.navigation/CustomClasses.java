@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.MalformedURLException;
 import java.util.Collection;
 
 import es.situm.sdk.model.cartography.Building;
@@ -34,13 +35,17 @@ class CustomClasses {
         try {
             jo.put("address", building.getAddress());
             jo.put("bounds", boundsToJsonObject(building.getBounds()));
-            jo.put("boundsRotated", boundsToJsonObject(building.getBoundsRotated()));
+            jo.put("bound8sRotated", boundsToJsonObject(building.getBoundsRotated()));
             jo.put("center", coordinateToJsonObject(building.getCenter()));
             jo.put("dimensions", dimensionsToJsonObject(building.getDimensions()));
             jo.put("infoHtml", building.getInfoHtml());
             jo.put("name", building.getName());
-            jo.put("pictureThumbUrl", building.getPictureThumbUrl().toString());
-            jo.put("pictureUrl", building.getPictureUrl().toString());
+          try {
+            jo.put("pictureThumbUrl", building.getPictureThumbUrl().path());
+            jo.put("pictureUrl", building.getPictureUrl().path());
+          } catch (MalformedURLException e) {
+            e.printStackTrace();
+          }
             jo.put("rotation", angleToJsonObject(building.getRotation()));
             jo.put("userIdentifier", building.getUserIdentifier());
             jo.put("identifier", building.getIdentifier());

@@ -10,8 +10,8 @@ page-location-info {
 
 	.map-container {
 		position: absolute;
-		top: 0;
-		bottom: 0;
+		top: 20;
+		bottom: 20;
 		left: 0;
 		right: 0;
 	}
@@ -26,6 +26,23 @@ page-location-info {
 		float: right;
 	}
 
+	.floor-list {
+		position: absolute;
+		bottom:30px;
+		left:5px;
+		width: 40px;
+		height: auto;
+		background-color:#ffffff;
+		ion-list {
+			margin: 0;
+			.item {
+				padding: 0;
+				.label {
+					padding-left:10px;
+				}
+			}
+		}
+	}
 	.search-list-container{
 		z-index: 11;
 		position: relative;
