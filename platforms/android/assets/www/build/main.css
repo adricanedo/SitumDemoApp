@@ -24666,6 +24666,13 @@ ion-navbar.toolbar {
   }
 }
 
+.menu-devider-line {
+  position: relative;
+  height: 1px;
+  width: 100%;
+  float: left;
+}
+
 page-location-info .indication-meessage {
   white-space: normal;
   width: 100%;
@@ -24673,4 +24680,57 @@ page-location-info .indication-meessage {
   height: auto;
   font-size: 18px;
   text-align: center;
+}
+
+page-location-info .map-container {
+  position: absolute;
+  top: 20;
+  bottom: 20;
+  left: 0;
+  right: 0;
+}
+
+page-location-info .searchbar {
+  z-index: 11;
+}
+
+page-location-info .logo_img_bottom {
+  width: 80px;
+  height: auto;
+  float: right;
+}
+
+page-location-info .floor-list {
+  position: absolute;
+  bottom: 30px;
+  left: 5px;
+  width: 40px;
+  height: auto;
+  background-color: #ffffff;
+}
+
+page-location-info .floor-list ion-list {
+  margin: 0;
+}
+
+page-location-info .floor-list ion-list .item {
+  padding: 0;
+}
+
+page-location-info .floor-list ion-list .item .label {
+  padding-left: 10px;
+}
+
+page-location-info .search-list-container {
+  z-index: 11;
+  position: relative;
+  height: auto;
+  max-height: 150px;
+  overflow-y: scroll;
+  background-color: #ffffff;
+  margin: 0 8px;
+}
+
+page-location-info .search-list-container ion-list {
+  margin: 0;
 }

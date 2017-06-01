@@ -44801,7 +44801,7 @@ var LocationInfoPage = (function () {
                 ref.hideLoading();
                 ref.zone.run(function () {
                     if (res.length > 0) {
-                        ref.slectedFloor = res[0];
+                        ref.floorSelect(res[0]);
                         ref.floorsArray = res;
                     }
                 });
@@ -44836,6 +44836,22 @@ var LocationInfoPage = (function () {
     };
     LocationInfoPage.prototype.floorSelect = function (item) {
         this.slectedFloor = item;
+        var mapUrl = this.slectedFloor.mapUrl;
+        this.setImageOnMap(mapUrl);
+    };
+    LocationInfoPage.prototype.setImageOnMap = function (mapUrl) {
+        if (this.floorMap) {
+            this.floorMap.setMap(null);
+        }
+        var bounds = this.selectedBuilding.bounds;
+        var imageBounds = {
+            north: bounds.northWest.latitude,
+            south: bounds.southEast.latitude,
+            east: bounds.northEast.longitude,
+            west: bounds.southWest.longitude
+        };
+        this.floorMap = new google.maps.GroundOverlay(mapUrl, imageBounds);
+        this.floorMap.setMap(this.map);
     };
     /*************************************************************************************/
     /****************************  Search Bar Handle  ***********************************/
@@ -44849,7 +44865,10 @@ var LocationInfoPage = (function () {
             this.buildingFilterList = filteredArray;
         }
         else if (this.searchType == 'POI') {
-            this.poiFilterList = this.poisArray;
+            var filteredArray = this.poisArray.filter(function (item) {
+                return item.name.toLowerCase().indexOf(ref.searchBar.toLowerCase()) !== -1;
+            });
+            this.poiFilterList = filteredArray;
         }
         this.isShowSearchList = true;
     };
@@ -45033,11 +45052,12 @@ var LocationInfoPage = (function () {
 LocationInfoPage = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPage */])(),
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
-        selector: 'page-location-info',template:/*ion-inline-start:"/Users/ignisit/Downloads/tools/SwiftyCam-masters/DemoApp/src/pages/location-info/location-info.html"*/'<!--\n  Generated template for the LocationInfoPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n	<ion-navbar hideBackButton="true">\n		<button ion-button menuToggle>\n			<ion-icon name="menu"></ion-icon>\n		</button>\n		<ion-title>Building</ion-title>\n	</ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n	<ion-searchbar \n	(ionFocus)="searchBarOnFocus()"\n	showCancelButton="false" \n	debounce="100" \n	placeholder="{{searchPlaceHolderText}}" \n	class="searchbar"\n	[(ngModel)]="searchBar"\n	(ionCancel)="onCancel($event)"\n	(ionInput)="onInput($event)"\n	(ionClear)="onClear($event)">\n</ion-searchbar>\n<div class="search-list-container" *ngIf="isShowSearchList">\n	<ion-list *ngIf="searchType == \'Building\'">\n		<ion-item *ngFor="let item of buildingFilterList" (click)="buildingSelect(item)">\n			{{ item.name }}\n		</ion-item>		\n	</ion-list>\n\n	<ion-list *ngIf="searchType == \'POI\'" >\n		<ion-item *ngFor="let item of poiFilterList" (click)="poiSelect(item)">\n			{{ item.name }}\n		</ion-item>\n	</ion-list>\n</div>\n	<!-- <ion-list>  \n		<ion-item><b>Status : </b> {{status}}</ion-item>\n		<ion-item><b>Building : </b> {{selectedBuilding.name}}</ion-item>\n		<ion-item>\n			<ion-label>Select POI</ion-label>\n			<ion-select [(ngModel)]="selectedPoiName">\n				<ion-option value="{{item.name}}" *ngFor="let item of poisList">{{item.name}}</ion-option>      \n			</ion-select>\n		</ion-item>\n\n		\n\n		<ion-item *ngIf="locationErrorMsg.length > 0" style="color:#ff0000;">\n			Location - {{locationErrorMsg}}\n		</ion-item>\n\n		\n\n		<button ion-button full *ngIf="selectedPoiName.length>0" (click)="showRoute()">Show Route</button>\n		<button ion-button full *ngIf="currentRoute" (click)="showRoute()">Show Indications</button>\n\n		<ion-item>\n			<div id="map_canvas" style="width: 100%;height: 80vw;"></div>\n		</ion-item>\n\n		<ion-item *ngIf="navigationIndicationsMessage.length > 0">\n			Navigation - <p class="indication-meessage" > {{navigationIndicationsMessage}}</p>\n		</ion-item>\n		<button ion-button full *ngIf="currentRoute" (click)="startNavigation()">Start Navigation</button>\n	</ion-list> -->\n\n	<div class="map-container">\n		<div id="map_canvas" style="width: 100%;height: 100vh;"></div>\n	</div>\n\n	<div class="floor-list">\n		<ion-list *ngIf="floorsArray.length > 0" >\n		<ion-item [style.background-color]="(item.level == slectedFloor.level)?\'#dddddd\':\'#ffffff\'" *ngFor="let item of floorsArray" (click)="floorSelect(item)">\n			{{ item.level }}\n		</ion-item>\n	</ion-list>\n	</div>\n</ion-content>\n<ion-footer>\n	<ion-toolbar padding>\n		{{selectedBuilding?selectedBuilding.name:\'Building not selected\'}}\n\n		<img class="logo_img_bottom" src="../assets/situm_logo.png" />\n	</ion-toolbar>\n</ion-footer>\n'/*ion-inline-end:"/Users/ignisit/Downloads/tools/SwiftyCam-masters/DemoApp/src/pages/location-info/location-info.html"*/,
+        selector: 'page-location-info',template:/*ion-inline-start:"/Users/ignisit/Downloads/tools/SwiftyCam-masters/DemoApp/src/pages/location-info/location-info.html"*/'<!--\n  Generated template for the LocationInfoPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n	<ion-navbar hideBackButton="true">\n		<button ion-button menuToggle>\n			<ion-icon name="menu"></ion-icon>\n		</button>\n		<ion-title>Building</ion-title>\n	</ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n	<ion-searchbar \n	(ionFocus)="searchBarOnFocus()"\n	showCancelButton="false" \n	debounce="100" \n	placeholder="{{searchPlaceHolderText}}" \n	class="searchbar"\n	[(ngModel)]="searchBar"\n	(ionCancel)="onCancel($event)"\n	(ionInput)="onInput($event)"\n	(ionClear)="onClear($event)">\n</ion-searchbar>\n<div class="search-list-container" *ngIf="isShowSearchList">\n	<ion-list *ngIf="searchType == \'Building\'">\n		<ion-item *ngFor="let item of buildingFilterList" (click)="buildingSelect(item)">\n			{{ item.name }}\n		</ion-item>		\n	</ion-list>\n\n	<ion-list *ngIf="searchType == \'POI\'" >\n		<ion-item *ngFor="let item of poiFilterList" (click)="poiSelect(item)">\n			{{ item.name }}\n		</ion-item>\n	</ion-list>\n</div>\n	<!-- <ion-list>  \n		<ion-item><b>Status : </b> {{status}}</ion-item>\n		<ion-item><b>Building : </b> {{selectedBuilding.name}}</ion-item>\n		<ion-item>\n			<ion-label>Select POI</ion-label>\n			<ion-select [(ngModel)]="selectedPoiName">\n				<ion-option value="{{item.name}}" *ngFor="let item of poisList">{{item.name}}</ion-option>      \n			</ion-select>\n		</ion-item>\n\n		\n\n		<ion-item *ngIf="locationErrorMsg.length > 0" style="color:#ff0000;">\n			Location - {{locationErrorMsg}}\n		</ion-item>\n\n		\n\n		<button ion-button full *ngIf="selectedPoiName.length>0" (click)="showRoute()">Show Route</button>\n		<button ion-button full *ngIf="currentRoute" (click)="showRoute()">Show Indications</button>\n\n		<ion-item>\n			<div id="map_canvas" style="width: 100%;height: 80vw;"></div>\n		</ion-item>\n\n		<ion-item *ngIf="navigationIndicationsMessage.length > 0">\n			Navigation - <p class="indication-meessage" > {{navigationIndicationsMessage}}</p>\n		</ion-item>\n		<button ion-button full *ngIf="currentRoute" (click)="startNavigation()">Start Navigation</button>\n	</ion-list> -->\n\n	<div class="map-container">\n		<div id="map_canvas" style="width: 100%;height: 100vh;"></div>\n	</div>\n\n	<div class="floor-list">\n		<ion-list *ngIf="floorsArray.length > 0" >\n		<ion-item [style.background-color]="(item.level == slectedFloor.level)?\'#dddddd\':\'#ffffff\'" *ngFor="let item of floorsArray" (click)="floorSelect(item)">\n			{{ item.level }}\n		</ion-item>\n	</ion-list>\n	</div>\n</ion-content>\n<ion-footer>\n	<ion-toolbar padding>\n		{{selectedBuilding?selectedBuilding.name:\'Building not selected\'}}\n\n		<img class="logo_img_bottom" src="./assets/situm_logo.png" />\n	</ion-toolbar>\n</ion-footer>\n'/*ion-inline-end:"/Users/ignisit/Downloads/tools/SwiftyCam-masters/DemoApp/src/pages/location-info/location-info.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* NgZone */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Events */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* NgZone */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* NgZone */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Events */]) === "function" && _e || Object])
 ], LocationInfoPage);
 
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=location-info.js.map
 
 /***/ }),

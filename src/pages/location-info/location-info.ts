@@ -32,6 +32,8 @@ declare var google: any;
  	map;
  	currentPosMarker;
  	selectedPoiName = "";
+ 	floorMap:any;
+ 	poisMarker:any = [];
 
  	routesPolylines = [];
 
@@ -129,7 +131,7 @@ declare var google: any;
  				ref.hideLoading();
  				ref.zone.run(() => {
  					if (res.length > 0) {
- 						ref.slectedFloor = res[0];
+ 						ref.floorSelect(res[0]);
  						ref.floorsArray = res;
  					}
  				});
@@ -150,6 +152,7 @@ declare var google: any;
  			ref.hideLoading();
  			ref.zone.run(() => {
  				ref.poisArray = res;
+ 				ref.setPoisOnMap();
  			});
  			console.log("Response POIS "+JSON.stringify(res));
  			ref.startLocationUpdate();
@@ -169,8 +172,52 @@ declare var google: any;
 
  	floorSelect(item) {
  		this.slectedFloor = item;
+
+ 		var mapUrl = this.slectedFloor.mapUrl;
+ 		this.setImageOnMap(mapUrl);
  	}
 
+ 	setImageOnMap(mapUrl) {
+ 		if(this.floorMap) {
+ 			this.floorMap.setMap(null);
+ 		}
+ 		let bounds = this.selectedBuilding.bounds;
+ 		var imageBounds = {
+          north: bounds.northWest.latitude,
+          south: bounds.southEast.latitude,
+          east: bounds.northEast.longitude,
+          west: bounds.southWest.longitude
+        };
+
+ 		this.floorMap = new google.maps.GroundOverlay(mapUrl, imageBounds);
+ 		this.floorMap.setMap(this.map);
+ 	}
+ 	
+ 	setPoisOnMap() {
+ 		for (var i = 0; i < this.poisMarker.length; ++i) {
+ 			var marker = this.poisMarker[i];
+ 			marker.setMap(null);
+ 		}
+ 		this.poisMarker = [];
+ 		for (var i = 0; i < this.poisArray.length; ++i) {
+ 			var poi = this.poisArray[i];
+ 			var lat = poi.coordinate.latitude;
+			var lng = poi.coordinate.longitude;			
+ 			let position = new google.maps.LatLng(lat, lng);
+ 			var markerImage = new google.maps.MarkerImage('img/point-icon.png',
+ 				new google.maps.Size(25, 25),
+ 				new google.maps.Point(0, 0),
+ 				new google.maps.Point(12.5, 12.5));
+
+ 			var marker = new google.maps.Marker({
+ 				position: position,
+ 				map: this.map,
+ 				title: ""
+ 			});
+
+ 			this.poisMarker.push(marker);
+ 		}
+ 	}
  	/*************************************************************************************/
  	/****************************  Search Bar Handle  ***********************************/
  	/*************************************************************************************/
@@ -184,7 +231,10 @@ declare var google: any;
  			});
  			this.buildingFilterList = filteredArray;
  		} else if(this.searchType  == 'POI') {
- 			this.poiFilterList = this.poisArray;
+ 			var filteredArray = this.poisArray.filter(function(item) {
+ 				return item.name.toLowerCase().indexOf(ref.searchBar.toLowerCase()) !== -1;
+ 			});
+ 			this.poiFilterList = filteredArray;
  		}
  		this.isShowSearchList = true;
  	}
