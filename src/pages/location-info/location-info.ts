@@ -162,7 +162,8 @@ declare var google: any;
  			ref.hideLoading;
  			ref.startLocationUpdate();
  			console.log("POI Fecth error "+error);
- 		}
+ 		};
+
  		if(window.plugins && window.plugins.SitumIndoorNavigation) {
  			this.showLoading("Fetching Point of interests");
 
@@ -212,12 +213,13 @@ declare var google: any;
  			var marker = new google.maps.Marker({
  				position: position,
  				map: this.map,
- 				title: ""
+ 				title: poi.name
  			});
 
  			this.poisMarker.push(marker);
  		}
  	}
+
  	/*************************************************************************************/
  	/****************************  Search Bar Handle  ***********************************/
  	/*************************************************************************************/
@@ -278,6 +280,8 @@ declare var google: any;
 
  		this.poiFilterList = [];
  		this.isShowSearchList = false;
+
+ 		this.showRoute();
  	}
 
  	startLocationUpdate() {
@@ -323,13 +327,8 @@ declare var google: any;
  			window.plugins.SitumIndoorNavigation.startLocationUpdate(this.selectedBuilding, onLocationChanged, onStatusChanged, onError);
  		}
  	}
-
- 	
-
- 	
- 	showMap() {
-
- 		
+	
+ 	showMap() { 		
  		let element = document.getElementById('map_canvas');
  		var mapOptions = {
  			center:new google.maps.LatLng(0, 0),
@@ -341,10 +340,8 @@ declare var google: any;
  			disableDoubleClickZoom:false,
  			mapTypeId: google.maps.MapTypeId.ROADMAP
  		};
-
  		this.map =  new google.maps.Map(element, mapOptions)
  	}
-
 
  	updateMarkerPosition(lat, lng) {
  		if (!this.map) {
