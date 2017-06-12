@@ -24734,3 +24734,17 @@ page-location-info .search-list-container {
 page-location-info .search-list-container ion-list {
   margin: 0;
 }
+
+page-location-info .building-select-button {
+  background-color: transparent;
+}
+
+page-location-info .poi-fab {
+  right: 10px;
+  bottom: 10px;
+}
+
+page-location-info .navigate-fab {
+  right: 10px;
+  bottom: 60px;
+}
