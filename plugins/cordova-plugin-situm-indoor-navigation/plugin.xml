@@ -60,6 +60,12 @@
 			<string>Location is required to find out where you are</string>
 		</config-file>
 
+		<config-file target="*-Info.plist" parent="API_USER_EMAIL">
+			<string>$API_USER_EMAIL</string>
+		</config-file>
+		<config-file target="*-Info.plist" parent="API_KEY">
+			<string>$API_KEY</string>
+		</config-file>
 
 		<framework src="src/ios/vendor/SitumSDK.framework" custom="true" />
 		<framework src="lib.dylib" />

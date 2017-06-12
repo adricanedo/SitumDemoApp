@@ -134,7 +134,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
         }
         if (buildings.isEmpty()) {
           Log.e(TAG, "onSuccess: you have no buildings. Create one in the Dashboard");
-          cbc.error("You have no buildings. Create one in the Dashboard");
+          cbc.error("you have no buildings. Create one in the Dashboard");
         } else {
           cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, buildingsJA));
         }
@@ -143,7 +143,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
       @Override
       public void onFailure(Error error) {
         Log.e(TAG, "onFailure:" + error);
-        cbc.error(error.toString());
+        cbc.error("Expected one non-empty string argument.");
       }
     });
   }
@@ -167,7 +167,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
           }
           if (floors.isEmpty()) {
             Log.e(TAG, "onSuccess: you have no floors. Create one in the Dashboard");
-            cbc.error("You have no floors. Create one in the Dashboard");
+            cbc.error("you have no floors. Create one in the Dashboard");
           } else {
             cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, floorsJA));
           }
@@ -201,7 +201,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
           }
           if (pois.isEmpty()) {
             Log.e(TAG, "onSuccess: you have no floors. Create one in the Dashboard");
-            cbc.error("You have no poi. Create one in the Dashboard");
+            cbc.error("you have no floors. Create one in the Dashboard");
           } else {
             cbc.sendPluginResult(new PluginResult(PluginResult.Status.OK, poisJA));
           }

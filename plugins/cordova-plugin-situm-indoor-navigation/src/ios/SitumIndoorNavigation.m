@@ -31,7 +31,9 @@
 
 
 + (void)load {
-    [SITServices provideAPIKey:@"9ebe6ce727fad5052f1402b513d48be50c2c7936b562754306285fb99ec84816" forEmail:@"qaiyumohamed@gmail.com"];
+     NSString *APIUserEmail = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"API_USER_EMAIL"];
+     NSString *APIKey = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"API_KEY"];
+    [SITServices provideAPIKey:APIKey forEmail:APIUserEmail];
 }
 
 - (void)fetchBuildings:(CDVInvokedUrlCommand*)command
@@ -69,7 +71,8 @@
         floorStored = [[NSMutableDictionary alloc] init];
     }
     
-    [[SITCommunicationManager sharedManager] fetchFloorsForBuilding:[buildingJO valueForKey:@"identifier"] withOptions:nil success:^(NSDictionary *mapping) {
+    NSString *buildingId = [buildingJO valueForKey:@"identifier"];
+    [[SITCommunicationManager sharedManager] fetchFloorsForBuilding:buildingId withOptions:nil success:^(NSDictionary *mapping) {
         NSArray *list = [mapping objectForKey:@"results"];
         NSMutableArray *ja = [[NSMutableArray alloc] init];
         for (SITFloor *obj in list) {

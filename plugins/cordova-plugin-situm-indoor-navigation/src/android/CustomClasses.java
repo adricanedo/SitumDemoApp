@@ -39,8 +39,8 @@ class CustomClasses {
             jo.put("dimensions", dimensionsToJsonObject(building.getDimensions()));
             jo.put("infoHtml", building.getInfoHtml());
             jo.put("name", building.getName());
-            jo.put("pictureThumbUrl", building.getPictureThumbUrl().toString());
-            jo.put("pictureUrl", building.getPictureUrl().toString());
+            jo.put("pictureThumbUrl", building.getPictureThumbUrl().getValue());
+            jo.put("pictureUrl", building.getPictureUrl().getValue());
             jo.put("rotation", angleToJsonObject(building.getRotation()));
             jo.put("userIdentifier", building.getUserIdentifier());
             jo.put("identifier", building.getIdentifier());
@@ -61,7 +61,7 @@ class CustomClasses {
             jo.put("altitude", floor.getAltitude());
             jo.put("buildingIdentifier", floor.getBuildingIdentifier());
             jo.put("level", floor.getLevel());
-            jo.put("mapUrl", floor.getMapUrl());
+            jo.put("mapUrl", floor.getMapUrl().getValue());
             jo.put("scale", floor.getScale());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -297,6 +297,7 @@ class CustomClasses {
             jo.put("lastStep", routeStepToJsonObject(route.getLastStep()));
             jo.put("nodes", nodesJsonArray);
             jo.put("points", pointsJsonArray);
+            jo.put("indications", indicationsJsonArray);
             jo.put("to", pointToJsonObject(route.getTo()));
             jo.put("steps", stepsJsonArray);
 

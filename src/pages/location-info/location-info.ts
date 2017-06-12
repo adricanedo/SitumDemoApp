@@ -1,5 +1,5 @@
 import { Component , NgZone , ElementRef , ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams , LoadingController , Events } from 'ionic-angular';
+import { IonicPage, NavController, ToastController ,  NavParams , LoadingController , Events } from 'ionic-angular';
 
 declare var window: any;
 declare var google: any;
@@ -52,7 +52,7 @@ declare var google: any;
  	poiFilterList = [];
  	floorsArray = [];
 
- 	constructor( public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams , private zone: NgZone , public events: Events ) {
+ 	constructor( private toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams , private zone: NgZone , public events: Events ) {
  		this.selectedBuilding = navParams.get('building');
 
  		events.subscribe('MenuItemChange', (userEventData) => {
@@ -68,7 +68,7 @@ declare var google: any;
  					this.searchPlaceHolderText = "Search POI";
  				} 				
  			} else if(userEventData.type == 'Start Navigate') {
-
+ 				this.startNavigation();
  			} 
  		});
  	}
@@ -76,6 +76,20 @@ declare var google: any;
  	ionViewDidLoad() {
  		console.log('ionViewDidLoad LocationInfoPage');
  		this.getBuildings();
+ 	}
+
+ 	presentToast(msg) {
+ 		let toast = this.toastCtrl.create({
+ 			message: msg,
+ 			duration: 2000,
+ 			position: 'top'
+ 		});
+
+ 		toast.onDidDismiss(() => {
+ 			console.log('Dismissed toast');
+ 		});
+
+ 		toast.present();
  	}
 
  	ngAfterViewInit() {
@@ -184,11 +198,11 @@ declare var google: any;
  		}
  		let bounds = this.selectedBuilding.bounds;
  		var imageBounds = {
-          north: bounds.northWest.latitude,
-          south: bounds.southEast.latitude,
-          east: bounds.northEast.longitude,
-          west: bounds.southWest.longitude
-        };
+ 			north: bounds.northWest.latitude,
+ 			south: bounds.southEast.latitude,
+ 			east: bounds.northEast.longitude,
+ 			west: bounds.southWest.longitude
+ 		};
 
  		this.floorMap = new google.maps.GroundOverlay(mapUrl, imageBounds);
  		this.floorMap.setMap(this.map);
@@ -203,7 +217,7 @@ declare var google: any;
  		for (var i = 0; i < this.poisArray.length; ++i) {
  			var poi = this.poisArray[i];
  			var lat = poi.coordinate.latitude;
-			var lng = poi.coordinate.longitude;			
+ 			var lng = poi.coordinate.longitude;			
  			let position = new google.maps.LatLng(lat, lng);
  			var markerImage = new google.maps.MarkerImage('img/point-icon.png',
  				new google.maps.Size(25, 25),
@@ -327,7 +341,7 @@ declare var google: any;
  			window.plugins.SitumIndoorNavigation.startLocationUpdate(this.selectedBuilding, onLocationChanged, onStatusChanged, onError);
  		}
  	}
-	
+
  	showMap() { 		
  		let element = document.getElementById('map_canvas');
  		var mapOptions = {
@@ -350,7 +364,7 @@ declare var google: any;
  		}
  		let ionic = new google.maps.LatLng(lat, lng);
  		if (this.currentPosMarker == null) {
- 			var markerImage = new google.maps.MarkerImage('img/point-icon.png',
+ 			var markerImage = new google.maps.MarkerImage('./assets/navigation-arrow.png',
  				new google.maps.Size(25, 25),
  				new google.maps.Point(0, 0),
  				new google.maps.Point(12.5, 12.5));
@@ -380,11 +394,22 @@ declare var google: any;
  	}
 
  	addPolyline(coordinates) {
+ 		// Define a symbol using SVG path notation, with an opacity of 1.
+ 		var lineSymbol = {
+ 			path: 'M 0,-1 0,1',
+ 			strokeOpacity: 1,
+ 			scale: 4
+ 		};
+
  		var polyline = new google.maps.Polyline({
  			path: coordinates,
  			strokeColor: "#0B5EA7",
- 			strokeOpacity: 1.0,
- 			strokeWeight: 2,
+ 			strokeOpacity: 0,
+ 			icons: [{
+ 				icon: lineSymbol,
+ 				offset: '0',
+ 				repeat: '20px'
+ 			}],
  			map: this.map
  		});
  		this.routesPolylines.push(polyline);
@@ -430,24 +455,28 @@ declare var google: any;
  				console.log("Destination Reached");
  				ref.zone.run(() => {
  					ref.navigationIndicationsMessage = "Destination Reached";
+ 					ref.presentToast("Destination Reached");
  				}); 
  			};
  			var onProgress = function (navigationProgress) {
  				console.log("Navigation Progress  "+JSON.stringify(navigationProgress));
  				ref.zone.run(() => {
  					ref.navigationIndicationsMessage = navigationProgress.currentIndication.indicationType+" Distance : "+ navigationProgress.currentIndication.distanceToNextLevel+" Total  Distance : "+ navigationProgress.currentIndication.distance;
+ 					ref.presentToast(navigationProgress.currentIndication.indicationType+" Distance : "+ navigationProgress.currentIndication.distanceToNextLevel+" Total  Distance : "+ navigationProgress.currentIndication.distance);
  				}); 
  			};
  			var onUserOutsideRoute = function() {
  				console.log("User Outside Route");
  				ref.zone.run(() => {
  					ref.navigationIndicationsMessage = "User outside route";
+ 					ref.presentToast("User outside route");
  				}); 				
  			};
  			var onError = function(error) {
  				console.log("Navigation Error "+error);
  				ref.zone.run(() => {
  					ref.navigationIndicationsMessage = error;
+ 					ref.presentToast(error);
  				}); 				
  			};
  			window.plugins.SitumIndoorNavigation.startNaviagtion(ref.currentRoute, onDestinationReached, onProgress, onUserOutsideRoute, onError);
