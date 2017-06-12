@@ -1,11 +1,11 @@
 page-location-info {
 	.indication-meessage {
 		white-space: normal;
-    width: 100%;
-    color: #00ff00;
-    height: auto;
-    font-size: 18px;
-    text-align: center;
+		width: 100%;
+		color: #00ff00;
+		height: auto;
+		font-size: 18px;
+		text-align: center;
 	}
 
 	.map-container {
@@ -55,5 +55,17 @@ page-location-info {
 		ion-list {
 			margin:0;
 		}
+	}
+
+	.building-select-button {
+		background-color:transparent;
+	}
+	.poi-fab {
+		right: 10px;
+		bottom: 10px;
+	}
+	.navigate-fab {
+		right: 10px;
+		bottom: 60px;
 	}
 }

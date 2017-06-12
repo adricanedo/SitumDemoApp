@@ -78,14 +78,31 @@
 
 	<div class="floor-list">
 		<ion-list *ngIf="floorsArray.length > 0" >
-		<ion-item [style.background-color]="(item.level == slectedFloor.level)?'#dddddd':'#ffffff'" *ngFor="let item of floorsArray" (click)="floorSelect(item)">
-			{{ item.level }}
-		</ion-item>
-	</ion-list>
+			<ion-item [style.background-color]="(item.level == slectedFloor.level)?'#dddddd':'#ffffff'" *ngFor="let item of floorsArray" (click)="floorSelect(item)">
+				{{ item.level }}
+			</ion-item>
+		</ion-list>
 	</div>
+
+
+	<ion-fab class="poi-fab" ng-if="selectedBuilding">
+		<button ion-fab mini (click)="poiFindClick()">
+			<ion-icon name="map"></ion-icon>
+		</button>
+	</ion-fab>
+
+	<ion-fab class="navigate-fab" *ngIf="currentRoute">
+		<button ion-fab mini (click)="startNavigation()">
+			<ion-icon ios="ios-navigate" md="md-navigate"></ion-icon>
+		</button>
+	</ion-fab>
+
 </ion-content>
 <ion-footer>
-	<ion-toolbar padding>
+	<ion-toolbar padding (click)="buildingFindClick()">
+		<button class="building-select-button">
+			  <ion-icon name="locate"></ion-icon>
+		</button>
 		{{selectedBuilding?selectedBuilding.name:'Building not selected'}}
 
 		<img class="logo_img_bottom" src="./assets/situm_logo.png" />
