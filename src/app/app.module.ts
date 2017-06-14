@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LocationInfoPage } from '../pages/location-info/location-info';
+import { UtilProvider } from '../providers/util/util';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { LocationInfoPage } from '../pages/location-info/location-info';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UtilProvider
   ]
 })
 export class AppModule {}
