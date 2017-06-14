@@ -45046,6 +45046,7 @@ var LocationInfoPage = (function () {
         }
     };
     LocationInfoPage.prototype.showMap = function () {
+        var ref = this;
         var element = document.getElementById('map_canvas');
         var mapOptions = {
             center: new google.maps.LatLng(0, 0),
@@ -45059,7 +45060,7 @@ var LocationInfoPage = (function () {
         };
         this.map = new google.maps.Map(element, mapOptions);
         google.maps.event.addListener(this.map, 'center_changed', function () {
-            this.infowindow.close();
+            ref.infowindow.close();
         });
     };
     LocationInfoPage.prototype.updateMarkerPosition = function (lat, lng) {

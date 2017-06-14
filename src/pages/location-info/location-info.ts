@@ -328,7 +328,7 @@ declare var google: any;
                  });
 
                  google.maps.event.addListener(marker, 'click', function() {
-                     ref.setInfoWindowContent(marker, this.poi, ref.map, ref);                     
+                     ref.setInfoWindowContent(this, this.poi, ref.map, ref);                     
                  });
 
                  ref.poisMarker.push(marker);
@@ -456,6 +456,9 @@ declare var google: any;
      }
 
      showMap() { 		
+
+         let ref = this;
+
          let element = document.getElementById('map_canvas');
          var mapOptions = {
              center:new google.maps.LatLng(0, 0),
@@ -470,7 +473,7 @@ declare var google: any;
          this.map =  new google.maps.Map(element, mapOptions)
 
          google.maps.event.addListener(this.map, 'center_changed', function() {
-             this.infowindow.close();            
+             ref.infowindow.close();            
          });
      }
 
@@ -499,6 +502,7 @@ declare var google: any;
 
 
      drawRouteOnMap() {
+        
          let points = this.currentRoute.points;
 
          var coordinates = [];
