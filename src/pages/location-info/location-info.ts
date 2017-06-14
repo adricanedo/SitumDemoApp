@@ -484,10 +484,10 @@ declare var google: any;
          }
          let ionic = new google.maps.LatLng(lat, lng);
          if (this.currentPosMarker == null) {
-             var markerImage = new google.maps.MarkerImage('./assets/navigation-arrow.png',
-                 new google.maps.Size(25, 25),
+             var markerImage = new google.maps.MarkerImage('./assets/curr_pos.png',
+                 new google.maps.Size(57, 57),
                  new google.maps.Point(0, 0),
-                 new google.maps.Point(12.5, 12.5));
+                 new google.maps.Point(28.5, 28.5));
 
              this.currentPosMarker = new google.maps.Marker({
                  position: ionic,
@@ -629,5 +629,6 @@ declare var google: any;
      processInfoWindowClick (ref, poi) {
          ref.selectedPOI = poi;
          ref.showRoute();
+         ref.infowindow.close();  
      }        
  }
