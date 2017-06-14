@@ -44790,7 +44790,7 @@ var LocationInfoPage = (function () {
     LocationInfoPage.prototype.getBuildings = function () {
         var ref = this;
         // Test Purpose
-        ref.buildingsArray = JSON.parse('[{"address":"","bounds":{"northEast":{"latitude":3.1574073523743467,"longitude":101.61013028728091},"northWest":{"latitude":3.1574073523743467,"longitude":101.60891630527264},"southEast":{"latitude":3.156614425892212,"longitude":101.61013028728091},"southWest":{"latitude":3.156614425892212,"longitude":101.60891630527264}},"boundsRotated":{"northEast":{"latitude":3.157480336631599,"longitude":101.60897022208923},"northWest":{"latitude":3.156312174954634,"longitude":101.60932123240065},"southEast":{"latitude":3.157709603104937,"longitude":101.60972536029018},"southWest":{"latitude":3.1565414414538453,"longitude":101.61007637067026}},"center":{"latitude":3.15701088914065,"longitude":101.609523296356},"dimensions":{"width":134.936103199873,"height":87.6799409001345},"infoHtml":"","name":"eCurve Damansara","pictureThumbUrl":"","pictureUrl":"","rotation":{"degrees":-106.80645929441549,"degreesClockwise":466.8064592944155,"radians":-1.86412437708485,"radiansMinusPiPi":-1.86412437708485},"userIdentifier":"-1","identifier":"1431"},{"address":"","bounds":{"northEast":{"latitude":22.72628960249395,"longitude":75.89448680074379},"northWest":{"latitude":22.72628960249395,"longitude":75.89371557431514},"southEast":{"latitude":22.725335693101915,"longitude":75.89448680074379},"southWest":{"latitude":22.725335693101915,"longitude":75.89371557431514}},"boundsRotated":{"northEast":{"latitude":22.725464014496872,"longitude":75.89462253878999},"northWest":{"latitude":22.726179316726352,"longitude":75.89460795730739},"southEast":{"latitude":22.7254459790073,"longitude":75.89359441792793},"southWest":{"latitude":22.72616128123678,"longitude":75.89357983641747}},"center":{"latitude":22.7258126477903,"longitude":75.8941011875868},"dimensions":{"width":79.2268628160681,"height":105.636099078708},"infoHtml":"","name":"Patidar sHouse","pictureThumbUrl":"","pictureUrl":"","rotation":{"degrees":-271.08332833894497,"degreesClockwise":631.083328338945,"radians":-4.73129662677944,"radiansMinusPiPi":-4.73129662677944},"userIdentifier":"-1","identifier":"1685"},{"address":"168, Jalan Bukit Bintang, Bukit Bintang, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia","bounds":{"northEast":{"latitude":3.1499039013645462,"longitude":101.71507820155018},"northWest":{"latitude":3.1499039013645462,"longitude":101.71164177560608},"southEast":{"latitude":3.1480975260401527,"longitude":101.71507820155018},"southWest":{"latitude":3.1480975260401527,"longitude":101.71164177560608}},"boundsRotated":{"northEast":{"latitude":3.1488384109553205,"longitude":101.71529221983101},"northWest":{"latitude":3.150688470021479,"longitude":101.71239021751384},"southEast":{"latitude":3.14731295821117,"longitude":101.71432975984834},"southWest":{"latitude":3.149163017277328,"longitude":101.71142775753117}},"center":{"latitude":3.14900071371087,"longitude":101.713359989226},"dimensions":{"width":381.967303904424,"height":199.744691825801},"infoHtml":"<p>Pavilion Kuala Lumpur contains over 450 retail shops that are spread across seven levels. There are a number of double-storey&nbsp;flagship&nbsp;stores, of which some are street-front fashion boutiques which constitute the shopping mall.</p>","name":"Pavilion Bukit Bintang KL","pictureThumbUrl":"","pictureUrl":"","rotation":{"degrees":-327.6165552681448,"degreesClockwise":687.6165552681448,"radians":-5.7179875734711,"radiansMinusPiPi":-5.7179875734711},"userIdentifier":"-1","identifier":"1413"}]');
+        // ref.buildingsArray = JSON.parse('[{"address":"","bounds":{"northEast":{"latitude":3.1574073523743467,"longitude":101.61013028728091},"northWest":{"latitude":3.1574073523743467,"longitude":101.60891630527264},"southEast":{"latitude":3.156614425892212,"longitude":101.61013028728091},"southWest":{"latitude":3.156614425892212,"longitude":101.60891630527264}},"boundsRotated":{"northEast":{"latitude":3.157480336631599,"longitude":101.60897022208923},"northWest":{"latitude":3.156312174954634,"longitude":101.60932123240065},"southEast":{"latitude":3.157709603104937,"longitude":101.60972536029018},"southWest":{"latitude":3.1565414414538453,"longitude":101.61007637067026}},"center":{"latitude":3.15701088914065,"longitude":101.609523296356},"dimensions":{"width":134.936103199873,"height":87.6799409001345},"infoHtml":"","name":"eCurve Damansara","pictureThumbUrl":"","pictureUrl":"","rotation":{"degrees":-106.80645929441549,"degreesClockwise":466.8064592944155,"radians":-1.86412437708485,"radiansMinusPiPi":-1.86412437708485},"userIdentifier":"-1","identifier":"1431"},{"address":"","bounds":{"northEast":{"latitude":22.72628960249395,"longitude":75.89448680074379},"northWest":{"latitude":22.72628960249395,"longitude":75.89371557431514},"southEast":{"latitude":22.725335693101915,"longitude":75.89448680074379},"southWest":{"latitude":22.725335693101915,"longitude":75.89371557431514}},"boundsRotated":{"northEast":{"latitude":22.725464014496872,"longitude":75.89462253878999},"northWest":{"latitude":22.726179316726352,"longitude":75.89460795730739},"southEast":{"latitude":22.7254459790073,"longitude":75.89359441792793},"southWest":{"latitude":22.72616128123678,"longitude":75.89357983641747}},"center":{"latitude":22.7258126477903,"longitude":75.8941011875868},"dimensions":{"width":79.2268628160681,"height":105.636099078708},"infoHtml":"","name":"Patidar sHouse","pictureThumbUrl":"","pictureUrl":"","rotation":{"degrees":-271.08332833894497,"degreesClockwise":631.083328338945,"radians":-4.73129662677944,"radiansMinusPiPi":-4.73129662677944},"userIdentifier":"-1","identifier":"1685"},{"address":"168, Jalan Bukit Bintang, Bukit Bintang, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia","bounds":{"northEast":{"latitude":3.1499039013645462,"longitude":101.71507820155018},"northWest":{"latitude":3.1499039013645462,"longitude":101.71164177560608},"southEast":{"latitude":3.1480975260401527,"longitude":101.71507820155018},"southWest":{"latitude":3.1480975260401527,"longitude":101.71164177560608}},"boundsRotated":{"northEast":{"latitude":3.1488384109553205,"longitude":101.71529221983101},"northWest":{"latitude":3.150688470021479,"longitude":101.71239021751384},"southEast":{"latitude":3.14731295821117,"longitude":101.71432975984834},"southWest":{"latitude":3.149163017277328,"longitude":101.71142775753117}},"center":{"latitude":3.14900071371087,"longitude":101.713359989226},"dimensions":{"width":381.967303904424,"height":199.744691825801},"infoHtml":"<p>Pavilion Kuala Lumpur contains over 450 retail shops that are spread across seven levels. There are a number of double-storey&nbsp;flagship&nbsp;stores, of which some are street-front fashion boutiques which constitute the shopping mall.</p>","name":"Pavilion Bukit Bintang KL","pictureThumbUrl":"","pictureUrl":"","rotation":{"degrees":-327.6165552681448,"degreesClockwise":687.6165552681448,"radians":-5.7179875734711,"radiansMinusPiPi":-5.7179875734711},"userIdentifier":"-1","identifier":"1413"}]');
         if (window.plugins && window.plugins.SitumIndoorNavigation) {
             ref.showLoading("Fetching buildings");
             window.plugins.SitumIndoorNavigation.fetchBuildings(function (res) {
@@ -44809,9 +44809,9 @@ var LocationInfoPage = (function () {
         var ref = this;
         //For testing
         // ref.floorsArray = [{level:1}, {level:2}, {level:3}, {level:4},{level:5},{level:6}];
-        ref.floorsArray = JSON.parse('[{"altitude":1,"buildingIdentifier":"1685","level":1,"mapUrl":"https://dashboard.situm.es/uploads/situm/floor/map/2395/4d5e7118-053a-4979-aeee-cefebde9b52d.png","scale":6.77800408741024}]');
-        ref.floorSelect(ref.floorsArray[0]);
-        ref.getPOIs();
+        // ref.floorsArray = JSON.parse('[{"altitude":1,"buildingIdentifier":"1685","level":1,"mapUrl":"https://dashboard.situm.es/uploads/situm/floor/map/2395/4d5e7118-053a-4979-aeee-cefebde9b52d.png","scale":6.77800408741024}]');
+        // ref.floorSelect(ref.floorsArray[0]);
+        // ref.getPOIs();
         //testing 
         if (window.plugins && window.plugins.SitumIndoorNavigation) {
             ref.showLoading("Fetching Floors");
@@ -44834,8 +44834,8 @@ var LocationInfoPage = (function () {
     LocationInfoPage.prototype.getPOIs = function () {
         var ref = this;
         // For testing
-        ref.poisArray = JSON.parse('[{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","name":"Flat 1","position":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":17.0300720309583,"y":59.4640739405727},"coordinate":{"latitude":22.7341329857857,"longitude":75.8839282393456},"floorIdentifier":"2395","name":"Badroom","position":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":17.0300720309583,"y":59.4640739405727},"coordinate":{"latitude":22.7341329857857,"longitude":75.8839282393456},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isIndoor":true,"isOutdoor":false}]');
-        ref.setPoisOnMap();
+        // ref.poisArray = JSON.parse('[{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","name":"Flat 1","position":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":17.0300720309583,"y":59.4640739405727},"coordinate":{"latitude":22.7341329857857,"longitude":75.8839282393456},"floorIdentifier":"2395","name":"Badroom","position":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":17.0300720309583,"y":59.4640739405727},"coordinate":{"latitude":22.7341329857857,"longitude":75.8839282393456},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isIndoor":true,"isOutdoor":false}]');
+        // ref.setPoisOnMap();
         //tesing
         var success = function (res) {
             ref.hideLoading();
@@ -44858,12 +44858,14 @@ var LocationInfoPage = (function () {
     };
     LocationInfoPage.prototype.floorSelect = function (item) {
         this.slectedFloor = item;
+        if (this.floorOverlay) {
+            this.floorOverlay.setMap(null);
+        }
         var mapUrl = this.slectedFloor.mapUrl;
         this.setImageOnMap(mapUrl);
     };
     LocationInfoPage.prototype.setCustomOverlay = function (mapUrl) {
         var ref = this;
-        var overlay;
         USGSOverlay.prototype = new google.maps.OverlayView();
         var bounds = this.selectedBuilding.bounds;
         var north = this.midpoint(bounds.northWest.latitude, bounds.northEast.latitude, bounds.northWest.longitude, bounds.northEast.longitude);
@@ -44876,7 +44878,7 @@ var LocationInfoPage = (function () {
             this.div_ = null;
             this.setMap(map);
         }
-        overlay = new USGSOverlay(bounds, mapUrl, this.map);
+        this.floorOverlay = new USGSOverlay(bounds, mapUrl, this.map);
         USGSOverlay.prototype.onAdd = function () {
             var div = document.createElement('div');
             div.style.borderStyle = 'none';
@@ -45019,6 +45021,7 @@ var LocationInfoPage = (function () {
                 ref.status = res;
             });
             console.log("Status changed " + res);
+            ref.presentToastTop(res);
         };
         var onError = function (error) {
             ref.zone.run(function () {
@@ -45055,7 +45058,8 @@ var LocationInfoPage = (function () {
             this.currentPosMarker = new google.maps.Marker({
                 position: ionic,
                 map: this.map,
-                title: ""
+                title: "",
+                icon: markerImage
             });
         }
         this.currentPosMarker.setPosition(ionic);
@@ -45159,11 +45163,22 @@ var LocationInfoPage = (function () {
             window.plugins.SitumIndoorNavigation.startNaviagtion(ref.currentRoute, onDestinationReached, onProgress, onUserOutsideRoute, onError);
         }
     };
+    LocationInfoPage.prototype.presentToastTop = function (message) {
+        var toast = this.toastCtrl.create({
+            message: message,
+            duration: 2000,
+            position: 'top'
+        });
+        toast.onDidDismiss(function () {
+            console.log('Dismissed toast');
+        });
+        toast.present();
+    };
     LocationInfoPage.prototype.presentToast = function (message) {
         var toast = this.toastCtrl.create({
             message: message,
-            duration: 5000,
-            position: 'top'
+            duration: 2000,
+            position: 'bottom'
         });
         toast.onDidDismiss(function () {
             console.log('Dismissed toast');

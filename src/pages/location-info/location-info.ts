@@ -52,6 +52,7 @@ declare var google: any;
  	poiFilterList = [];
  	floorsArray = [];
 
+    floorOverlay:any;
 
  	isNavigationStart = false;
 
@@ -201,6 +202,9 @@ declare var google: any;
  	floorSelect(item) {
  		this.slectedFloor = item;
 
+         if (this.floorOverlay) {
+            this.floorOverlay.setMap(null);
+         }
  		var mapUrl = this.slectedFloor.mapUrl;
  		this.setImageOnMap(mapUrl);
  	}
@@ -209,7 +213,6 @@ declare var google: any;
  	setCustomOverlay(mapUrl) {
  		var ref = this;
 
- 		var overlay;
  		USGSOverlay.prototype = new google.maps.OverlayView();
 
  		let bounds = this.selectedBuilding.bounds;
@@ -221,14 +224,13 @@ declare var google: any;
  			new google.maps.LatLng(south.latitude, south.longitude));
 
  		function USGSOverlay(bounds, image, map) {
-
  			this.bounds_ = bounds;
  			this.image_ = image;
  			this.map_ = map;
  			this.div_ = null;
  			this.setMap(map);
  		}
- 		overlay = new USGSOverlay(bounds, mapUrl, this.map);
+ 		this.floorOverlay = new USGSOverlay(bounds, mapUrl, this.map);
 
  		USGSOverlay.prototype.onAdd = function() {
 
@@ -304,6 +306,7 @@ declare var google: any;
  		this.poisMarker = [];
  		for (var i = 0; i < this.poisArray.length; ++i) {
  			var poi = this.poisArray[i];
+
  			var lat = poi.coordinate.latitude;
  			var lng = poi.coordinate.longitude;			
  			let position = new google.maps.LatLng(lat, lng);
@@ -414,6 +417,7 @@ declare var google: any;
  				ref.status = res;
  			});
  			console.log("Status changed "+res);  
+             ref.presentToastTop(res);
  		};
 
 
@@ -460,7 +464,8 @@ declare var google: any;
  			this.currentPosMarker = new google.maps.Marker({
  				position: ionic,
  				map: this.map,
- 				title: ""
+ 				title: "",
+                icon: markerImage
  			});
  		}
 
@@ -578,12 +583,25 @@ declare var google: any;
  		}
  	}
 
+     presentToastTop(message) {
+         let toast = this.toastCtrl.create({
+             message: message,
+             duration: 2000,
+             position: 'top'
+         });
+
+         toast.onDidDismiss(() => {
+             console.log('Dismissed toast');
+         });
+
+         toast.present();
+     }
 
  	presentToast(message) {
  		let toast = this.toastCtrl.create({
  			message: message,
- 			duration: 5000,
- 			position: 'top'
+ 			duration: 2000,
+ 			position: 'bottom'
  		});
 
  		toast.onDidDismiss(() => {
