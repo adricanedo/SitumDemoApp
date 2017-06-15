@@ -24682,20 +24682,25 @@ page-location-info .indication-meessage {
   text-align: center;
 }
 
+page-location-info .toolbar {
+  padding: 0 16px !important;
+}
+
 page-location-info .map-container {
   position: absolute;
-  top: 20;
-  bottom: 20;
+  top: 40px;
+  bottom: 0px;
   left: 0;
   right: 0;
 }
 
 page-location-info .searchbar {
   z-index: 11;
+  position: fixed;
 }
 
 page-location-info .logo_img_bottom {
-  width: 80px;
+  width: 55px;
   height: auto;
   float: right;
 }

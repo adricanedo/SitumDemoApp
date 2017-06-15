@@ -221,6 +221,7 @@ declare var google: any;
          }
          var mapUrl = this.slectedFloor.mapUrl;
          this.setImageOnMap(mapUrl);
+         this.setPoisOnMap();
      }
 
 
@@ -311,10 +312,13 @@ declare var google: any;
              for (var i = 0; i < ref.poisArray.length; ++i) {
                  var poi = ref.poisArray[i];
 
+                 if(poi.floorIdentifier != ref.slectedFloor.identifier) {
+                     return;
+                 }
                  var lat = poi.coordinate.latitude;
                  var lng = poi.coordinate.longitude;            
                  let position = new google.maps.LatLng(lat, lng);
-                 var markerImage = new google.maps.MarkerImage('./assets/marker.png',
+                 var markerImage = new google.maps.MarkerImage('./assets/shop-marker.png',
                      new google.maps.Size(35, 35),
                      new google.maps.Point(0, 0),
                      new google.maps.Point(17.5, 17.5));
@@ -468,6 +472,8 @@ declare var google: any;
              draggable:true,
              scrollwheel:true,
              disableDoubleClickZoom:false,
+             streetViewControl:false,
+             fullscreenControl:false,
              mapTypeId: google.maps.MapTypeId.ROADMAP
          };
          this.map =  new google.maps.Map(element, mapOptions)
@@ -556,7 +562,10 @@ declare var google: any;
              }
          }
          if (window.plugins && window.plugins.SitumIndoorNavigation) {
+
+             ref.showLoading("");
              var success = function (route) {
+                 ref.hideLoading();
                  ref.zone.run(() => {
                      ref.currentRoute = route;
                      ref.drawRouteOnMap();
@@ -564,6 +573,7 @@ declare var google: any;
                  });
              };
              var onError = function (error) {
+                 ref.hideLoading();
                  console.log("Error in getting route "+error);
              };
              window.plugins.SitumIndoorNavigation.getRoute(this.currentLocation, this.selectedPOI, success, onError);
@@ -605,7 +615,7 @@ declare var google: any;
                  ref.zone.run(() => {
                      ref.navigationIndicationsMessage = error;
 
-                     ref.util.presentToast(ref.navigationIndicationsMessage);
+                     ref.util.presentToast("You are not in building");
                  }); 				
              };
              window.plugins.SitumIndoorNavigation.startNaviagtion(ref.currentRoute, onDestinationReached, onProgress, onUserOutsideRoute, onError);

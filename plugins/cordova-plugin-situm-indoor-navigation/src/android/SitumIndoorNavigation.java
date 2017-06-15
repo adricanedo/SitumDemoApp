@@ -341,7 +341,6 @@ public class SitumIndoorNavigation extends CordovaPlugin {
       cb.error("Error while calculating route " + e.getMessage());
       e.printStackTrace();
     }
-
   }
 
   private void startNavigation(JSONObject route, CallbackContext callbackContext) {

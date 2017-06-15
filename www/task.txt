@@ -1,0 +1,29 @@
+download psd photoshop here https://drive.google.com/open?id=0B1gZ2tvxkLLCNzlLVFN0MFlZcTA
+
+then at the footer area, this is the message should appear start from first to end.
+
+1. GPS
+
+—— Enable your GPS
+
+
+2. Search mall
+
+——  Search mall, shop and start routing.
+
+
+3. Not in location
+
+——  Error: Your are not in mall. 
+
+
+4. Start navigation
+
+——  Start navigation now.
+
+
+5. When navigation is on
+
+——  Find your way.
+
+just follow like that.

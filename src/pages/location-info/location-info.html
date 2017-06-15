@@ -73,7 +73,7 @@
 	</ion-list> -->
 
 	<div class="map-container">
-		<div id="map_canvas" style="width: 100%;height: 100vh;"></div>
+		<div id="map_canvas" style="width: 100%;height: 100%;"></div>
 	</div>
 
 	<div class="floor-list">
@@ -100,11 +100,13 @@
 </ion-content>
 <ion-footer>
 	<ion-toolbar padding (click)="buildingFindClick()">
-		<button class="building-select-button">
+		<div style="padding-top: 16px;float:left;">
+			<button class="building-select-button">
 			  <ion-icon name="locate"></ion-icon>
 		</button>
 		{{selectedBuilding?selectedBuilding.name:'Building not selected'}}
+		</div>
 
-		<img class="logo_img_bottom" src="./assets/situm_logo.png" />
+		<img class="logo_img_bottom" src="./assets/logo-app.png" />
 	</ion-toolbar>
 </ion-footer>

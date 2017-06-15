@@ -63,6 +63,7 @@ class CustomClasses {
             jo.put("level", floor.getLevel());
             jo.put("mapUrl", floor.getMapUrl().getValue());
             jo.put("scale", floor.getScale());
+            jo.put("identifier", floor.getIdentifier());
         } catch (JSONException e) {
             e.printStackTrace();
         }
