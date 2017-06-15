@@ -24753,3 +24753,25 @@ page-location-info .navigate-fab {
   right: 10px;
   bottom: 60px;
 }
+
+page-location-info .nav-route-button-container {
+  position: absolute;
+  bottom: 10px;
+  left: 30px;
+  right: 30px;
+  height: 50px;
+  text-align: center;
+}
+
+page-location-info .nav-route-button-container .nav-route-button {
+  width: 135px;
+}
+
+page-location-info .nav-route-button-container .nav-icon {
+  background-color: #ffffff;
+  padding: 0;
+}
+
+page-location-info .nav-route-button-container .nav-icon img {
+  width: 100%;
+}

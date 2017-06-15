@@ -97,14 +97,20 @@
 		</button>
 	</ion-fab>
 
+	<!-- <div class="nav-route-button-container">
+		<button ion-button round class="nav-route-button">Button</button>
+		<button ion-button class="nav-icon">
+			<img src="./assets/nav_arrow.png" />
+		</button>
+	</div> -->
 </ion-content>
 <ion-footer>
 	<ion-toolbar padding (click)="buildingFindClick()">
 		<div style="padding-top: 16px;float:left;">
 			<button class="building-select-button">
-			  <ion-icon name="locate"></ion-icon>
-		</button>
-		{{selectedBuilding?selectedBuilding.name:'Building not selected'}}
+				<ion-icon name="locate"></ion-icon>
+			</button>
+			{{selectedBuilding?selectedBuilding.name:'Building not selected'}}
 		</div>
 
 		<img class="logo_img_bottom" src="./assets/logo-app.png" />

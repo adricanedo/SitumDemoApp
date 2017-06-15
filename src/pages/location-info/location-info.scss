@@ -72,4 +72,23 @@ page-location-info {
 		right: 10px;
 		bottom: 60px;
 	}
+
+	.nav-route-button-container {
+		position: absolute;
+		bottom: 10px;
+		left: 30px;
+		right: 30px;
+		height: 50px;
+		text-align: center;
+		.nav-route-button {
+			width: 135px;
+		}
+		.nav-icon {
+			background-color: #ffffff;
+			padding: 0;
+			img {
+				width: 100%;
+			}
+		}
+	}
 }
