@@ -24688,7 +24688,7 @@ page-location-info .toolbar {
 
 page-location-info .map-container {
   position: absolute;
-  top: 40px;
+  top: 0px;
   bottom: 0px;
   left: 0;
   right: 0;
@@ -24697,6 +24697,15 @@ page-location-info .map-container {
 page-location-info .searchbar {
   z-index: 11;
   position: fixed;
+  background-color: transparent;
+}
+
+page-location-info .searchbar.mall {
+  top: 10px;
+}
+
+page-location-info .searchbar.shop {
+  top: 45px;
 }
 
 page-location-info .logo_img_bottom {
@@ -24706,8 +24715,8 @@ page-location-info .logo_img_bottom {
 }
 
 page-location-info .floor-list {
-  position: absolute;
-  bottom: 30px;
+  position: fixed;
+  bottom: 94px;
   left: 5px;
   width: 40px;
   height: auto;
@@ -24728,12 +24737,21 @@ page-location-info .floor-list ion-list .item .label {
 
 page-location-info .search-list-container {
   z-index: 11;
-  position: relative;
+  position: fixed;
   height: auto;
   max-height: 150px;
   overflow-y: scroll;
   background-color: #ffffff;
-  margin: 0 8px;
+  left: 8px;
+  right: 8px;
+}
+
+page-location-info .search-list-container.mall {
+  top: 47px;
+}
+
+page-location-info .search-list-container.shop {
+  top: 83px;
 }
 
 page-location-info .search-list-container ion-list {
@@ -24755,21 +24773,29 @@ page-location-info .navigate-fab {
 }
 
 page-location-info .nav-route-button-container {
-  position: absolute;
-  bottom: 10px;
-  left: 30px;
-  right: 30px;
+  position: fixed;
+  bottom: 50px;
+  left: 20px;
+  right: 20px;
   height: 50px;
   text-align: center;
 }
 
 page-location-info .nav-route-button-container .nav-route-button {
-  width: 135px;
+  width: 60vw;
+  font-weight: bold;
+}
+
+page-location-info .nav-route-button-container .nav-route-button-selected {
+  width: 165px;
+  font-weight: bold;
+  background-color: #c00;
 }
 
 page-location-info .nav-route-button-container .nav-icon {
   background-color: #ffffff;
   padding: 0;
+  width: 50px;
 }
 
 page-location-info .nav-route-button-container .nav-icon img {

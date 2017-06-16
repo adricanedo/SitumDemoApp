@@ -18,48 +18,48 @@ declare var google: any;
      providers: [UtilProvider]
  })
  export class LocationInfoPage {
- 	selectedBuilding:any;
- 	currentLocation:any;
- 	slectedFloor:any;
- 	selectedPOI:any;
- 	
- 	locationErrorMsg = "";
- 	navigationIndicationsMessage = "";
+     isTesting = false;
 
- 	status = "Not available";
- 	poisList:any = [];
- 	loading;
- 	currentRoute:any;
+     selectedBuilding:any;
+     currentLocation:any;
+     slectedFloor:any;
+     selectedPOI:any;
 
- 	map;
- 	currentPosMarker;
- 	selectedPoiName = "";
- 	floorMap:any;
- 	poisMarker:any = [];
+     locationErrorMsg = "";
+     navigationIndicationsMessage = "";
 
- 	routesPolylines = [];
+     status = "Not available";
+     poisList:any = [];
+     loading;
+     currentRoute:any;
 
- 	mapZoom = 18;
+     map;
+     currentPosMarker;
+     selectedPoiName = "";
+     floorMap:any;
+     poisMarker:any = [];
 
- 	isShowSearchList = false;
+     routesPolylines = [];
 
- 	searchBar:any = "";
+     mapZoom = 18;
 
- 	searchPlaceHolderText = "Search Building";
- 	searchType = "Building";
+     isShowSearchList = false;
 
- 	buildingsArray = [];
- 	poisArray = [];
- 	buildingFilterList = [];
- 	poiFilterList = [];
- 	floorsArray = [];
+     searchBarMall:any = "";
+     searchBarShop:any = "";
 
+     searchType = "Building";
+
+     buildingsArray = [];
+     poisArray = [];
+     buildingFilterList = [];
+     poiFilterList = [];
+     floorsArray = [];
+
+     bottomInfoText:string = "Please search mall & shop"; 
      floorOverlay:any;
-
      isNavigationStart = false;
-
      isLocationUpdating = false;
-
 
      infowindow:any;
 
@@ -74,19 +74,19 @@ declare var google: any;
 
          events.subscribe('MenuItemChange', (userEventData) => {
              this.isShowSearchList = false;
-             this.searchBar = "";
+             
 
-             if(userEventData.type == 'Building') {
-                 this.searchPlaceHolderText = "Search Building";
-                 this.searchType = userEventData.type;
-             } else if(userEventData.type == 'POI') {
-                 if(this.selectedBuilding) {
-                     this.searchType = userEventData.type;
-                     this.searchPlaceHolderText = "Search POI";
-                 } 				
-             } else if(userEventData.type == 'Start Navigate') {
-                 this.startNavigation();
-             } 
+             // if(userEventData.type == 'Building') {
+             //     this.searchBarMall = "";
+             //     this.searchType = userEventData.type;
+             // } else if(userEventData.type == 'POI') {
+             //     this.searchBarShop = "";
+             //     if(this.selectedBuilding) {
+             //         this.searchType = userEventData.type;
+             //     } 				
+             // } else if(userEventData.type == 'Start Navigate') {
+             //     this.startNavigation();
+             // } 
          });
      }
 
@@ -95,24 +95,7 @@ declare var google: any;
          this.getBuildings();
      }
 
-
-     buildingFindClick() {
-         this.isShowSearchList = false;
-         this.searchBar = "";
-
-         this.searchPlaceHolderText = "Search Building";
-         this.searchType = 'Building';
-     }
-
-     poiFindClick() {
-         this.isShowSearchList = false;
-         this.searchBar = "";
-
-         this.searchType = 'POI';
-         this.searchPlaceHolderText = "Search POI";
-     }
-
-
+   
      ngAfterViewInit() {
          var ref = this;
          ref.zone.run(() => {
@@ -134,8 +117,10 @@ declare var google: any;
 
      getBuildings() {
          let ref = this;
-         // Test Purpose
-         // ref.buildingsArray = JSON.parse('[{"address":"","bounds":{"northEast":{"latitude":3.1574073523743467,"longitude":101.61013028728091},"northWest":{"latitude":3.1574073523743467,"longitude":101.60891630527264},"southEast":{"latitude":3.156614425892212,"longitude":101.61013028728091},"southWest":{"latitude":3.156614425892212,"longitude":101.60891630527264}},"boundsRotated":{"northEast":{"latitude":3.157480336631599,"longitude":101.60897022208923},"northWest":{"latitude":3.156312174954634,"longitude":101.60932123240065},"southEast":{"latitude":3.157709603104937,"longitude":101.60972536029018},"southWest":{"latitude":3.1565414414538453,"longitude":101.61007637067026}},"center":{"latitude":3.15701088914065,"longitude":101.609523296356},"dimensions":{"width":134.936103199873,"height":87.6799409001345},"infoHtml":"","name":"eCurve Damansara","pictureThumbUrl":"","pictureUrl":"","rotation":{"degrees":-106.80645929441549,"degreesClockwise":466.8064592944155,"radians":-1.86412437708485,"radiansMinusPiPi":-1.86412437708485},"userIdentifier":"-1","identifier":"1431"},{"address":"","bounds":{"northEast":{"latitude":22.72628960249395,"longitude":75.89448680074379},"northWest":{"latitude":22.72628960249395,"longitude":75.89371557431514},"southEast":{"latitude":22.725335693101915,"longitude":75.89448680074379},"southWest":{"latitude":22.725335693101915,"longitude":75.89371557431514}},"boundsRotated":{"northEast":{"latitude":22.725464014496872,"longitude":75.89462253878999},"northWest":{"latitude":22.726179316726352,"longitude":75.89460795730739},"southEast":{"latitude":22.7254459790073,"longitude":75.89359441792793},"southWest":{"latitude":22.72616128123678,"longitude":75.89357983641747}},"center":{"latitude":22.7258126477903,"longitude":75.8941011875868},"dimensions":{"width":79.2268628160681,"height":105.636099078708},"infoHtml":"","name":"Patidar sHouse","pictureThumbUrl":"","pictureUrl":"","rotation":{"degrees":-271.08332833894497,"degreesClockwise":631.083328338945,"radians":-4.73129662677944,"radiansMinusPiPi":-4.73129662677944},"userIdentifier":"-1","identifier":"1685"},{"address":"168, Jalan Bukit Bintang, Bukit Bintang, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia","bounds":{"northEast":{"latitude":3.1499039013645462,"longitude":101.71507820155018},"northWest":{"latitude":3.1499039013645462,"longitude":101.71164177560608},"southEast":{"latitude":3.1480975260401527,"longitude":101.71507820155018},"southWest":{"latitude":3.1480975260401527,"longitude":101.71164177560608}},"boundsRotated":{"northEast":{"latitude":3.1488384109553205,"longitude":101.71529221983101},"northWest":{"latitude":3.150688470021479,"longitude":101.71239021751384},"southEast":{"latitude":3.14731295821117,"longitude":101.71432975984834},"southWest":{"latitude":3.149163017277328,"longitude":101.71142775753117}},"center":{"latitude":3.14900071371087,"longitude":101.713359989226},"dimensions":{"width":381.967303904424,"height":199.744691825801},"infoHtml":"<p>Pavilion Kuala Lumpur contains over 450 retail shops that are spread across seven levels. There are a number of double-storey&nbsp;flagship&nbsp;stores, of which some are street-front fashion boutiques which constitute the shopping mall.</p>","name":"Pavilion Bukit Bintang KL","pictureThumbUrl":"","pictureUrl":"","rotation":{"degrees":-327.6165552681448,"degreesClockwise":687.6165552681448,"radians":-5.7179875734711,"radiansMinusPiPi":-5.7179875734711},"userIdentifier":"-1","identifier":"1413"}]');
+
+         if(this.isTesting) {
+             ref.buildingsArray = JSON.parse('[{"address":"","bounds":{"northEast":{"latitude":3.1574073523743467,"longitude":101.61013028728091},"northWest":{"latitude":3.1574073523743467,"longitude":101.60891630527264},"southEast":{"latitude":3.156614425892212,"longitude":101.61013028728091},"southWest":{"latitude":3.156614425892212,"longitude":101.60891630527264}},"boundsRotated":{"northEast":{"latitude":3.157480336631599,"longitude":101.60897022208923},"northWest":{"latitude":3.156312174954634,"longitude":101.60932123240065},"southEast":{"latitude":3.157709603104937,"longitude":101.60972536029018},"southWest":{"latitude":3.1565414414538453,"longitude":101.61007637067026}},"center":{"latitude":3.15701088914065,"longitude":101.609523296356},"dimensions":{"width":134.936103199873,"height":87.6799409001345},"infoHtml":"","name":"eCurve Damansara","pictureThumbUrl":"","pictureUrl":"","rotation":{"degrees":-106.80645929441549,"degreesClockwise":466.8064592944155,"radians":-1.86412437708485,"radiansMinusPiPi":-1.86412437708485},"userIdentifier":"-1","identifier":"1431"},{"address":"","bounds":{"northEast":{"latitude":22.72628960249395,"longitude":75.89448680074379},"northWest":{"latitude":22.72628960249395,"longitude":75.89371557431514},"southEast":{"latitude":22.725335693101915,"longitude":75.89448680074379},"southWest":{"latitude":22.725335693101915,"longitude":75.89371557431514}},"boundsRotated":{"northEast":{"latitude":22.725464014496872,"longitude":75.89462253878999},"northWest":{"latitude":22.726179316726352,"longitude":75.89460795730739},"southEast":{"latitude":22.7254459790073,"longitude":75.89359441792793},"southWest":{"latitude":22.72616128123678,"longitude":75.89357983641747}},"center":{"latitude":22.7258126477903,"longitude":75.8941011875868},"dimensions":{"width":79.2268628160681,"height":105.636099078708},"infoHtml":"","name":"Patidar sHouse","pictureThumbUrl":"","pictureUrl":"","rotation":{"degrees":-271.08332833894497,"degreesClockwise":631.083328338945,"radians":-4.73129662677944,"radiansMinusPiPi":-4.73129662677944},"userIdentifier":"-1","identifier":"1685"},{"address":"168, Jalan Bukit Bintang, Bukit Bintang, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia","bounds":{"northEast":{"latitude":3.1499039013645462,"longitude":101.71507820155018},"northWest":{"latitude":3.1499039013645462,"longitude":101.71164177560608},"southEast":{"latitude":3.1480975260401527,"longitude":101.71507820155018},"southWest":{"latitude":3.1480975260401527,"longitude":101.71164177560608}},"boundsRotated":{"northEast":{"latitude":3.1488384109553205,"longitude":101.71529221983101},"northWest":{"latitude":3.150688470021479,"longitude":101.71239021751384},"southEast":{"latitude":3.14731295821117,"longitude":101.71432975984834},"southWest":{"latitude":3.149163017277328,"longitude":101.71142775753117}},"center":{"latitude":3.14900071371087,"longitude":101.713359989226},"dimensions":{"width":381.967303904424,"height":199.744691825801},"infoHtml":"<p>Pavilion Kuala Lumpur contains over 450 retail shops that are spread across seven levels. There are a number of double-storey&nbsp;flagship&nbsp;stores, of which some are street-front fashion boutiques which constitute the shopping mall.</p>","name":"Pavilion Bukit Bintang KL","pictureThumbUrl":"","pictureUrl":"","rotation":{"degrees":-327.6165552681448,"degreesClockwise":687.6165552681448,"radians":-5.7179875734711,"radiansMinusPiPi":-5.7179875734711},"userIdentifier":"-1","identifier":"1413"}]');
+         }
 
          if(window.plugins && window.plugins.SitumIndoorNavigation) {
              ref.showLoading("Fetching buildings");
@@ -155,12 +140,12 @@ declare var google: any;
      getFloorsForBuilding() {
          let ref = this;
 
-         //For testing
-         // ref.floorsArray = [{level:1}, {level:2}, {level:3}, {level:4},{level:5},{level:6}];
-         // ref.floorsArray = JSON.parse('[{"altitude":1,"buildingIdentifier":"1685","level":1,"mapUrl":"https://dashboard.situm.es/uploads/situm/floor/map/2395/4d5e7118-053a-4979-aeee-cefebde9b52d.png","scale":6.77800408741024}]');
-         // ref.floorSelect(ref.floorsArray[0]);
-         // ref.getPOIs();
-         //testing 
+         if(this.isTesting) {
+             ref.floorsArray = [{level:1}, {level:2}, {level:3}, {level:4},{level:5},{level:6}];
+             ref.floorsArray = JSON.parse('[{"altitude":1,"buildingIdentifier":"1685","level":1,"mapUrl":"https://dashboard.situm.es/uploads/situm/floor/map/2395/4d5e7118-053a-4979-aeee-cefebde9b52d.png","scale":6.77800408741024}]');
+             ref.floorSelect(ref.floorsArray[0]);
+             ref.getPOIs();
+         }
 
          if(window.plugins && window.plugins.SitumIndoorNavigation) {
              ref.showLoading("Fetching Floors");
@@ -183,11 +168,10 @@ declare var google: any;
 
      getPOIs() {
          var ref = this;
-         // For testing
-         // ref.poisArray = JSON.parse('[{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","name":"Flat 1","position":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":17.0300720309583,"y":59.4640739405727},"coordinate":{"latitude":22.7341329857857,"longitude":75.8839282393456},"floorIdentifier":"2395","name":"Badroom","position":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":17.0300720309583,"y":59.4640739405727},"coordinate":{"latitude":22.7341329857857,"longitude":75.8839282393456},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isIndoor":true,"isOutdoor":false}]');
-         // ref.setPoisOnMap();
-         //tesing
-
+         if(this.isTesting) {
+             ref.poisArray = JSON.parse('[{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","name":"Flat 1","position":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":35.4698126398935,"y":78.5507469981981},"coordinate":{"latitude":22.7341725669465,"longitude":75.884183049202},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isIndoor":true,"isOutdoor":false},{"buildingIdentifier":"1685","cartesianCoordinate":{"x":17.0300720309583,"y":59.4640739405727},"coordinate":{"latitude":22.7341329857857,"longitude":75.8839282393456},"floorIdentifier":"2395","name":"Badroom","position":{"buildingIdentifier":"1685","cartesianCoordinate":{"x":17.0300720309583,"y":59.4640739405727},"coordinate":{"latitude":22.7341329857857,"longitude":75.8839282393456},"floorIdentifier":"2395","isIndoor":true,"isOutdoor":false},"isIndoor":true,"isOutdoor":false}]');
+             ref.setPoisOnMap();
+         }
 
          var success = function (res) {
              ref.hideLoading();
@@ -349,12 +333,12 @@ declare var google: any;
          if(this.searchType == 'Building') {
 
              var filteredArray = this.buildingsArray.filter(function(item) {
-                 return item.name.toLowerCase().indexOf(ref.searchBar.toLowerCase()) !== -1;
+                 return item.name.toLowerCase().indexOf(ref.searchBarMall.toLowerCase()) !== -1;
              });
              this.buildingFilterList = filteredArray;
          } else if(this.searchType  == 'POI') {
              var filteredArray = this.poisArray.filter(function(item) {
-                 return item.name.toLowerCase().indexOf(ref.searchBar.toLowerCase()) !== -1;
+                 return item.name.toLowerCase().indexOf(ref.searchBarShop.toLowerCase()) !== -1;
              });
              this.poiFilterList = filteredArray;
          }
@@ -362,21 +346,31 @@ declare var google: any;
      }
 
      onClear(event) {
-         this.buildingFilterList  = [];
+         if(this.searchType == 'Building') {
+             this.buildingFilterList  = [];
+         } else if(this.searchType  == 'POI') {
+             this.poiFilterList  = [];
+         } 
          this.isShowSearchList = false;
      }
 
      onCancel(event) {
-         this.buildingFilterList  = [];
+         if(this.searchType == 'Building') {
+             this.buildingFilterList  = [];
+         } else if(this.searchType  == 'POI') {
+             this.poiFilterList  = [];
+         } 
      }
 
-     searchBarOnFocus() {
+     searchBarOnFocus(type) {
+         this.searchType = type;
+
          this.onInput("");
          console.log("On Focus");
      }
 
      buildingSelect(item) {
-         this.searchBar = item.name;
+         this.searchBarMall = item.name;
          this.selectedBuilding = item;
 
          this.buildingFilterList = [];
@@ -399,14 +393,12 @@ declare var google: any;
          this.getFloorsForBuilding();
      }
      poiSelect(item) {
-         this.searchBar = item.name;
+         this.searchBarShop = item.name;
 
          this.selectedPOI = item;
 
          this.poiFilterList = [];
          this.isShowSearchList = false;
-
-         this.showRoute();
      }
 
      startLocationUpdate() {
@@ -471,6 +463,7 @@ declare var google: any;
              zoomControl:false,
              draggable:true,
              scrollwheel:true,
+             mapTypeControl:false,
              disableDoubleClickZoom:false,
              streetViewControl:false,
              fullscreenControl:false,
@@ -508,7 +501,7 @@ declare var google: any;
 
 
      drawRouteOnMap() {
-        
+
          let points = this.currentRoute.points;
 
          var coordinates = [];
@@ -544,40 +537,47 @@ declare var google: any;
      }
 
      showRoute() {
-         if (this.currentPosMarker) {
-             this.currentPosMarker.setMap(null);
-             for (var i = 0; i < this.routesPolylines.length; ++i) {
-                 var polyline = this.routesPolylines[i];
-                 polyline.setMap(null);
+         if(!this.selectedBuilding) {
+             this.util.presentToastTop("Please select mall first.");
+         } else if (!this.selectedPOI){
+             this.util.presentToastTop("Please select shop first.");
+         } else {
+             if (this.currentPosMarker) {
+                 this.currentPosMarker.setMap(null);
+                 for (var i = 0; i < this.routesPolylines.length; ++i) {
+                     var polyline = this.routesPolylines[i];
+                     polyline.setMap(null);
+                 }
+                 this.routesPolylines = [];
+                 this.currentPosMarker = null;
              }
-             this.routesPolylines = [];
-             this.currentPosMarker = null;
-         }
 
-         var ref = this;
-         for (var i = 0; i <this.poisList.length; ++i) {
-             let poi = this.poisList[i];
-             if (poi.name == this.selectedPoiName) {
-                 this.selectedPOI = poi;
+             var ref = this;
+             for (var i = 0; i <this.poisList.length; ++i) {
+                 let poi = this.poisList[i];
+                 if (poi.name == this.selectedPoiName) {
+                     this.selectedPOI = poi;
+                 }
+             }
+             if (window.plugins && window.plugins.SitumIndoorNavigation) {
+
+                 ref.showLoading("");
+                 var success = function (route) {
+                     ref.hideLoading();
+                     ref.zone.run(() => {
+                         ref.currentRoute = route;
+                         ref.drawRouteOnMap();
+                         console.log("Route response "+JSON.stringify(route)); 
+                     });
+                 };
+                 var onError = function (error) {
+                     ref.hideLoading();
+                     console.log("Error in getting route "+error);
+                 };
+                 window.plugins.SitumIndoorNavigation.getRoute(this.currentLocation, this.selectedPOI, success, onError);
              }
          }
-         if (window.plugins && window.plugins.SitumIndoorNavigation) {
-
-             ref.showLoading("");
-             var success = function (route) {
-                 ref.hideLoading();
-                 ref.zone.run(() => {
-                     ref.currentRoute = route;
-                     ref.drawRouteOnMap();
-                     console.log("Route response "+JSON.stringify(route)); 
-                 });
-             };
-             var onError = function (error) {
-                 ref.hideLoading();
-                 console.log("Error in getting route "+error);
-             };
-             window.plugins.SitumIndoorNavigation.getRoute(this.currentLocation, this.selectedPOI, success, onError);
-         }
+         
      }
 
      startNavigation() {
@@ -622,6 +622,19 @@ declare var google: any;
          }
      }        
 
+     stopNavigation() {
+         this.isNavigationStart = false;
+         if (this.currentPosMarker) {
+             this.currentPosMarker.setMap(null);
+             for (var i = 0; i < this.routesPolylines.length; ++i) {
+                 var polyline = this.routesPolylines[i];
+                 polyline.setMap(null);
+             }
+             this.routesPolylines = [];
+             this.currentPosMarker = null;
+         }
+     }
+
      setInfoWindowContent(marker, poi, map_obj, ref) {
          var contentString = '<div class="info_window"> ' +
          '<h3>' + poi.name + '</h3>' +
@@ -637,8 +650,9 @@ declare var google: any;
 
 
      processInfoWindowClick (ref, poi) {
-         ref.selectedPOI = poi;
-         ref.showRoute();
+         this.searchBarShop = poi.name;
+
+         ref.selectedPOI = poi;         
          ref.infowindow.close();  
      }        
  }

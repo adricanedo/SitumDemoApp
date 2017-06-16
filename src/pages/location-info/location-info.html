@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<!-- <ion-header>
 
 	<ion-navbar hideBackButton="true">
 		<button ion-button menuToggle>
@@ -13,22 +13,34 @@
 		<ion-title>Building</ion-title>
 	</ion-navbar>
 
-</ion-header>
+</ion-header> -->
 
 
 <ion-content>
 	<ion-searchbar 
-	(ionFocus)="searchBarOnFocus()"
+	(ionFocus)="searchBarOnFocus('Building')"
 	showCancelButton="false" 
 	debounce="100" 
-	placeholder="{{searchPlaceHolderText}}" 
-	class="searchbar"
-	[(ngModel)]="searchBar"
+	placeholder="Search mall" 
+	class="searchbar mall"
+	[(ngModel)]="searchBarMall"
 	(ionCancel)="onCancel($event)"
 	(ionInput)="onInput($event)"
 	(ionClear)="onClear($event)">
 </ion-searchbar>
-<div class="search-list-container" *ngIf="isShowSearchList">
+<ion-searchbar 
+	(ionFocus)="searchBarOnFocus('POI')"
+	showCancelButton="false" 
+	debounce="100" 
+	placeholder="Search shop" 
+	class="searchbar shop"
+	[(ngModel)]="searchBarShop"
+	(ionCancel)="onCancel($event)"
+	(ionInput)="onInput($event)"
+	(ionClear)="onClear($event)">
+</ion-searchbar>
+
+<div class="search-list-container" [ngClass]="(searchType == 'Building')?'mall':'shop'" *ngIf="isShowSearchList">
 	<ion-list *ngIf="searchType == 'Building'">
 		<ion-item *ngFor="let item of buildingFilterList" (click)="buildingSelect(item)">
 			{{ item.name }}
@@ -85,7 +97,7 @@
 	</div>
 
 
-	<ion-fab class="poi-fab" ng-if="selectedBuilding">
+	<!-- <ion-fab class="poi-fab" ng-if="selectedBuilding">
 		<button ion-fab mini (click)="poiFindClick()">
 			<ion-icon name="map"></ion-icon>
 		</button>
@@ -95,14 +107,15 @@
 		<button ion-fab mini (click)="startNavigation()">
 			<ion-icon ios="ios-navigate" md="md-navigate"></ion-icon>
 		</button>
-	</ion-fab>
+	</ion-fab> -->
 
-	<!-- <div class="nav-route-button-container">
-		<button ion-button round class="nav-route-button">Button</button>
+	<div class="nav-route-button-container">
+	<button ion-button *ngIf="!currentRoute" class="nav-route-button" (click)="showRoute()">ROUTE</button>
+		<button ion-button *ngIf="currentRoute" [ngClass]="isNavigationStart?'nav-route-button-selected':'nav-route-button'" (click)="isNavigationStart?stopNavigation():startNavigation()">{{isNavigationStart?'STOP':'START'}}</button>
 		<button ion-button class="nav-icon">
 			<img src="./assets/nav_arrow.png" />
 		</button>
-	</div> -->
+	</div>
 </ion-content>
 <ion-footer>
 	<ion-toolbar padding (click)="buildingFindClick()">
@@ -110,7 +123,7 @@
 			<button class="building-select-button">
 				<ion-icon name="locate"></ion-icon>
 			</button>
-			{{selectedBuilding?selectedBuilding.name:'Building not selected'}}
+			{{bottomInfoText}}
 		</div>
 
 		<img class="logo_img_bottom" src="./assets/logo-app.png" />
