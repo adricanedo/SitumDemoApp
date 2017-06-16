@@ -27,7 +27,7 @@ page-location-info {
 			top:10px;
 		}
 		&.shop {
-			top:45px;
+			top:55px;
 		}
 	}
 
@@ -64,10 +64,10 @@ page-location-info {
 		left: 8px;
 		right: 8px;
 		&.mall {
-			top: 47px;
+			top: 52px;
 		}
 		&.shop {
-			top: 83px;
+			top: 98px;
 		}
 
 		ion-list {
@@ -99,7 +99,7 @@ page-location-info {
 			font-weight: bold;
 		}
 		.nav-route-button-selected {
-			width: 165px;
+			width: 60vw;
 			font-weight: bold;
 			background-color: #c00;
 		}

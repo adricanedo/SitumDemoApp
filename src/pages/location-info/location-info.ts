@@ -56,7 +56,6 @@ declare var google: any;
      poiFilterList = [];
      floorsArray = [];
 
-     bottomInfoText:string = "Please search mall & shop"; 
      floorOverlay:any;
      isNavigationStart = false;
      isLocationUpdating = false;

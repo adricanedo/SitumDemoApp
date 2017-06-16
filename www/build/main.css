@@ -24705,7 +24705,7 @@ page-location-info .searchbar.mall {
 }
 
 page-location-info .searchbar.shop {
-  top: 45px;
+  top: 55px;
 }
 
 page-location-info .logo_img_bottom {
@@ -24747,11 +24747,11 @@ page-location-info .search-list-container {
 }
 
 page-location-info .search-list-container.mall {
-  top: 47px;
+  top: 52px;
 }
 
 page-location-info .search-list-container.shop {
-  top: 83px;
+  top: 98px;
 }
 
 page-location-info .search-list-container ion-list {
@@ -24787,7 +24787,7 @@ page-location-info .nav-route-button-container .nav-route-button {
 }
 
 page-location-info .nav-route-button-container .nav-route-button-selected {
-  width: 165px;
+  width: 60vw;
   font-weight: bold;
   background-color: #c00;
 }
