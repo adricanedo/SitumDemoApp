@@ -296,7 +296,7 @@ declare var google: any;
                  var poi = ref.poisArray[i];
 
                  if(poi.floorIdentifier != ref.slectedFloor.identifier) {
-                     return;
+                     continue;
                  }
                  var lat = poi.coordinate.latitude;
                  var lng = poi.coordinate.longitude;            
