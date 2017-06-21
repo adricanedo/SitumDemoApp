@@ -37,7 +37,7 @@ import { ToastController , AlertController } from 'ionic-angular';
 
 
     showAlert(title, msg) {
-      this.alrtCtrl.create({
+      var alert = this.alrtCtrl.create({
         title: title,
         message: msg,
         buttons: [
@@ -49,7 +49,8 @@ import { ToastController , AlertController } from 'ionic-angular';
           }
         }
         ]
-      })
+      });
+      alert.present();
     }
 
     presentToastTop(message) {

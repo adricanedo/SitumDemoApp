@@ -558,7 +558,7 @@ declare var google: any;
          } else if (!this.selectedPOI){
              this.util.presentToastTop("Please select shop first.");
          } else {
-             if (!this.currentLocation) {
+             if (!this.currentLocation || (this.currentLocation && this.currentLocation.buildingIdentifier != this.selectedBuilding.identifier)) {
                  this.util.showAlert("Alert!", "You are not in building.");
                  return;
              }
