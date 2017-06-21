@@ -35545,7 +35545,7 @@ if (!exports.root) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_alert_alert__ = __webpack_require__(52);
 /* unused harmony reexport Alert */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_alert_alert_controller__ = __webpack_require__(106);
-/* unused harmony reexport AlertController */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_6__components_alert_alert_controller__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_alert_alert_component__ = __webpack_require__(51);
 /* unused harmony reexport AlertCmp */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_app_app__ = __webpack_require__(6);
@@ -35623,7 +35623,7 @@ if (!exports.root) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__components_loading_loading__ = __webpack_require__(131);
 /* unused harmony reexport Loading */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__components_loading_loading_controller__ = __webpack_require__(130);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_45__components_loading_loading_controller__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_45__components_loading_loading_controller__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__components_loading_loading_component__ = __webpack_require__(65);
 /* unused harmony reexport LoadingCmp */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__components_menu_menu__ = __webpack_require__(134);
@@ -35641,7 +35641,7 @@ if (!exports.root) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__components_modal_modal_controller__ = __webpack_require__(135);
 /* unused harmony reexport ModalController */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__components_nav_nav__ = __webpack_require__(69);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return __WEBPACK_IMPORTED_MODULE_54__components_nav_nav__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return __WEBPACK_IMPORTED_MODULE_54__components_nav_nav__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__components_nav_nav_pop__ = __webpack_require__(67);
 /* unused harmony reexport NavPop */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__components_nav_nav_pop_anchor__ = __webpack_require__(137);
@@ -35758,20 +35758,20 @@ if (!exports.root) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_110__platform_dom_controller__ = __webpack_require__(8);
 /* unused harmony reexport DomController */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_111__platform_platform__ = __webpack_require__(3);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_111__platform_platform__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return __WEBPACK_IMPORTED_MODULE_111__platform_platform__["a"]; });
 /* unused harmony reexport setupPlatform */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_112__tap_click_haptic__ = __webpack_require__(36);
 /* unused harmony reexport Haptic */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_113__navigation_deep_linker__ = __webpack_require__(14);
 /* unused harmony reexport DeepLinker */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_114__navigation_ionic_page__ = __webpack_require__(228);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_114__navigation_ionic_page__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_114__navigation_ionic_page__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_115__navigation_nav_controller__ = __webpack_require__(18);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_115__navigation_nav_controller__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_115__navigation_nav_controller__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_116__navigation_nav_controller_base__ = __webpack_require__(45);
 /* unused harmony reexport NavControllerBase */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_117__navigation_nav_params__ = __webpack_require__(15);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_117__navigation_nav_params__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_117__navigation_nav_params__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_118__navigation_nav_util__ = __webpack_require__(21);
 /* unused harmony reexport DeepLinkMetadata */
 /* unused harmony reexport DeepLinkMetadataFactory */
@@ -35803,7 +35803,7 @@ if (!exports.root) {
 /* unused harmony reexport GestureDelegate */
 /* unused harmony reexport BlockerDelegate */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_127__util_events__ = __webpack_require__(181);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_127__util_events__["b"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_127__util_events__["b"]; });
 /* unused harmony reexport setupEvents */
 /* unused harmony reexport setupProvideEvents */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_128__util_ionic_error_handler__ = __webpack_require__(236);
@@ -35830,7 +35830,7 @@ if (!exports.root) {
 /* unused harmony reexport IonicGestureConfig */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_138__module__ = __webpack_require__(227);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_138__module__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_138__module__["b"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_138__module__["b"]; });
 /* unused harmony reexport provideLocationStrategy */
 
 
@@ -45007,6 +45007,19 @@ var LocationInfoPage = (function () {
         this.selectedPOI = item;
         this.poiFilterList = [];
         this.isShowSearchList = false;
+        this.focusOnSelectedPOI();
+    };
+    LocationInfoPage.prototype.focusOnSelectedPOI = function () {
+        var coordinate = this.selectedPOI.coordinate;
+        var ionic = new google.maps.LatLng(coordinate.latitude, coordinate.longitude);
+        this.map.setCenter(ionic);
+        for (var i = 0; i < this.floorsArray.length; ++i) {
+            var floor = this.floorsArray[i];
+            if (floor.identifier == this.selectedPOI.floorIdentifier) {
+                this.floorSelect(floor);
+                break;
+            }
+        }
     };
     LocationInfoPage.prototype.startLocationUpdate = function () {
         if (this.isLocationUpdating) {
@@ -45038,6 +45051,7 @@ var LocationInfoPage = (function () {
         };
         var onError = function (error) {
             ref.zone.run(function () {
+                ref.currentLocation = null;
                 ref.locationErrorMsg = error;
             });
             console.log("Error on location update " + error);
@@ -45123,6 +45137,10 @@ var LocationInfoPage = (function () {
             this.util.presentToastTop("Please select shop first.");
         }
         else {
+            if (!this.currentLocation) {
+                this.util.showAlert("Alert!", "You are not in building.");
+                return;
+            }
             if (this.currentPosMarker) {
                 this.currentPosMarker.setMap(null);
                 for (var i = 0; i < this.routesPolylines.length; ++i) {
@@ -45225,12 +45243,12 @@ var LocationInfoPage = (function () {
     return LocationInfoPage;
 }());
 LocationInfoPage = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPage */])(),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPage */])(),
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
         selector: 'page-location-info',template:/*ion-inline-start:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\location-info\location-info.html"*/'<!--\n\n  Generated template for the LocationInfoPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n\n\n	<ion-navbar hideBackButton="true">\n\n		<button ion-button menuToggle>\n\n			<ion-icon name="menu"></ion-icon>\n\n		</button>\n\n		<ion-title>Building</ion-title>\n\n	</ion-navbar>\n\n\n\n</ion-header> -->\n\n\n\n\n\n<ion-content>\n\n	<ion-searchbar \n\n	(ionFocus)="searchBarOnFocus(\'Building\')"\n\n	showCancelButton="false" \n\n	debounce="100" \n\n	placeholder="Search mall" \n\n	class="searchbar mall"\n\n	[(ngModel)]="searchBarMall"\n\n	(ionCancel)="onCancel($event)"\n\n	(ionInput)="onInput($event)"\n\n	(ionClear)="onClear($event)">\n\n</ion-searchbar>\n\n<ion-searchbar \n\n	(ionFocus)="searchBarOnFocus(\'POI\')"\n\n	showCancelButton="false" \n\n	debounce="100" \n\n	placeholder="Search shop" \n\n	class="searchbar shop"\n\n	[(ngModel)]="searchBarShop"\n\n	(ionCancel)="onCancel($event)"\n\n	(ionInput)="onInput($event)"\n\n	(ionClear)="onClear($event)">\n\n</ion-searchbar>\n\n\n\n<div class="search-list-container" [ngClass]="(searchType == \'Building\')?\'mall\':\'shop\'" *ngIf="isShowSearchList">\n\n	<ion-list *ngIf="searchType == \'Building\'">\n\n		<ion-item *ngFor="let item of buildingFilterList" (click)="buildingSelect(item)">\n\n			{{ item.name }}\n\n		</ion-item>		\n\n	</ion-list>\n\n\n\n	<ion-list *ngIf="searchType == \'POI\'" >\n\n		<ion-item *ngFor="let item of poiFilterList" (click)="poiSelect(item)">\n\n			{{ item.name }}\n\n		</ion-item>\n\n	</ion-list>\n\n</div>\n\n	<!-- <ion-list>  \n\n		<ion-item><b>Status : </b> {{status}}</ion-item>\n\n		<ion-item><b>Building : </b> {{selectedBuilding.name}}</ion-item>\n\n		<ion-item>\n\n			<ion-label>Select POI</ion-label>\n\n			<ion-select [(ngModel)]="selectedPoiName">\n\n				<ion-option value="{{item.name}}" *ngFor="let item of poisList">{{item.name}}</ion-option>      \n\n			</ion-select>\n\n		</ion-item>\n\n\n\n		\n\n\n\n		<ion-item *ngIf="locationErrorMsg.length > 0" style="color:#ff0000;">\n\n			Location - {{locationErrorMsg}}\n\n		</ion-item>\n\n\n\n		\n\n\n\n		<button ion-button full *ngIf="selectedPoiName.length>0" (click)="showRoute()">Show Route</button>\n\n		<button ion-button full *ngIf="currentRoute" (click)="showRoute()">Show Indications</button>\n\n\n\n		<ion-item>\n\n			<div id="map_canvas" style="width: 100%;height: 80vw;"></div>\n\n		</ion-item>\n\n\n\n		<ion-item *ngIf="navigationIndicationsMessage.length > 0">\n\n			Navigation - <p class="indication-meessage" > {{navigationIndicationsMessage}}</p>\n\n		</ion-item>\n\n		<button ion-button full *ngIf="currentRoute" (click)="startNavigation()">Start Navigation</button>\n\n	</ion-list> -->\n\n\n\n	<div class="map-container">\n\n		<div id="map_canvas" style="width: 100%;height: 100%;"></div>\n\n	</div>\n\n\n\n	<div class="floor-list">\n\n		<ion-list *ngIf="floorsArray.length > 0" >\n\n			<ion-item [style.background-color]="(item.level == slectedFloor.level)?\'#dddddd\':\'#ffffff\'" *ngFor="let item of floorsArray" (click)="floorSelect(item)">\n\n				{{ item.level }}\n\n			</ion-item>\n\n		</ion-list>\n\n	</div>\n\n\n\n\n\n	<!-- <ion-fab class="poi-fab" ng-if="selectedBuilding">\n\n		<button ion-fab mini (click)="poiFindClick()">\n\n			<ion-icon name="map"></ion-icon>\n\n		</button>\n\n	</ion-fab>\n\n\n\n	<ion-fab class="navigate-fab" *ngIf="currentRoute">\n\n		<button ion-fab mini (click)="startNavigation()">\n\n			<ion-icon ios="ios-navigate" md="md-navigate"></ion-icon>\n\n		</button>\n\n	</ion-fab> -->\n\n\n\n	<div class="nav-route-button-container">\n\n	<button ion-button *ngIf="!currentRoute" class="nav-route-button" (click)="showRoute()">ROUTE</button>\n\n		<button ion-button *ngIf="currentRoute" [ngClass]="isNavigationStart?\'nav-route-button-selected\':\'nav-route-button\'" (click)="isNavigationStart?stopNavigation():startNavigation()">{{isNavigationStart?\'STOP\':\'START\'}}</button>\n\n		<button ion-button class="nav-icon">\n\n			<img src="./assets/nav_arrow.png" />\n\n		</button>\n\n	</div>\n\n</ion-content>\n\n<ion-footer>\n\n	<ion-toolbar padding (click)="buildingFindClick()">\n\n		<div style="padding-top: 16px;float:left;">\n\n			<button class="building-select-button">\n\n				<ion-icon name="locate"></ion-icon>\n\n			</button>\n\n			{{(!currentRoute)?"Please search mall & shop":(!isNavigationStart?"Start navigation now":"Find your way")}}\n\n		</div>\n\n\n\n		<img class="logo_img_bottom" src="./assets/logo-app.png" />\n\n	</ion-toolbar>\n\n</ion-footer>\n\n'/*ion-inline-end:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\location-info\location-info.html"*/,
         providers: [__WEBPACK_IMPORTED_MODULE_2__providers_util_util__["a" /* UtilProvider */]]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* NgZone */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* NgZone */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Events */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_2__providers_util_util__["a" /* UtilProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_util_util__["a" /* UtilProvider */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* NgZone */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* NgZone */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Events */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_2__providers_util_util__["a" /* UtilProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_util_util__["a" /* UtilProvider */]) === "function" && _f || Object])
 ], LocationInfoPage);
 
 var _a, _b, _c, _d, _e, _f;
@@ -56239,8 +56257,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
   for more info on providers and Angular 2 DI.
     */
 var UtilProvider = (function () {
-    function UtilProvider(toastCtrl) {
+    function UtilProvider(toastCtrl, alrtCtrl) {
         this.toastCtrl = toastCtrl;
+        this.alrtCtrl = alrtCtrl;
         console.log('Hello UtilProvider Provider');
     }
     UtilProvider.prototype.midpoint = function (lat1, lat2, lng1, lng2) {
@@ -56259,6 +56278,21 @@ var UtilProvider = (function () {
         var lat3 = Math.atan2(Math.sin(lat1) + Math.sin(lat2), Math.sqrt((Math.cos(lat1) + bx) * (Math.cos(lat1) + bx) + Math.pow(by, 2)));
         var lon3 = lng1 + Math.atan2(by, Math.cos(lat1) + bx);
         return { latitude: degrees(lat3), longitude: degrees(lon3) };
+    };
+    UtilProvider.prototype.showAlert = function (title, msg) {
+        this.alrtCtrl.create({
+            title: title,
+            message: msg,
+            buttons: [
+                {
+                    text: 'Ok',
+                    role: 'ok',
+                    handler: function () {
+                        console.log('Ok clicked');
+                    }
+                }
+            ]
+        });
     };
     UtilProvider.prototype.presentToastTop = function (message) {
         var toast = this.toastCtrl.create({
@@ -56286,9 +56320,10 @@ var UtilProvider = (function () {
 }());
 UtilProvider = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* ToastController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* ToastController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* AlertController */]) === "function" && _b || Object])
 ], UtilProvider);
 
+var _a, _b;
 //# sourceMappingURL=util.js.map
 
 /***/ }),
@@ -75136,13 +75171,13 @@ var MyApp = (function () {
     return MyApp;
 }());
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Nav */]),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Nav */])
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Nav */]),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Nav */])
 ], MyApp.prototype, "nav", void 0);
 MyApp = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({template:/*ion-inline-start:"F:\Projects\SitumPlugin\SitumDemoApp\src\app\app.html"*/'<!-- <ion-menu  type="push" [content]="content">\n\n  <ion-header>\n\n    <ion-title padding>Situm Demo App</ion-title>\n\n  </ion-header>\n\n\n\n  <ion-content class="side-menu side-menu-gradient">\n\n    <ion-list>\n\n      <label *ngFor="let page of pages">\n\n          <div class="menu-devider-line" ></div>\n\n          <button menuClose ion-item (click)="openPage(page)" [ngClass]="{\'menu-selected\': (page.title === selectedMenuItem)}">\n\n            <ion-icon class="icon-menu" name="{{page.icon}}"></ion-icon> \n\n            <span class="title-menu">{{page.title}}</span>\n\n          </button>\n\n      </label>\n\n    </ion-list>\n\n  </ion-content>\n\n\n\n</ion-menu> -->\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>   \n\n'/*ion-inline-end:"F:\Projects\SitumPlugin\SitumDemoApp\src\app\app.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Events */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Events */]])
 ], MyApp);
 
 //# sourceMappingURL=app.component.js.map
@@ -75214,7 +75249,7 @@ HomePage = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
         selector: 'page-home',template:/*ion-inline-start:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\home\home.html"*/'<ion-header>\n\n	<ion-navbar>\n\n	<button ion-button menuToggle>\n\n			<ion-icon name="menu"></ion-icon>\n\n		</button>\n\n		<ion-title>\n\n			Situm Indoor Navigation\n\n		</ion-title>\n\n	</ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n	<h1 padding>\n\n		Select Your Building\n\n	</h1>\n\n	<ion-list>\n\n	<ion-item [navPush]="locationInfoPage" [navParams]="{\'building\':{\'dta\':1}}">\n\n		title <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" item-right ></ion-icon>\n\n	</ion-item>\n\n		<ion-item *ngFor="let item of buildings"  [navPush]="locationInfoPage" [navParams]="{\'building\':item}">\n\n			{{ item.name }}\n\n			  <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" item-right></ion-icon>\n\n		</ion-item>\n\n	</ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"F:\Projects\SitumPlugin\SitumDemoApp\src\pages\home\home.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Platform */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* NgZone */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* NgZone */]])
 ], HomePage);
 
 //# sourceMappingURL=home.js.map

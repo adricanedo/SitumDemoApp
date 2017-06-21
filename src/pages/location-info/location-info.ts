@@ -398,6 +398,22 @@ declare var google: any;
 
          this.poiFilterList = [];
          this.isShowSearchList = false;
+
+         this.focusOnSelectedPOI();
+     }
+
+     focusOnSelectedPOI() {
+         let coordinate = this.selectedPOI.coordinate;
+         let ionic = new google.maps.LatLng(coordinate.latitude, coordinate.longitude);
+         this.map.setCenter(ionic);
+
+         for (var i = 0; i < this.floorsArray.length; ++i) {
+             var floor = this.floorsArray[i];
+             if (floor.identifier == this.selectedPOI.floorIdentifier) {
+                 this.floorSelect(floor);
+                 break;
+             }
+         }
      }
 
      startLocationUpdate() {
@@ -439,6 +455,7 @@ declare var google: any;
 
          var onError = function(error) {
              ref.zone.run(() => {
+                 ref.currentLocation = null;
                  ref.locationErrorMsg = error;
              });
              console.log("Error on location update "+error);
@@ -541,6 +558,11 @@ declare var google: any;
          } else if (!this.selectedPOI){
              this.util.presentToastTop("Please select shop first.");
          } else {
+             if (!this.currentLocation) {
+                 this.util.showAlert("Alert!", "You are not in building.");
+                 return;
+             }
+
              if (this.currentPosMarker) {
                  this.currentPosMarker.setMap(null);
                  for (var i = 0; i < this.routesPolylines.length; ++i) {

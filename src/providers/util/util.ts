@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { ToastController } from 'ionic-angular';
+import { ToastController , AlertController } from 'ionic-angular';
 
 /*
   Generated class for the UtilProvider provider.
@@ -11,7 +11,7 @@ import { ToastController } from 'ionic-angular';
   @Injectable()
   export class UtilProvider {
 
-  	constructor(private toastCtrl: ToastController) {
+  	constructor(private toastCtrl: ToastController, public alrtCtrl:AlertController) {
   		console.log('Hello UtilProvider Provider');
   	}
 
@@ -35,31 +35,48 @@ import { ToastController } from 'ionic-angular';
   		return {latitude:degrees(lat3), longitude: degrees(lon3)};
   	}
 
-  	presentToastTop(message) {
-  		let toast = this.toastCtrl.create({
-  			message: message,
-  			duration: 2000,
-  			position: 'top'
-  		});
 
-  		toast.onDidDismiss(() => {
-  			console.log('Dismissed toast');
-  		});
+    showAlert(title, msg) {
+      this.alrtCtrl.create({
+        title: title,
+        message: msg,
+        buttons: [
+        {
+          text: 'Ok',
+          role: 'ok',
+          handler: () => {
+            console.log('Ok clicked');
+          }
+        }
+        ]
+      })
+    }
 
-  		toast.present();
-  	}
+    presentToastTop(message) {
+      let toast = this.toastCtrl.create({
+        message: message,
+        duration: 2000,
+        position: 'top'
+      });
 
-  	presentToast(message) {
-  		let toast = this.toastCtrl.create({
-  			message: message,
-  			duration: 2000,
-  			position: 'bottom'
-  		});
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+      });
 
-  		toast.onDidDismiss(() => {
-  			console.log('Dismissed toast');
-  		});
+      toast.present();
+    }
 
-  		toast.present();
-  	}
+    presentToast(message) {
+      let toast = this.toastCtrl.create({
+        message: message,
+        duration: 2000,
+        position: 'bottom'
+      });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+      });
+
+      toast.present();
+    }
   }
