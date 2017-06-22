@@ -14,11 +14,11 @@
 
 //Building
 
-- (NSDictionary *) buildingToJsonObject:(SITBuilding *) building;
+- (NSDictionary *) buildingToJsonObject:(SITIndoorBuilding *) building;
 
 //Floor
 
-- (NSDictionary *) floorToJsonObject:(SITFloor *) floor;
+- (NSDictionary *) floorToJsonObject:(SITIndoorLevel *) floor;
 
 // POI
 

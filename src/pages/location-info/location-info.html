@@ -90,7 +90,7 @@
 
 	<div class="floor-list">
 		<ion-list *ngIf="floorsArray.length > 0" >
-			<ion-item [style.background-color]="(item.level == slectedFloor.level)?'#dddddd':'#ffffff'" *ngFor="let item of floorsArray" (click)="floorSelect(item)">
+			<ion-item [style.background-color]="(item.level == slectedFloor.level)?'#dddddd':'#ffffff'" style="font-size: 10px" *ngFor="let item of floorsArray" (click)="floorSelect(item)">
 				{{ item.level }}
 			</ion-item>
 		</ion-list>

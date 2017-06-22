@@ -6,13 +6,13 @@
 #import "EnumManager.h"
 
 @interface SitumIndoorNavigation : CDVPlugin<SITDirectionsDelegate, SITLocationDelegate, SITNavigationDelegate> {
-  // Member variables go here.
-
+    // Member variables go here.
+    
     NSMutableDictionary *buildingsStored;
     NSMutableDictionary *floorStored;
     NSMutableDictionary *poisStored;
     NSMutableDictionary *routesStored;
-
+    
     NSDictionary *selectedBuildingJO;
     
     NSString *locationCallbackId, *routeCallbackId, *navigationProgressCallbackId;
@@ -31,8 +31,9 @@
 
 
 + (void)load {
-     NSString *APIUserEmail = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"API_USER_EMAIL"];
-     NSString *APIKey = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"API_KEY"];
+    
+    NSString *APIUserEmail = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"API_USER_EMAIL"];
+    NSString *APIKey = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"API_KEY"];
     [SITServices provideAPIKey:APIKey forEmail:APIUserEmail];
 }
 
@@ -42,25 +43,49 @@
         buildingsStored = [[NSMutableDictionary alloc] init];
     }
     
-    [[SITCommunicationManager sharedManager] fetchBuildingsWithOptions:nil success:^(NSDictionary *mapping) {
-        NSArray *list = [mapping objectForKey:@"results"];
-        NSMutableArray *ja = [[NSMutableArray alloc] init];
-        for (SITBuilding *obj in list) {
-            [ja addObject:[CustomClasses.shared buildingToJsonObject:obj]];
-            [buildingsStored setObject:obj forKey:obj.identifier];
-        }
-        CDVPluginResult* pluginResult = nil;
-        if (list.count == 0) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"You have no buildings. Create one in the Dashboard"];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:ja.copy];
-        }
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-
-    } failure:^(NSError *error) {
-        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description] callbackId:command.callbackId];
-    }];
-
+    [[SITCommunicationManager sharedManager]
+     fetchIndoorBuildingsWithOptions:nil
+     withCompletion:^(NSArray *indoorBuildings, NSError *error) {
+         if (!error) {
+             NSMutableArray *ja = [[NSMutableArray alloc] init];
+             for (SITIndoorBuilding *obj in indoorBuildings) {
+                 [ja addObject:[CustomClasses.shared buildingToJsonObject:obj]];
+                 [buildingsStored setObject:obj forKey:[NSString stringWithFormat:@"%@", obj.identifier]];
+             }
+             CDVPluginResult* pluginResult = nil;
+             if (indoorBuildings.count == 0) {
+                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"You have no buildings. Create one in the Dashboard"];
+             } else {
+                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:ja.copy];
+             }
+             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+             
+         } else {
+             [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description] callbackId:command.callbackId];
+         }
+     }];
+    
+    
+    
+    //    [[SITCommunicationManager sharedManager] fetchBuildingsWithOptions:nil success:^(NSDictionary *mapping) {
+    //        NSArray *list = [mapping objectForKey:@"results"];
+    //        NSMutableArray *ja = [[NSMutableArray alloc] init];
+    //        for (SITBuilding *obj in list) {
+    //            [ja addObject:[CustomClasses.shared buildingToJsonObject:obj]];
+    //            [buildingsStored setObject:obj forKey:obj.identifier];
+    //        }
+    //        CDVPluginResult* pluginResult = nil;
+    //        if (list.count == 0) {
+    //            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"You have no buildings. Create one in the Dashboard"];
+    //        } else {
+    //            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:ja.copy];
+    //        }
+    //        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    //
+    //    } failure:^(NSError *error) {
+    //        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description] callbackId:command.callbackId];
+    //    }];
+    
 }
 
 - (void)fetchFloorsForBuilding:(CDVInvokedUrlCommand*)command
@@ -72,23 +97,47 @@
     }
     
     NSString *buildingId = [buildingJO valueForKey:@"identifier"];
-    [[SITCommunicationManager sharedManager] fetchFloorsForBuilding:buildingId withOptions:nil success:^(NSDictionary *mapping) {
-        NSArray *list = [mapping objectForKey:@"results"];
-        NSMutableArray *ja = [[NSMutableArray alloc] init];
-        for (SITFloor *obj in list) {
-            [ja addObject:[CustomClasses.shared floorToJsonObject:obj]];
-            [floorStored setObject:obj forKey:[NSString stringWithFormat:@"%ld", (long)obj.level]];
-        }
-        CDVPluginResult* pluginResult = nil;
-        if (list.count == 0) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"You have no floors. Create one in the Dashboard"];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:ja.copy];
-        }
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    } failure:^(NSError *error) {
-        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description] callbackId:command.callbackId];
-    }];
+    
+    SITIndoorBuilding *selectedBuilding = (SITIndoorBuilding *) [buildingsStored objectForKey:buildingId];
+    [[SITCommunicationManager sharedManager] fetchIndoorLevelsFromIndoorBuilding:selectedBuilding
+                                                                     withOptions:nil
+                                                                  withCompletion:^(NSArray *indoorLevels, NSError *error) {
+                                                                      if (!error) {
+                                                                          NSMutableArray *ja = [[NSMutableArray alloc] init];
+                                                                          for (SITIndoorLevel *obj in indoorLevels) {
+                                                                              [ja addObject:[CustomClasses.shared floorToJsonObject:obj]];
+                                                                              [floorStored setObject:obj forKey:[NSString stringWithFormat:@"%@", obj.level]];
+                                                                          }
+                                                                          CDVPluginResult* pluginResult = nil;
+                                                                          if (indoorLevels.count == 0) {
+                                                                              pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"You have no floors. Create one in the Dashboard"];
+                                                                          } else {
+                                                                              pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:ja.copy];
+                                                                          }
+                                                                          [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                                                                      } else {
+                                                                          [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description] callbackId:command.callbackId];
+                                                                      }
+                                                                  }];
+    
+    
+    //    [[SITCommunicationManager sharedManager] fetchFloorsForBuilding:buildingId withOptions:nil success:^(NSDictionary *mapping) {
+    //        NSArray *list = [mapping objectForKey:@"results"];
+    //        NSMutableArray *ja = [[NSMutableArray alloc] init];
+    //        for (SITFloor *obj in list) {
+    //            [ja addObject:[CustomClasses.shared floorToJsonObject:obj]];
+    //            [floorStored setObject:obj forKey:[NSString stringWithFormat:@"%ld", (long)obj.level]];
+    //        }
+    //        CDVPluginResult* pluginResult = nil;
+    //        if (list.count == 0) {
+    //            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"You have no floors. Create one in the Dashboard"];
+    //        } else {
+    //            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:ja.copy];
+    //        }
+    //        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    //    } failure:^(NSError *error) {
+    //        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description] callbackId:command.callbackId];
+    //    }];
 }
 
 - (void)fetchIndoorPOIsFromBuilding:(CDVInvokedUrlCommand*)command
@@ -98,24 +147,24 @@
     if (poisStored == nil) {
         poisStored = [[NSMutableDictionary alloc] init];
     }
-
-     [[SITCommunicationManager sharedManager] fetchPoisOfBuilding:[buildingJO valueForKey:@"identifier"]  withOptions:nil success:^(NSDictionary *mapping) {
-         NSArray *list = [mapping objectForKey:@"results"];
-         NSMutableArray *ja = [[NSMutableArray alloc] init];
-         for (SITPOI *obj in list) {
-             [ja addObject:[CustomClasses.shared poiToJsonObject:obj]];
-             [poisStored setObject:obj forKey:obj.name];
-         }
-         CDVPluginResult* pluginResult = nil;
-         if (list.count == 0) {
-             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"You have no poi. Create one in the Dashboard"];
-         } else {
-             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:ja.copy];
-         }
-         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-     } failure:^(NSError *error) {
-         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description] callbackId:command.callbackId];
-     }];
+    
+    [[SITCommunicationManager sharedManager] fetchPoisOfBuilding:[buildingJO valueForKey:@"identifier"]  withOptions:nil success:^(NSDictionary *mapping) {
+        NSArray *list = [mapping objectForKey:@"results"];
+        NSMutableArray *ja = [[NSMutableArray alloc] init];
+        for (SITPOI *obj in list) {
+            [ja addObject:[CustomClasses.shared poiToJsonObject:obj]];
+            [poisStored setObject:obj forKey:obj.name];
+        }
+        CDVPluginResult* pluginResult = nil;
+        if (list.count == 0) {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"You have no poi. Create one in the Dashboard"];
+        } else {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:ja.copy];
+        }
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } failure:^(NSError *error) {
+        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description] callbackId:command.callbackId];
+    }];
 }
 
 - (void)startLocationUpdate:(CDVInvokedUrlCommand*)command
@@ -140,7 +189,7 @@
     if (routesStored == nil) {
         routesStored = [[NSMutableDictionary alloc] init];
     }
-
+    
     
     SITLocation *location = [CustomClasses.shared locationJsonObjectToLocation:fromLocation];
     SITPOI *poi = (SITPOI*)[poisStored objectForKey:@"name"];

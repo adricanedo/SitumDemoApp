@@ -31,34 +31,34 @@ static CustomClasses *customClassesSharedObj;
 
 //Building
 
-- (NSDictionary *) buildingToJsonObject:(SITBuilding *) building {
+- (NSDictionary *) buildingToJsonObject:(SITIndoorBuilding *) building {
     
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
     [jo setObject:emptyStrCheck(building.address) forKey:@"address"];
     [jo setObject:[self boundsToJsonObject:building.bounds] forKey:@"bounds"];
-    [jo setObject:[self boundsToJsonObject:building.rotatedBounds] forKey:@"boundsRotated"];
-    [jo setObject:[self coordinateToJsonObject:building.center] forKey:@"center"];
-    [jo setObject:[self dimensionsToJsonObject:building.dimensions] forKey:@"dimensions"];
-    [jo setObject:emptyStrCheck(building.infoHTML) forKey:@"infoHtml"];
+    [jo setObject:[self boundsToJsonObject:building.boundsRotated] forKey:@"boundsRotated"];
+    [jo setObject:[self coordinateToJsonObject:building.coordinate] forKey:@"center"];
+//    [jo setObject:[self dimensionsToJsonObject:building.dimensions] forKey:@"dimensions"];
     [jo setObject:emptyStrCheck(building.name) forKey:@"name"];
-    [jo setObject:emptyStrCheck(building.pictureThumbURL.direction) forKey:@"pictureThumbUrl"];
-    [jo setObject:emptyStrCheck(building.pictureURL.direction) forKey:@"pictureUrl"];
-    [jo setObject:[self angleToJsonObject:building.rotation] forKey:@"rotation"];
-    [jo setObject:emptyStrCheck(building.userIdentifier) forKey:@"userIdentifier"];
-    [jo setObject:emptyStrCheck(building.identifier) forKey:@"identifier"];
+    [jo setObject:emptyStrCheck(building.picture_thumb_url) forKey:@"pictureThumbUrl"];
+    [jo setObject:emptyStrCheck(building.picture_url) forKey:@"pictureUrl"];
+    [jo setObject:building.rotation forKey:@"rotation"];
+    [jo setObject:emptyStrCheck(building.user_identifier) forKey:@"userIdentifier"];
+    [jo setObject:emptyStrCheck([NSString stringWithFormat:@"%@", building.identifier]) forKey:@"identifier"];
     
     return jo.copy;
 }
 
 //Floor
 
-- (NSDictionary *) floorToJsonObject:(SITFloor *) floor {
+- (NSDictionary *) floorToJsonObject:(SITIndoorLevel *) floor {
     NSMutableDictionary *jo  = [[NSMutableDictionary alloc] init];
-    [jo setObject:[NSNumber numberWithDouble:floor.altitude] forKey:@"altitude"];
-    [jo setObject:emptyStrCheck(floor.buildingIdentifier) forKey:@"buildingIdentifier"];
-    [jo setObject:[NSNumber numberWithInteger:floor.level] forKey:@"level"];
-    [jo setObject:floor.mapURL.direction forKey:@"mapUrl"];
-    [jo setObject:[NSNumber numberWithDouble:floor.scale] forKey:@"scale"];
+//    [jo setObject:[NSNumber numberWithDouble:floor.altitude] forKey:@"altitude"];
+    [jo setObject:emptyStrCheck([NSString stringWithFormat:@"%@", floor.project_identifier]) forKey:@"buildingIdentifier"];
+    [jo setObject:floor.level forKey:@"level"];
+    [jo setObject:floor.map_url forKey:@"mapUrl"];
+    [jo setObject:floor.scale forKey:@"scale"];
+    [jo setObject:[NSString stringWithFormat:@"%@", floor.identifier] forKey:@"identifier"];
     return jo.copy;
 }
 

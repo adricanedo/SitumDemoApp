@@ -10,27 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336478.733552"
+            timestampString = "519805203.367781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "-fetchIndoorPOIsFromBuilding:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336478.733552"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
             landmarkName = "-startLocationUpdate:"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336478.733552"
+            timestampString = "519805203.367781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
             landmarkName = "-getRoute:"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,122 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336478.733552"
+            timestampString = "519805203.367781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "-fetchFloorsForBuilding:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[SitumIndoorNavigation fetchFloorsForBuilding:]"
-                  moduleName = "DemoApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ignisit/Downloads/tool/SwiftyCam-masters/DemoApp/platforms/ios/DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-                  timestampString = "518336950.170341"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "89"
-                  endingLineNumber = "89"
-                  offsetFromSymbolStart = "456">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__48-[SitumIndoorNavigation fetchFloorsForBuilding:]_block_invoke"
-                  moduleName = "DemoApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ignisit/Downloads/tool/SwiftyCam-masters/DemoApp/platforms/ios/DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-                  timestampString = "518336950.171658"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "89"
-                  endingLineNumber = "89"
-                  offsetFromSymbolStart = "56">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__48-[SitumIndoorNavigation fetchFloorsForBuilding:]_block_invoke_2"
-                  moduleName = "DemoApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ignisit/Downloads/tool/SwiftyCam-masters/DemoApp/platforms/ios/DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-                  timestampString = "518336950.173012"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "89"
-                  endingLineNumber = "89"
-                  offsetFromSymbolStart = "24">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336478.733552"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "-fetchFloorsForBuilding:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/CustomClasses.m"
-            timestampString = "517933331.600503"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "-poiToJsonObject:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/CustomClasses.m"
-            timestampString = "517933339.392745"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "-floorToJsonObject:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336478.733552"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
+            startingLineNumber = "211"
+            endingLineNumber = "211"
             landmarkName = "-startNaviagtion:"
             landmarkType = "7">
          </BreakpointContent>
@@ -185,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336478.733552"
+            timestampString = "519805203.367781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "-updateWithLocation:"
             landmarkType = "7">
          </BreakpointContent>
@@ -201,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336478.733552"
+            timestampString = "519805203.367781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
             landmarkName = "-locationManager:didUpdateLocation:"
             landmarkType = "7">
          </BreakpointContent>
@@ -217,59 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336487.366011"
+            timestampString = "519805203.367781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
-            landmarkName = "-fetchFloorsForBuilding:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[SitumIndoorNavigation fetchFloorsForBuilding:]"
-                  moduleName = "DemoApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ignisit/Downloads/tool/SwiftyCam-masters/DemoApp/platforms/ios/DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-                  timestampString = "518336950.196682"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "75"
-                  endingLineNumber = "75"
-                  offsetFromSymbolStart = "312">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__48-[SitumIndoorNavigation fetchFloorsForBuilding:]_block_invoke"
-                  moduleName = "DemoApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ignisit/Downloads/tool/SwiftyCam-masters/DemoApp/platforms/ios/DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-                  timestampString = "518336950.198005"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "89"
-                  endingLineNumber = "89"
-                  offsetFromSymbolStart = "56">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336913.355479"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
             landmarkName = "-locationManager:didFailWithError:"
             landmarkType = "7">
          </BreakpointContent>
@@ -281,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336914.275601"
+            timestampString = "519805203.367781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
             landmarkName = "-locationManager:didUpdateState:"
             landmarkType = "7">
          </BreakpointContent>
@@ -297,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336923.755743"
+            timestampString = "519805203.367781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
             landmarkName = "-directionsManager:didFailProcessingRequest:withError:"
             landmarkType = "7">
          </BreakpointContent>
@@ -313,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336924.71587"
+            timestampString = "519805203.367781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
             landmarkName = "-directionsManager:didProcessRequest:withResponse:"
             landmarkType = "7">
          </BreakpointContent>
@@ -329,12 +154,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
-            timestampString = "518336926.660017"
+            timestampString = "519805203.367781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
             landmarkName = "-navigationManager:didFailWithError:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
+            timestampString = "519806104.862408"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "-fetchFloorsForBuilding:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DemoApp/Plugins/cordova-plugin-situm-indoor-navigation/SitumIndoorNavigation.m"
+            timestampString = "519807987.015846"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "-fetchFloorsForBuilding:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

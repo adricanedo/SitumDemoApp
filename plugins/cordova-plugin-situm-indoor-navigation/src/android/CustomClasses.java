@@ -41,7 +41,7 @@ class CustomClasses {
             jo.put("name", building.getName());
             jo.put("pictureThumbUrl", building.getPictureThumbUrl().getValue());
             jo.put("pictureUrl", building.getPictureUrl().getValue());
-            jo.put("rotation", angleToJsonObject(building.getRotation()));
+            jo.put("rotation", building.getRotation().radians());
             jo.put("userIdentifier", building.getUserIdentifier());
             jo.put("identifier", building.getIdentifier());
 

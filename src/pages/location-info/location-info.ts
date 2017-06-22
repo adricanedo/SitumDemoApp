@@ -255,7 +255,7 @@ declare var google: any;
              var overlayProjection = this.getProjection();
 
              let boundsData = ref.selectedBuilding.bounds;
-             let rotation = ref.selectedBuilding.rotation.degrees;
+             let rotation = ref.selectedBuilding.rotation;
 
              var swLatLng = new google.maps.LatLng(boundsData.southWest.latitude, boundsData.southWest.longitude);
              var neLatLng = new google.maps.LatLng(boundsData.northEast.latitude, boundsData.northEast.longitude);
@@ -268,7 +268,7 @@ declare var google: any;
              div.style.top = ne.y + 'px';
              div.style.width = (ne.x - sw.x) + 'px';
              div.style.height = (sw.y - ne.y) + 'px';
-             div.style.transform = 'rotate('+rotation+'deg)';
+             div.style.transform = 'rotate('+rotation+'rad)';
          };
 
          USGSOverlay.prototype.onRemove = function() {
