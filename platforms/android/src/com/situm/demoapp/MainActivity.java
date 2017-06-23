@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.ionicframework.demoapp675353;
+package com.situm.demoapp;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

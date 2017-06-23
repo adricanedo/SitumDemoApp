@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
 		0C4053A43BBB4C369C3A7043 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = CE95B36CD80E45FFBEA471E6 /* CDVDevice.m */; };
@@ -279,7 +278,7 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = 2KB9FYS7ZE;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -445,9 +444,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ahmad Qaiyum Mohamed (2KB9FYS7ZE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2KB9FYS7ZE;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"DemoApp/Plugins/cordova-plugin-situm-indoor-navigation\"",
@@ -487,8 +486,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.situm.demoapp;
 				PRODUCT_NAME = DemoApp;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "d09000f4-b214-4a81-9184-c7416341046a";
+				PROVISIONING_PROFILE_SPECIFIER = appdissitum;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -503,9 +502,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ahmad Qaiyum Mohamed (2KB9FYS7ZE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2KB9FYS7ZE;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"DemoApp/Plugins/cordova-plugin-situm-indoor-navigation\"",
@@ -543,8 +542,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.situm.demoapp;
 				PRODUCT_NAME = DemoApp;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "d09000f4-b214-4a81-9184-c7416341046a";
+				PROVISIONING_PROFILE_SPECIFIER = appdissitum;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
