@@ -168,14 +168,20 @@
 }
 
 - (void)startLocationUpdate:(CDVInvokedUrlCommand*)command
-{
+{    
+    if ([SITLocationManager sharedInstance].state == kSITLocationStarted) {
+        [[SITLocationManager sharedInstance] removeUpdates];
+    }
     NSDictionary* buildingJO = (NSDictionary*)[command.arguments objectAtIndex:0];
     locationCallbackId = command.callbackId;
     selectedBuildingJO = buildingJO;
     
-    SITLocationRequest *locationRequest = [[SITLocationRequest alloc] initWithPriority:kSITHighAccuracy provider:kSITHybridProvider updateInterval:2 buildingID:[buildingJO valueForKey:@"identifier"] operationQueue:[NSOperationQueue mainQueue] options:nil];
-    [[SITLocationManager sharedInstance] requestLocationUpdates:locationRequest];
-    [[SITLocationManager sharedInstance] setDelegate:self];
+    SITLocationRequest *locationRequest = [[SITLocationRequest alloc] initWithPriority:kSITHighAccuracy provider:kSITInPhoneProvider updateInterval:2 buildingID:[buildingJO valueForKey:@"identifier"] operationQueue:[NSOperationQueue mainQueue] options:nil];
+    if (locationRequest.isValid) {
+        [[SITLocationManager sharedInstance] requestLocationUpdates:locationRequest];
+        [[SITLocationManager sharedInstance] setDelegate:self];
+    }
+    
 }
 
 - (void)getRoute:(CDVInvokedUrlCommand*)command

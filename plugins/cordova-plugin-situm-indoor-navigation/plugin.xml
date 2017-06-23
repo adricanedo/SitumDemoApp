@@ -59,7 +59,10 @@
 		<config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
 			<string>Location is required to find out where you are</string>
 		</config-file>
-
+		<config-file target="*-Info.plist" parent="NSLocationUsageDescription">
+			<string>Location is required to find out where you are</string>
+		</config-file>
+		
 		<config-file target="*-Info.plist" parent="API_USER_EMAIL">
 			<string>$API_USER_EMAIL</string>
 		</config-file>
