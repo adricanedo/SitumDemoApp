@@ -7,7 +7,8 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import com.ionicframework.demoapp675353.MainActivity;
+
+import com.situm.demoapp.MainActivity;
 
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -110,6 +111,9 @@ public class SitumIndoorNavigation extends CordovaPlugin {
       if (route != null) {
         this.startNavigation(route, callbackContext);
       }
+      return true;
+    }  else if (action.equals("stopNaviagtion")) {
+      stopNavigation(callbackContext);
       return true;
     }
     return false;
@@ -341,6 +345,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
       cb.error("Error while calculating route " + e.getMessage());
       e.printStackTrace();
     }
+
   }
 
   private void startNavigation(JSONObject route, CallbackContext callbackContext) {
@@ -400,6 +405,15 @@ public class SitumIndoorNavigation extends CordovaPlugin {
     }
   }
 
+  private void stopNavigation(CallbackContext callbackContext) {
+    if (SitumSdk.navigationManager().isRunning()) {
+      if (SitumSdk.navigationManager().removeUpdates()) {
+        callbackContext.sendPluginResult( new PluginResult(PluginResult.Status.OK));
+      } else {
+        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+      }
+    }
+  }
 
   private void updateWithLocation(Location location) {
     SitumSdk.navigationManager().updateWithLocation(location);

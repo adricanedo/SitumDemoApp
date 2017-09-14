@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="support-v4-24.0.0">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/res" />
-      <root url="jar://$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/libs/internal_impl-24.0.0.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/e9e77821d44a37bd4225332803c283591d0edf56/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/e9e77821d44a37bd4225332803c283591d0edf56/output/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/e9e77821d44a37bd4225332803c283591d0edf56/output/jars/libs/internal_impl-24.0.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/support-v4/24.0.0/support-v4-24.0.0-sources.jar!/" />
+      <root url="jar://F:/AndroidStudioSetupInstalled/Sdk/extras/android/m2repository/com/android/support/support-v4/24.0.0/support-v4-24.0.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

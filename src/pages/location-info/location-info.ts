@@ -18,7 +18,7 @@ declare var google: any;
      providers: [UtilProvider]
  })
  export class LocationInfoPage {
-     isTesting = false;
+     isTesting = true;
 
      selectedBuilding:any;
      currentLocation:any;
@@ -159,7 +159,7 @@ declare var google: any;
              ref.floorSelect(ref.floorsArray[0]);
              ref.getPOIs();
 
-                              ref.updateMarkerPosition(ref.selectedBuilding.center.latitude, ref.selectedBuilding.center.longitude, ref);
+             ref.updateMarkerPosition(ref.selectedBuilding.center.latitude, ref.selectedBuilding.center.longitude, ref);
 
          }
 
@@ -500,7 +500,13 @@ declare var google: any;
              disableDoubleClickZoom:false,
              streetViewControl:false,
              fullscreenControl:false,
-             mapTypeId: google.maps.MapTypeId.ROADMAP
+             mapTypeId: google.maps.MapTypeId.ROADMAP,
+             styles: [{
+                 featureType: "poi",
+                 stylers: [{
+                     visibility: "off"
+                 }]
+             }]
          };
          this.map =  new google.maps.Map(element, mapOptions)
 
@@ -511,209 +517,214 @@ declare var google: any;
 
      updateMarkerPosition1(lat, lng, ref) {
 
-             if (!this.map) {
-                     console.log("Map is not initialized");
-                     return;
+         if (!this.map) {
+             console.log("Map is not initialized");
+             return;
+         }
+         let ionic = new google.maps.LatLng(lat, lng);
+
+         if (this.currentPosMarker == null) {
+             var markerImage = new google.maps.MarkerImage('./assets/curr_pos.png',
+                 new google.maps.Size(57, 57),
+                 new google.maps.Point(0, 0),
+                 new google.maps.Point(28.5, 28.5));
+
+             this.currentPosMarker = new google.maps.Marker({
+                 position: ionic,
+                 map: this.map,
+                 title: "",
+                 icon: markerImage
+             });
+         }
+
+         this.currentPosMarker.setPosition(ionic);
+     }
+
+     updateMarkerPosition(lat, lng, ref) {
+         let currentCoords = new google.maps.LatLng(lat, lng);
+
+         if (!ref.currentPosMarker) {
+             ref.currentPosMarker = new google.maps.Marker({
+                 position: currentCoords,
+                 map: ref.map,
+                 title: 'Your Position!',
+                 icon: ref.icon   
+             });
+         } else {
+             var prevPos = new google.maps.LatLng({"lat": ref.currentPosMarker.getPosition().lat(), "lng": ref.currentPosMarker.getPosition().lng()});
+             var lastPosn = new google.maps.LatLng(currentCoords);
+             var dist = ref.calcDistance(prevPos, lastPosn);
+             ref.currentPosMarker.setPosition(lastPosn);
+             var heading = google.maps.geometry.spherical.computeHeading(lastPosn, prevPos);
+             ref.icon.rotation = heading;
+             ref.currentPosMarker.setIcon(ref.icon);
+             ref.map.setCenter(currentCoords);
+         }
+     }
+
+     drawRouteOnMap() {
+
+         let points = this.currentRoute.points;
+
+         var coordinates = [];
+         for (var i = 0; i < points.length; ++i) {
+             let point = points[i];
+             let coordinate = point.coordinate; 		
+             let latLng = new google.maps.LatLng(coordinate.latitude, coordinate.longitude);
+             coordinates.push(latLng);
+         }
+         this.addPolyline(coordinates);
+     }
+
+     addPolyline(coordinates) {
+         // Define a symbol using SVG path notation, with an opacity of 1.
+         var lineSymbol = {
+             path: 'M 0,-1 0,1',
+             strokeOpacity: 1,
+             scale: 4
+         };
+
+         var polyline = new google.maps.Polyline({
+             path: coordinates,
+             strokeColor: "#0B5EA7",
+             strokeOpacity: 0,
+             icons: [{
+                 icon: lineSymbol,
+                 offset: '0',
+                 repeat: '20px'
+             }],
+             map: this.map
+         });
+         this.routesPolylines.push(polyline);
+     }
+
+     showRoute() {
+         if(!this.selectedBuilding) {
+             this.util.presentToastTop("Please select mall first.");
+         } else if (!this.selectedPOI){
+             this.util.presentToastTop("Please select shop first.");
+         } else {
+             if (!this.currentLocation || (this.currentLocation && this.currentLocation.buildingIdentifier != this.selectedBuilding.identifier)) {
+                 this.util.showAlert("Alert!", "You are not in building.");
+                 return;
+             }
+
+             if (this.currentPosMarker) {
+                 this.currentPosMarker.setMap(null);
+                 for (var i = 0; i < this.routesPolylines.length; ++i) {
+                     var polyline = this.routesPolylines[i];
+                     polyline.setMap(null);
                  }
-                                                   let ionic = new google.maps.LatLng(lat, lng);
+                 this.routesPolylines = [];
+                 this.currentPosMarker = null;
+             }
 
-                 if (this.currentPosMarker == null) {
-                         var markerImage = new google.maps.MarkerImage('./assets/curr_pos.png',
-                             new google.maps.Size(57, 57),
-                             new google.maps.Point(0, 0),
-                             new google.maps.Point(28.5, 28.5));
-
-                         this.currentPosMarker = new google.maps.Marker({
-                                 position: ionic,
-                                 map: this.map,
-                                 title: "",
-                                 icon: markerImage
-                             });
-                         }
-
-                         this.currentPosMarker.setPosition(ionic);
-                     }
-
-                     updateMarkerPosition(lat, lng, ref) {
-                         let currentCoords = new google.maps.LatLng(lat, lng);
-
-                         if (!ref.currentPosMarker) {
-                             ref.currentPosMarker = new google.maps.Marker({
-                                 position: currentCoords,
-                                 map: ref.map,
-                                 title: 'Your Position!',
-                                 icon: ref.icon   
-                             });
-                         } else {
-                             var prevPos = new google.maps.LatLng({"lat": ref.currentPosMarker.getPosition().lat(), "lng": ref.currentPosMarker.getPosition().lng()});
-                             var lastPosn = new google.maps.LatLng(currentCoords);
-                             var dist = ref.calcDistance(prevPos, lastPosn);
-                             ref.currentPosMarker.setPosition(lastPosn);
-                             var heading = google.maps.geometry.spherical.computeHeading(lastPosn, prevPos);
-                             ref.icon.rotation = heading;
-                             ref.currentPosMarker.setIcon(ref.icon);
-                             ref.map.setCenter(currentCoords);
-                         }
-                     }
-
-                     drawRouteOnMap() {
-
-                         let points = this.currentRoute.points;
-
-                         var coordinates = [];
-                         for (var i = 0; i < points.length; ++i) {
-                             let point = points[i];
-                             let coordinate = point.coordinate; 		
-                             let latLng = new google.maps.LatLng(coordinate.latitude, coordinate.longitude);
-                             coordinates.push(latLng);
-                         }
-                         this.addPolyline(coordinates);
-                     }
-
-                     addPolyline(coordinates) {
-                         // Define a symbol using SVG path notation, with an opacity of 1.
-                         var lineSymbol = {
-                             path: 'M 0,-1 0,1',
-                             strokeOpacity: 1,
-                             scale: 4
-                         };
-
-                         var polyline = new google.maps.Polyline({
-                             path: coordinates,
-                             strokeColor: "#0B5EA7",
-                             strokeOpacity: 0,
-                             icons: [{
-                                 icon: lineSymbol,
-                                 offset: '0',
-                                 repeat: '20px'
-                             }],
-                             map: this.map
-                         });
-                         this.routesPolylines.push(polyline);
-                     }
-
-                     showRoute() {
-                         if(!this.selectedBuilding) {
-                             this.util.presentToastTop("Please select mall first.");
-                         } else if (!this.selectedPOI){
-                             this.util.presentToastTop("Please select shop first.");
-                         } else {
-                             if (!this.currentLocation || (this.currentLocation && this.currentLocation.buildingIdentifier != this.selectedBuilding.identifier)) {
-                                 this.util.showAlert("Alert!", "You are not in building.");
-                                 return;
-                             }
-
-                             if (this.currentPosMarker) {
-                                 this.currentPosMarker.setMap(null);
-                                 for (var i = 0; i < this.routesPolylines.length; ++i) {
-                                     var polyline = this.routesPolylines[i];
-                                     polyline.setMap(null);
-                                 }
-                                 this.routesPolylines = [];
-                                 this.currentPosMarker = null;
-                             }
-
-                             var ref = this;
-                             for (var i = 0; i <this.poisList.length; ++i) {
-                                 let poi = this.poisList[i];
-                                 if (poi.name == this.selectedPoiName) {
-                                     this.selectedPOI = poi;
-                                 }
-                             }
-                             if (window.plugins && window.plugins.SitumIndoorNavigation) {
-
-                                 ref.showLoading("");
-                                 var success = function (route) {
-                                     ref.hideLoading();
-                                     ref.zone.run(() => {
-                                         ref.currentRoute = route;
-                                         ref.drawRouteOnMap();
-                                         console.log("Route response "+JSON.stringify(route)); 
-                                     });
-                                 };
-                                 var onError = function (error) {
-                                     ref.hideLoading();
-                                     console.log("Error in getting route "+error);
-                                 };
-                                 window.plugins.SitumIndoorNavigation.getRoute(this.currentLocation, this.selectedPOI, success, onError);
-                             }
-                         }
-
-                     }
-
-                     startNavigation() {
-                         var ref = this;
-                         if (window.plugins && window.plugins.SitumIndoorNavigation) {
-                             var onDestinationReached = function () {
-                                 console.log("Destination Reached");
-                                 ref.isNavigationStart = false;
-                                 ref.zone.run(() => {
-                                     ref.navigationIndicationsMessage = "Destination Reached";
-
-                                     ref.util.presentToast(ref.navigationIndicationsMessage);
-                                 }); 
-                             };
-                             var onProgress = function (navigationProgress) {
-                                 ref.isNavigationStart = true;
-                                 console.log("Navigation Progress  "+JSON.stringify(navigationProgress));
-                                 ref.zone.run(() => {
-                                     ref.navigationIndicationsMessage = navigationProgress.currentIndication.indicationType+" Distance : "+ navigationProgress.currentIndication.distanceToNextLevel+" Total  Distance : "+ navigationProgress.currentIndication.distance;
-
-                                     ref.util.presentToast(ref.navigationIndicationsMessage);
-                                 }); 
-                             };
-                             var onUserOutsideRoute = function() {
-                                 console.log("User Outside Route");
-                                 ref.zone.run(() => {
-                                     ref.navigationIndicationsMessage = "User outside route";
-
-                                     ref.util.presentToast(ref.navigationIndicationsMessage);
-                                 }); 				
-                             };
-                             var onError = function(error) {
-                                 console.log("Navigation Error "+error);
-                                 ref.isNavigationStart = false;
-                                 ref.zone.run(() => {
-                                     ref.navigationIndicationsMessage = error;
-
-                                     ref.util.presentToast("You are not in building");
-                                 }); 				
-                             };
-                             window.plugins.SitumIndoorNavigation.startNaviagtion(ref.currentRoute, onDestinationReached, onProgress, onUserOutsideRoute, onError);
-                         }
-                     }        
-
-                     stopNavigation() {
-                         this.isNavigationStart = false;
-                         if (this.currentPosMarker) {
-                             this.currentPosMarker.setMap(null);
-                             for (var i = 0; i < this.routesPolylines.length; ++i) {
-                                 var polyline = this.routesPolylines[i];
-                                 polyline.setMap(null);
-                             }
-                             this.routesPolylines = [];
-                             this.currentPosMarker = null;
-                         }
-                     }
-
-                     setInfoWindowContent(marker, poi, map_obj, ref) {
-                         var contentString = '<div class="info_window"> ' +
-                         '<h3>' + poi.name + '</h3>' +
-                         '<p><a id="processInfoWindowId"  href="javascript:void(0);">Show Route</a></p>' +
-                         '</div>';
-                         ref.infowindow.setContent(contentString);
-                         ref.infowindow.open(map_obj, marker);
-
-                         document.getElementById("processInfoWindowId").addEventListener("click", function(){
-                             ref.processInfoWindowClick(ref, poi);
-                         });
-                     }     
-
-
-                     processInfoWindowClick (ref, poi) {
-                         this.searchBarShop = poi.name;
-
-                         ref.selectedPOI = poi;         
-                         ref.infowindow.close();  
-                     }        
+             var ref = this;
+             for (var i = 0; i <this.poisList.length; ++i) {
+                 let poi = this.poisList[i];
+                 if (poi.name == this.selectedPoiName) {
+                     this.selectedPOI = poi;
                  }
+             }
+             if (window.plugins && window.plugins.SitumIndoorNavigation) {
+
+                 ref.showLoading("");
+                 var success = function (route) {
+                     ref.hideLoading();
+                     ref.zone.run(() => {
+                         ref.currentRoute = route;
+                         ref.drawRouteOnMap();
+                         console.log("Route response "+JSON.stringify(route)); 
+                     });
+                 };
+                 var onError = function (error) {
+                     ref.hideLoading();
+                     console.log("Error in getting route "+error);
+                 };
+                 window.plugins.SitumIndoorNavigation.getRoute(this.currentLocation, this.selectedPOI, success, onError);
+             }
+         }
+
+     }
+
+     startNavigation() {
+         var ref = this;
+         if (window.plugins && window.plugins.SitumIndoorNavigation) {
+             var onDestinationReached = function () {
+                 console.log("Destination Reached");
+                 ref.isNavigationStart = false;
+                 ref.zone.run(() => {
+                     ref.navigationIndicationsMessage = "Destination Reached";
+
+                     ref.util.presentToast(ref.navigationIndicationsMessage);
+                 }); 
+             };
+             var onProgress = function (navigationProgress) {
+                 ref.isNavigationStart = true;
+                 console.log("Navigation Progress  "+JSON.stringify(navigationProgress));
+                 ref.zone.run(() => {
+                     ref.navigationIndicationsMessage = navigationProgress.currentIndication.indicationType+" Distance : "+ navigationProgress.currentIndication.distanceToNextLevel+" Total  Distance : "+ navigationProgress.currentIndication.distance;
+
+                     ref.util.presentToast(ref.navigationIndicationsMessage);
+                 }); 
+             };
+             var onUserOutsideRoute = function() {
+                 console.log("User Outside Route");
+                 ref.zone.run(() => {
+                     ref.navigationIndicationsMessage = "User outside route";
+
+                     ref.util.presentToast(ref.navigationIndicationsMessage);
+                 }); 				
+             };
+             var onError = function(error) {
+                 console.log("Navigation Error "+error);
+                 ref.isNavigationStart = false;
+                 ref.zone.run(() => {
+                     ref.navigationIndicationsMessage = error;
+
+                     ref.util.presentToast("You are not in building");
+                 }); 				
+             };
+             window.plugins.SitumIndoorNavigation.startNaviagtion(ref.currentRoute, onDestinationReached, onProgress, onUserOutsideRoute, onError);
+         }
+     }        
+
+     stopNavigation() {
+         let ref = this;
+         window.plugins.SitumIndoorNavigation.stopNavigation(function(res) {
+             ref.isNavigationStart = false;
+             if (ref.currentPosMarker) {
+                 ref.currentPosMarker.setMap(null);
+                 for (var i = 0; i < ref.routesPolylines.length; ++i) {
+                     var polyline = ref.routesPolylines[i];
+                     polyline.setMap(null);
+                 }
+                 ref.routesPolylines = [];
+                 ref.currentPosMarker = null;
+             }
+         }, function(err) {
+             
+         });
+     }
+
+     setInfoWindowContent(marker, poi, map_obj, ref) {
+         var contentString = '<div class="info_window"> ' +
+         '<h3>' + poi.name + '</h3>' +
+         '<p><a id="processInfoWindowId"  href="javascript:void(0);">Show Route</a></p>' +
+         '</div>';
+         ref.infowindow.setContent(contentString);
+         ref.infowindow.open(map_obj, marker);
+
+         document.getElementById("processInfoWindowId").addEventListener("click", function(){
+             ref.processInfoWindowClick(ref, poi);
+         });
+     }     
+
+
+     processInfoWindowClick (ref, poi) {
+         this.searchBarShop = poi.name;
+
+         ref.selectedPOI = poi;         
+         ref.infowindow.close();  
+     }        
+ }
