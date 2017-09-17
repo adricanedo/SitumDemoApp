@@ -18,7 +18,7 @@ declare var google: any;
      providers: [UtilProvider]
  })
  export class LocationInfoPage {
-     isTesting = true;
+     isTesting = false;
 
      selectedBuilding:any;
      currentLocation:any;

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="CordovaLib-unspecified">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/CordovaLib/build/intermediates/bundles/debug/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/CordovaLib/build/intermediates/bundles/debug/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
