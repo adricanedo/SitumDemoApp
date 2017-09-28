@@ -24,6 +24,7 @@
 - (void)startLocationUpdate:(CDVInvokedUrlCommand*)command;
 - (void)getRoute:(CDVInvokedUrlCommand*)command;
 - (void)startNaviagtion:(CDVInvokedUrlCommand*)command;
+- (void)stopNavigation:(CDVInvokedUrlCommand*)command;
 
 @end
 
@@ -168,20 +169,14 @@
 }
 
 - (void)startLocationUpdate:(CDVInvokedUrlCommand*)command
-{    
-    if ([SITLocationManager sharedInstance].state == kSITLocationStarted) {
-        [[SITLocationManager sharedInstance] removeUpdates];
-    }
+{
     NSDictionary* buildingJO = (NSDictionary*)[command.arguments objectAtIndex:0];
     locationCallbackId = command.callbackId;
     selectedBuildingJO = buildingJO;
     
-    SITLocationRequest *locationRequest = [[SITLocationRequest alloc] initWithPriority:kSITHighAccuracy provider:kSITInPhoneProvider updateInterval:2 buildingID:[buildingJO valueForKey:@"identifier"] operationQueue:[NSOperationQueue mainQueue] options:nil];
-    if (locationRequest.isValid) {
-        [[SITLocationManager sharedInstance] requestLocationUpdates:locationRequest];
-        [[SITLocationManager sharedInstance] setDelegate:self];
-    }
-    
+    SITLocationRequest *locationRequest = [[SITLocationRequest alloc] initWithPriority:kSITHighAccuracy provider:kSITHybridProvider updateInterval:2 buildingID:[buildingJO valueForKey:@"identifier"] operationQueue:[NSOperationQueue mainQueue] options:nil];
+    [[SITLocationManager sharedInstance] requestLocationUpdates:locationRequest];
+    [[SITLocationManager sharedInstance] setDelegate:self];
 }
 
 - (void)getRoute:(CDVInvokedUrlCommand*)command
@@ -223,6 +218,17 @@
         
         [[SITNavigationManager sharedManager] requestNavigationUpdates:navigationRequest];
         [[SITNavigationManager sharedManager]  setDelegate:self];
+    }
+}
+
+- (void)stopNavigation:(CDVInvokedUrlCommand *)command {
+    if ([[SITNavigationManager sharedManager] isRunning]) {
+        [[SITNavigationManager sharedManager] removeUpdates];
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{@"status": @"success"}];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Navigation is already stopped"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }
 }
 
@@ -335,3 +341,4 @@ destinationReachedOnRoute:(SITRoute *)route {
     [self.commandDelegate sendPluginResult:pluginResult callbackId:navigationProgressCallbackId];
 }
 @end
+

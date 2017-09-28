@@ -13,12 +13,12 @@ declare var google: any;
  */
  @IonicPage()
  @Component({
- 	selector: 'page-location-info',
- 	templateUrl: 'location-info.html',
+     selector: 'page-location-info',
+     templateUrl: 'location-info.html',
      providers: [UtilProvider]
  })
  export class LocationInfoPage {
-     isTesting = false;
+     isTesting = true;
 
      selectedBuilding:any;
      currentLocation:any;
@@ -83,7 +83,7 @@ declare var google: any;
                      //     this.searchBarShop = "";
                      //     if(this.selectedBuilding) {
                          //         this.searchType = userEventData.type;
-                         //     } 				
+                         //     }                 
                          // } else if(userEventData.type == 'Start Navigate') {
                              //     this.startNavigation();
                              // } 
@@ -431,6 +431,21 @@ declare var google: any;
                  break;
              }
          }
+
+         
+         let ref = this;
+         setTimeout(function() {
+             var selectedMarker;
+             for(var i=0; i < ref.poisMarker.length; i++) {
+                 var marker = ref.poisMarker[i];
+                 if(marker.poi.name == ref.selectedPOI.name) {
+                     selectedMarker = marker;
+                     break;
+                 }
+             }
+
+             ref.setInfoWindowContent(selectedMarker, ref.selectedPOI, ref.map, ref); 
+         }, 600);        
      }
 
      startLocationUpdate() {
@@ -484,7 +499,7 @@ declare var google: any;
          }
      }
 
-     showMap() { 		
+     showMap() {         
 
          let ref = this;
 
@@ -515,7 +530,7 @@ declare var google: any;
          });
      }
 
-     updateMarkerPosition1(lat, lng, ref) {
+     updateMarkerPosition(lat, lng, ref) {
 
          if (!this.map) {
              console.log("Map is not initialized");
@@ -540,7 +555,7 @@ declare var google: any;
          this.currentPosMarker.setPosition(ionic);
      }
 
-     updateMarkerPosition(lat, lng, ref) {
+     updateMarkerPosition1(lat, lng, ref) {
          let currentCoords = new google.maps.LatLng(lat, lng);
 
          if (!ref.currentPosMarker) {
@@ -569,7 +584,7 @@ declare var google: any;
          var coordinates = [];
          for (var i = 0; i < points.length; ++i) {
              let point = points[i];
-             let coordinate = point.coordinate; 		
+             let coordinate = point.coordinate;         
              let latLng = new google.maps.LatLng(coordinate.latitude, coordinate.longitude);
              coordinates.push(latLng);
          }
@@ -674,7 +689,7 @@ declare var google: any;
                      ref.navigationIndicationsMessage = "User outside route";
 
                      ref.util.presentToast(ref.navigationIndicationsMessage);
-                 }); 				
+                 });                 
              };
              var onError = function(error) {
                  console.log("Navigation Error "+error);
@@ -683,7 +698,7 @@ declare var google: any;
                      ref.navigationIndicationsMessage = error;
 
                      ref.util.presentToast("You are not in building");
-                 }); 				
+                 });                 
              };
              window.plugins.SitumIndoorNavigation.startNaviagtion(ref.currentRoute, onDestinationReached, onProgress, onUserOutsideRoute, onError);
          }

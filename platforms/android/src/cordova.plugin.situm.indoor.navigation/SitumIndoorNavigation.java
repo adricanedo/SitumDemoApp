@@ -112,7 +112,7 @@ public class SitumIndoorNavigation extends CordovaPlugin {
         this.startNavigation(route, callbackContext);
       }
       return true;
-    }  else if (action.equals("stopNaviagtion")) {
+    }  else if (action.equals("stopNavigation")) {
       stopNavigation(callbackContext);
       return true;
     }

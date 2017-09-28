@@ -24,6 +24,7 @@
 - (void)startLocationUpdate:(CDVInvokedUrlCommand*)command;
 - (void)getRoute:(CDVInvokedUrlCommand*)command;
 - (void)startNaviagtion:(CDVInvokedUrlCommand*)command;
+- (void)stopNavigation:(CDVInvokedUrlCommand*)command;
 
 @end
 
@@ -217,6 +218,17 @@
         
         [[SITNavigationManager sharedManager] requestNavigationUpdates:navigationRequest];
         [[SITNavigationManager sharedManager]  setDelegate:self];
+    }
+}
+
+- (void)stopNavigation:(CDVInvokedUrlCommand *)command {
+    if ([[SITNavigationManager sharedManager] isRunning]) {
+        [[SITNavigationManager sharedManager] removeUpdates];
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{@"status": @"success"}];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Navigation is already stopped"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }
 }
 

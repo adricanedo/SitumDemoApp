@@ -42,9 +42,6 @@ SitumIndoorNavigation.prototype.startNaviagtion = function(route, onDestinationR
 
 	cordova.exec(success, error, "SitumIndoorNavigation", "startNaviagtion", [route]);
 };
-SitumIndoorNavigation.prototype.stopNaviagtion = function(success, error) {
-	cordova.exec(success, error, "SitumIndoorNavigation", "stopNaviagtion", []);
-};
 
 SitumIndoorNavigation.install = function () {
   if (!window.plugins) {

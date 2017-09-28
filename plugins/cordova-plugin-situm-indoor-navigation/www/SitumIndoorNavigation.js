@@ -28,7 +28,7 @@ SitumIndoorNavigation.prototype.getRoute = function(fromLocation, toPOI, success
 	cordova.exec(success, error, "SitumIndoorNavigation", "getRoute", [fromLocation, toPOI]);
 };
 
-SitumIndoorNavigation.prototype.startNaviagtion = function(route, onDestinationReached, onProgress, onUserOutsideRoute, error) {
+SitumIndoorNavigation.prototype.startNavigation = function(route, onDestinationReached, onProgress, onUserOutsideRoute, error) {
 	var success = function(res) {
 		if(res.type == 'destinationReached') {
 			onDestinationReached();
@@ -39,11 +39,11 @@ SitumIndoorNavigation.prototype.startNaviagtion = function(route, onDestinationR
 		}
 	};
 
-	cordova.exec(success, error, "SitumIndoorNavigation", "startNaviagtion", [route]);
+	cordova.exec(success, error, "SitumIndoorNavigation", "startNavigation", [route]);
 };
 
-SitumIndoorNavigation.prototype.stopNaviagtion = function(success, error) {
-	cordova.exec(success, error, "SitumIndoorNavigation", "stopNaviagtion", []);
+SitumIndoorNavigation.prototype.stopNavigation = function(success, error) {
+	cordova.exec(success, error, "SitumIndoorNavigation", "stopNavigation", []);
 };
 
 SitumIndoorNavigation.install = function () {
